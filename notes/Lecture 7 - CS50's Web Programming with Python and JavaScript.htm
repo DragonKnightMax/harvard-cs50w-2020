@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html class="wf-ptsans-n4-active wf-ptsans-n7-active wf-active" lang="en-us"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width"><meta property="og:description" content="This course picks up where Harvard University's CS50 leaves off, diving more deeply into the design and implementation of web apps with Python, JavaScript, and SQL using frameworks like Django, React, and Bootstrap. Topics include database design, scalability, security, and user experience. Through hands-on projects, students learn to write and use APIs, create interactive UIs, and leverage cloud services like GitHub and Heroku. By semester’s end, students emerge with knowledge and experience in principles, languages, and tools that empower them to design and deploy applications on the Internet.">
+
+        <meta property="og:image" content="https://img.youtube.com/vi/24Kf3v7kZyE/maxresdefault.jpg"><meta property="og:title" content="Lecture 7 - CS50's Web Programming with Python and JavaScript">
+
+        <link href="https://cs50.harvard.edu/web/2020/favicon.ico?1645555620" rel="icon">
+
+        <!-- https://fonts.google.com/specimen/PT+Sans?query=PT+Sans&selection.family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700 -->
+        <script src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/webfont.js"></script>
+
+        <!-- http://getbootstrap.com/docs/4.6/getting-started/introduction/ -->
+        <script src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/jquery.js"></script>
+        <script src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap.js"></script>
+
+        <!-- https://bootstrap-table.com/docs/getting-started/introduction/ -->
+        <link href="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap-table.css" rel="stylesheet">
+        <script src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap-table.js"></script>
+        <script src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap-table-mobile.js"></script>
+
+        <!-- https://fontawesome.com/how-to-use/on-the-web/referencing-icons/basic-use -->
+        <link href="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/all.css" rel="stylesheet">
+
+        <!-- https://moment.github.io/luxon/ -->
+        <script src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/luxon.js"></script>
+
+        <!-- http://docs.mathjax.org/ -->
+        <!-- https://www.jsdelivr.com/package/npm/mathjax?path=es5 -->
+        <script crossorigin="anonymous" integrity="sha256-+nfSJ1LiSvANSK3wvi6FjM+oFwoIQvURU1frozp5z6o=" src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/tex-chtml.js"></script><style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuSlider {  left: .1em;}
+.CtxtMenu_SliderValue {  position:absolute; right:.1em; padding-top:.25em; color:#333333;  font-size: .75em}
+.CtxtMenu_SliderBar {  outline: none; background: #d3d3d3}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_SelectionMenu {  position:relative; float:left;  border-bottom: none; -webkit-box-shadow:none; -webkit-border-radius:0px; }
+.CtxtMenu_SelectionItem {  padding-right: 1em;}
+.CtxtMenu_Selection {  right: 40%; width:50%; }
+.CtxtMenu_SelectionBox {  padding: 0em; max-height:20em; max-width: none;  background-color:#FFFFFF;}
+.CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style>
+
+        <!-- https://github.com/verlok/vanilla-lazyload -->
+        <script src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/intersection-observer.js"></script>
+        <script src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/lazyload.js"></script>
+
+        <!-- https://github.com/davidjbradshaw/iframe-resizer -->
+        <!-- https://www.jsdelivr.com/package/npm/iframe-resizer?path=js -->
+        <script crossorigin="anonymous" integrity="sha256-S8f0Q/V9VcfrqYgWo9EFS9zuDMdPTBMC+CBW0RjxQbs=" src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/iframeResizer.js"></script>
+
+        <!-- https://github.com/scratchblocks/scratchblocks/releases -->
+        <script src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/scratchblocks.js"></script><style><![CDATA[ .sb-label {
+      font-family: Lucida Grande, Verdana, Arial, DejaVu Sans, sans-serif;
+      font-weight: bold;
+      fill: #fff;
+      font-size: 10px;
+      word-spacing: +1px;
+    }
+
+    .sb-obsolete { fill: #d42828; }
+    .sb-motion { fill: #4a6cd4; }
+    .sb-looks { fill: #8a55d7; }
+    .sb-sound { fill: #bb42c3; }
+    .sb-pen { fill: #0e9a6c;  }
+    .sb-events { fill: #c88330; }
+    .sb-control { fill: #e1a91a; }
+    .sb-sensing { fill: #2ca5e2; }
+    .sb-operators { fill: #5cb712; }
+    .sb-variables { fill: #ee7d16; }
+    .sb-list { fill: #cc5b22 }
+    .sb-custom { fill: #632d99; }
+    .sb-custom-arg { fill: #5947b1; }
+    .sb-extension { fill: #4b4a60; }
+    .sb-grey { fill: #969696; }
+
+    .sb-bevel {
+      filter: url(#bevelFilter);
+    }
+
+    .sb-input {
+      filter: url(#inputBevelFilter);
+    }
+    .sb-input-number,
+    .sb-input-string,
+    .sb-input-number-dropdown {
+      fill: #fff;
+    }
+    .sb-literal-number,
+    .sb-literal-string,
+    .sb-literal-number-dropdown,
+    .sb-literal-dropdown {
+      font-weight: normal;
+      font-size: 9px;
+      word-spacing: 0;
+    }
+    .sb-literal-number,
+    .sb-literal-string,
+    .sb-literal-number-dropdown {
+      fill: #000;
+    }
+
+    .sb-darker {
+      filter: url(#inputDarkFilter);
+    }
+
+    .sb-outline {
+      stroke: #fff;
+      stroke-opacity: 0.2;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .sb-define-hat-cap {
+      stroke: #632d99;
+      stroke-width: 1;
+      fill: #8e2ec2;
+    }
+
+    .sb-comment {
+      fill: #ffffa5;
+      stroke: #d0d1d2;
+      stroke-width: 1;
+    }
+    .sb-comment-line {
+      fill: #ffff80;
+    }
+    .sb-comment-label {
+      font-family: Helevetica, Arial, DejaVu Sans, sans-serif;
+      font-weight: bold;
+      fill: #5c5d5f;
+      word-spacing: 0;
+      font-size: 12px;
+    }
+
+    .sb-diff {
+      fill: none;
+      stroke: #000;
+    }
+    .sb-diff-ins {
+      stroke-width: 2px;
+    }
+    .sb-diff-del {
+      stroke-width: 3px;
+    }
+  ]]></style><style><![CDATA[ .sb3-label {
+      font: 500 12pt Helevetica Neue, Helvetica, sans-serif;
+      fill: #fff;
+      word-spacing: +1pt;
+    }
+
+    .sb3-motion { fill: #4c97ff; stroke: #3373cc; }
+    .sb3-motion-alt { fill: #4280d7; }
+    .sb3-motion-dark { fill: #4c97ff; }
+    .sb3-looks { fill: #9966ff; stroke: #774dcb; }
+    .sb3-looks-alt { fill: #855cd6; }
+    .sb3-looks-dark { fill: #bd42bd; }
+    .sb3-sound { fill: #cf63cf; stroke: #bd42bd; }
+    .sb3-sound-alt { fill: #c94fc9; }
+    .sb3-sound-dark { fill: #bd42bd; }
+    .sb3-control { fill: #ffab19; stroke: #cf8b17; }
+    .sb3-control-alt { fill: #ec9c13; }
+    .sb3-control-dark { fill: #cf8b17; }
+    .sb3-events { fill: #ffbf00; stroke: #cc9900; }
+    .sb3-events-alt { fill: #e6ac00; }
+    .sb3-events-dark { fill: #cc9900; }
+    .sb3-sensing { fill: #5cb1d6; stroke: #2e8eb8; }
+    .sb3-sensing-alt { fill: #47a8d1; }
+    .sb3-sensing-dark { fill: #2e8eb8; }
+    .sb3-operators { fill: #59c059; stroke: #389438; }
+    .sb3-operators-alt { fill: #46b946; }
+    .sb3-operators-dark { fill: #389438; }
+    .sb3-variables { fill: #ff8c1a; stroke: #db6e00; }
+    .sb3-variables-alt { fill: #ff8000; }
+    .sb3-variables-dark { fill: #db6e00; }
+    .sb3-list { fill: #ff661a; stroke: #e64d00; }
+    .sb3-list-alt { fill: #ff5500; }
+    .sb3-list-dark { fill: #e64d00; }
+    .sb3-custom { fill: #ff6680; stroke: #ff3355; }
+    .sb3-custom-alt { fill: #ff4d6a; }
+    .sb3-custom-dark { fill: #ff3355; }
+    .sb3-custom-arg { fill: #ff6680; stroke: #ff3355; }
+
+    /* extension blocks, e.g. pen */
+    .sb3-extension { fill: #0fbd8c; stroke: #0b8e69; }
+    .sb3-extension-alt { fill: #0da57a; }
+    .sb3-extension-line { stroke: #0da57a; }
+    .sb3-extension-dark { fill: #0b8e69; }
+
+    /* obsolete colors: chosen by hand, indicates invalid blocks */
+    .sb3-obsolete { fill: #ed4242; stroke: #ca2b2b; }
+    .sb3-obsolete-alt { fill: #db3333; }
+    .sb3-obsolete-dark { fill: #ca2b2b; }
+
+    /* grey: special color from the Scratch 3.0 design mockups */
+    .sb3-grey { fill: #bfbfbf; stroke: #909090; }
+    .sb3-grey-alt { fill: #b2b2b2; }
+    .sb3-grey-dark { fill: #909090; }
+
+    .sb3-input-color {
+      stroke: #fff;
+    }
+
+    .sb3-input-number,
+    .sb3-input-string {
+      fill: #fff;
+    }
+    .sb3-literal-number,
+    .sb3-literal-string,
+    .sb3-literal-number-dropdown,
+    .sb3-literal-dropdown {
+      word-spacing: 0;
+    }
+    .sb3-literal-number,
+    .sb3-literal-string {
+      fill: #575e75;
+    }
+
+    .sb3-comment {
+      fill: #ffffa5;
+      stroke: #d0d1d2;
+      stroke-width: 1;
+    }
+    .sb3-comment-line {
+      fill: #ffff80;
+    }
+    .sb3-comment-label {
+      font: 400 12pt Helevetica Neue, Helvetica, sans-serif;
+      fill: #000;
+      word-spacing: 0;
+    }
+
+    .sb3-diff {
+      fill: none;
+      stroke: #000;
+    }
+    .sb3-diff-ins {
+      stroke-width: 2px;
+    }
+    .sb3-diff-del {
+      stroke-width: 3px;
+    }
+  ]]></style>
+
+        
+
+        <link href="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/page.css" rel="stylesheet">
+        <link rel="stylesheet" href="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/css.css" media="all"><script src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/jekyll-theme-cs50.js"></script>
+
+        <script>
+            window.CS50 = {
+                local: {"day":"numeric","hour":"numeric","minute":"numeric","month":"long","timeZoneName":"short","weekday":"long","year":"numeric"},
+                locale: "en",
+                tz: "America/New_York"
+            };
+        </script>
+
+        <title>Lecture 7 - CS50's Web Programming with Python and JavaScript</title>
+
+
+    <style id="MJX-CHTML-styles">
+mjx-container[jax="CHTML"] {
+  line-height: 0;
+}
+
+mjx-container [space="1"] {
+  margin-left: .111em;
+}
+
+mjx-container [space="2"] {
+  margin-left: .167em;
+}
+
+mjx-container [space="3"] {
+  margin-left: .222em;
+}
+
+mjx-container [space="4"] {
+  margin-left: .278em;
+}
+
+mjx-container [space="5"] {
+  margin-left: .333em;
+}
+
+mjx-container [rspace="1"] {
+  margin-right: .111em;
+}
+
+mjx-container [rspace="2"] {
+  margin-right: .167em;
+}
+
+mjx-container [rspace="3"] {
+  margin-right: .222em;
+}
+
+mjx-container [rspace="4"] {
+  margin-right: .278em;
+}
+
+mjx-container [rspace="5"] {
+  margin-right: .333em;
+}
+
+mjx-container [size="s"] {
+  font-size: 70.7%;
+}
+
+mjx-container [size="ss"] {
+  font-size: 50%;
+}
+
+mjx-container [size="Tn"] {
+  font-size: 60%;
+}
+
+mjx-container [size="sm"] {
+  font-size: 85%;
+}
+
+mjx-container [size="lg"] {
+  font-size: 120%;
+}
+
+mjx-container [size="Lg"] {
+  font-size: 144%;
+}
+
+mjx-container [size="LG"] {
+  font-size: 173%;
+}
+
+mjx-container [size="hg"] {
+  font-size: 207%;
+}
+
+mjx-container [size="HG"] {
+  font-size: 249%;
+}
+
+mjx-container [width="full"] {
+  width: 100%;
+}
+
+mjx-box {
+  display: inline-block;
+}
+
+mjx-block {
+  display: block;
+}
+
+mjx-itable {
+  display: inline-table;
+}
+
+mjx-row {
+  display: table-row;
+}
+
+mjx-row > * {
+  display: table-cell;
+}
+
+mjx-mtext {
+  display: inline-block;
+}
+
+mjx-mstyle {
+  display: inline-block;
+}
+
+mjx-merror {
+  display: inline-block;
+  color: red;
+  background-color: yellow;
+}
+
+mjx-mphantom {
+  visibility: hidden;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-c::before {
+  display: block;
+  width: 0;
+}
+
+.MJX-TEX {
+  font-family: MJXZERO, MJXTEX;
+}
+
+.TEX-B {
+  font-family: MJXZERO, MJXTEX-B;
+}
+
+.TEX-I {
+  font-family: MJXZERO, MJXTEX-I;
+}
+
+.TEX-MI {
+  font-family: MJXZERO, MJXTEX-MI;
+}
+
+.TEX-BI {
+  font-family: MJXZERO, MJXTEX-BI;
+}
+
+.TEX-S1 {
+  font-family: MJXZERO, MJXTEX-S1;
+}
+
+.TEX-S2 {
+  font-family: MJXZERO, MJXTEX-S2;
+}
+
+.TEX-S3 {
+  font-family: MJXZERO, MJXTEX-S3;
+}
+
+.TEX-S4 {
+  font-family: MJXZERO, MJXTEX-S4;
+}
+
+.TEX-A {
+  font-family: MJXZERO, MJXTEX-A;
+}
+
+.TEX-C {
+  font-family: MJXZERO, MJXTEX-C;
+}
+
+.TEX-CB {
+  font-family: MJXZERO, MJXTEX-CB;
+}
+
+.TEX-FR {
+  font-family: MJXZERO, MJXTEX-FR;
+}
+
+.TEX-FRB {
+  font-family: MJXZERO, MJXTEX-FRB;
+}
+
+.TEX-SS {
+  font-family: MJXZERO, MJXTEX-SS;
+}
+
+.TEX-SSB {
+  font-family: MJXZERO, MJXTEX-SSB;
+}
+
+.TEX-SSI {
+  font-family: MJXZERO, MJXTEX-SSI;
+}
+
+.TEX-SC {
+  font-family: MJXZERO, MJXTEX-SC;
+}
+
+.TEX-T {
+  font-family: MJXZERO, MJXTEX-T;
+}
+
+.TEX-V {
+  font-family: MJXZERO, MJXTEX-V;
+}
+
+.TEX-VB {
+  font-family: MJXZERO, MJXTEX-VB;
+}
+
+mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
+  font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+}
+
+@font-face /* 0 */ {
+  font-family: MJXZERO;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff");
+}
+
+@font-face /* 1 */ {
+  font-family: MJXTEX;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff");
+}
+
+@font-face /* 2 */ {
+  font-family: MJXTEX-B;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff");
+}
+
+@font-face /* 3 */ {
+  font-family: MJXTEX-I;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff");
+}
+
+@font-face /* 4 */ {
+  font-family: MJXTEX-MI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff");
+}
+
+@font-face /* 5 */ {
+  font-family: MJXTEX-BI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff");
+}
+
+@font-face /* 6 */ {
+  font-family: MJXTEX-S1;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff");
+}
+
+@font-face /* 7 */ {
+  font-family: MJXTEX-S2;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff");
+}
+
+@font-face /* 8 */ {
+  font-family: MJXTEX-S3;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff");
+}
+
+@font-face /* 9 */ {
+  font-family: MJXTEX-S4;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff");
+}
+
+@font-face /* 10 */ {
+  font-family: MJXTEX-A;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff");
+}
+
+@font-face /* 11 */ {
+  font-family: MJXTEX-C;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff");
+}
+
+@font-face /* 12 */ {
+  font-family: MJXTEX-CB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff");
+}
+
+@font-face /* 13 */ {
+  font-family: MJXTEX-FR;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff");
+}
+
+@font-face /* 14 */ {
+  font-family: MJXTEX-FRB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff");
+}
+
+@font-face /* 15 */ {
+  font-family: MJXTEX-SS;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff");
+}
+
+@font-face /* 16 */ {
+  font-family: MJXTEX-SSB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff");
+}
+
+@font-face /* 17 */ {
+  font-family: MJXTEX-SSI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff");
+}
+
+@font-face /* 18 */ {
+  font-family: MJXTEX-SC;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff");
+}
+
+@font-face /* 19 */ {
+  font-family: MJXTEX-T;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff");
+}
+
+@font-face /* 20 */ {
+  font-family: MJXTEX-V;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff");
+}
+
+@font-face /* 21 */ {
+  font-family: MJXTEX-VB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff");
+}
+</style></head>
+
+    <body class="">
+
+        <div class="alert fixed-top mb-0 rounded-0 shadow alert-success alert-dismissible" data-alert="success dismissible" data-hash="edc24fffed7a3a9ad8c189ef5e2aca41" id="alert" role="alert">
+            <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button><p>Interested in <a href="https://cs50.harvard.edu/web/2020/#how-to-take-this-course" class="alert-link">a verified certificate, a professional certificate, or transfer credit and accreditation</a>?
+And get vaccinated (as soon as it’s available to you). 💉 <a href="https://www.who.int/news-room/feature-stories/detail/getting-the-covid-19-vaccine" class="alert-link">Here’s why</a>. <a href="https://www.google.com/search?q=covid-19+vaccine+finder" class="alert-link">Here’s how</a>.</p></div>
+        
+
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <aside class="col-md" style="height: 513.667px; top: 81.3333px;">
+ 
+                    <header><h1 data-id="cs50s-web-programming-with-python-and-javascript"><a href="https://cs50.harvard.edu/web/2020/">CS50’s Web Programming with Python and JavaScript</a></h1>
+
+<p>OpenCourseWare</p>
+
+<p><a class="pr-1 small" href="https://cs50.harvard.edu/donate">Donate<i aria-hidden="true" class="fas fa-external-link-alt ps-2"></i></a></p>
+
+<p><a href="https://brianyu.me/">Brian Yu</a><br>
+<a href="mailto:brian@cs.harvard.edu">brian@cs.harvard.edu</a></p>
+
+<p><a href="https://cs.harvard.edu/malan/">David J. Malan</a>
+<br>
+<a href="mailto:malan@harvard.edu">malan@harvard.edu</a>
+<br>
+<a class="mr-1" href="https://www.facebook.com/dmalan"><i aria-hidden="true" class="fab fa-facebook-f" title="Facebook"></i><span class="sr-only">Facebook</span></a>
+<a class="mr-1" href="https://github.com/dmalan"><i aria-hidden="true" class="fab fa-github" title="GitHub"></i><span class="sr-only">GitHub</span></a>
+<a class="mr-1" href="https://www.instagram.com/davidjmalan/"><i aria-hidden="true" class="fab fa-instagram" title="Instagram"></i><span class="sr-only">Instagram</span></a>
+<a class="mr-1" href="https://www.linkedin.com/in/malan/"><i aria-hidden="true" class="fab fa-linkedin" title="LinkedIn"></i><span class="sr-only">LinkedIn</span></a>
+<a class="mr-1" href="https://orcid.org/0000-0001-5338-2522"><i aria-hidden="true" class="fab fa-orcid" title="ORCID"></i><span class="sr-only">ORCID</span></a>
+<a class="mr-1" href="https://www.quora.com/profile/David-J-Malan"><i aria-hidden="true" class="fab fa-quora" title="Quora"></i><span class="sr-only">Quora</span></a>
+<a class="mr-1" href="https://www.reddit.com/user/davidjmalan"><i aria-hidden="true" class="fab fa-reddit-alien" title="Reddit"></i><span class="sr-only">Reddit</span></a>
+<a class="mr-1" href="https://www.tiktok.com/@davidjmalan"><i aria-hidden="true" class="fab fa-tiktok" title="TikTok"></i><span class="sr-only">Twitter</span></a>
+<a class="mr-1" href="https://twitter.com/davidjmalan"><i aria-hidden="true" class="fab fa-twitter" title="Twitter"></i><span class="sr-only">Twitter</span></a></p></header>
+
+                    
+
+                    <button aria-controls="nav" aria-expanded="false" class="btn btn-sm collapsed d-md-none" data-bs-target="aside &gt; nav" data-bs-toggle="collapse">
+                        Menu
+                    </button>
+
+                    <nav class="collapse d-md-block" id="nav"><hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/x/movie/">🍿 CS50x Movie Night 2022</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/x/puzzles/"><i class="fas fa-puzzle-piece pe-2"></i>CS50x Puzzle Day 2022</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/x/prepare/"><i class="fas fa-book pe-2"></i>How to Prepare for Technical Interviews</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.ly/zoom"><i class="fas fa-video pe-2"></i>Zoom Meetings</a></li>
+</ul>
+
+<hr>
+
+<ol start="0">
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/0/">HTML, CSS</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/1/">Git</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/2/">Python</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/3/">Django</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/4/">SQL, Models, and Migrations</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/5/">JavaScript</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/6/">User Interfaces</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/7/">Testing, CI/CD</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/8/">Scalability and Security</a></li>
+</ol>
+
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/honesty/">Academic Honesty</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/certificate/">CS50 Certificate</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/faqs/">FAQs</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.me/cs50w">Gradebook</a></li>
+</ul>
+
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/ed">Ed Discussion</a> for Q&amp;A</li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://us.edstem.org/quickstart/ed-discussion.pdf">Quick Start Guide</a></li>
+</ul>
+
+<hr>
+
+<ul class="small fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/web">edX</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://itunes.apple.com/us/course/id1505432709">iTunes U</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.youtube.com/playlist?list=PLhQjrBD2T380xvFSUmToMMzERZ3qB5Ueu">YouTube</a></li>
+</ul>
+
+<hr>
+
+<ul class="small fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.noticeable.news/">Changelog</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.statuspage.io/">Status Page</a></li>
+</ul>
+
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/communities/"><strong>Communities</strong></a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.clubhouse.com/club/cs50">Clubhouse</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://discord.gg/cs50">Discord</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/ed">Ed</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.facebook.com/groups/cs50/">Facebook Group</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.facebook.com/cs50/">Facebook Page</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://github.com/cs50">GitHub</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://gitter.im/cs50/x">Gitter</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://instagram.com/cs50">Instagram</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.linkedin.com/groups/7437240/">LinkedIn Group</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.linkedin.com/school/CS50/">LinkedIn Page</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.medium.com/">Medium</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.quora.com/topic/CS50">Quora</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.reddit.com/r/cs50/">Reddit</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/slack">Slack</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.snapchat.com/add/cs50">Snapchat</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://soundcloud.com/cs50">SoundCloud</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.stackexchange.com/">Stack Exchange</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.tiktok.com/@cs50">TikTok</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://twitter.com/cs50">Twitter</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="http://www.youtube.com/subscription_center?add_user=cs50tv">YouTube</a></li>
+</ul>
+
+<hr>
+
+<p><a href="https://cs50.harvardshop.com/"><img src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/GGMdcKt.png" alt="Harvard Shop"></a></p>
+
+<hr>
+
+<p><a href="https://cs50.harvard.edu/web/2020/license/" class="small"><i class="fab fa-creative-commons me-1"></i>License</a></p></nav>
+
+                    <footer></footer>
+
+                </aside>
+
+                <main class="col-md" style="margin-bottom: 0px; margin-top: 81.3333px;">
+
+                    <a data-id="" id="lecture-7" style="top: -81.3333px;"></a><h1 class="no_toc"><a data-id="" href="#lecture-7">Lecture 7</a></h1>
+
+<ul id="markdown-toc">
+  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
+  <li><a href="#testing" id="markdown-toc-testing">Testing</a></li>
+  <li><a href="#assert" id="markdown-toc-assert">Assert</a>    <ul>
+      <li><a href="#test-driven-development" id="markdown-toc-test-driven-development">Test-Driven Development</a></li>
+    </ul>
+  </li>
+  <li><a href="#unit-testing" id="markdown-toc-unit-testing">Unit Testing</a></li>
+  <li><a href="#django-testing" id="markdown-toc-django-testing">Django Testing</a>    <ul>
+      <li><a href="#client-testing" id="markdown-toc-client-testing">Client Testing</a></li>
+    </ul>
+  </li>
+  <li><a href="#selenium" id="markdown-toc-selenium">Selenium</a></li>
+  <li><a href="#cicd" id="markdown-toc-cicd">CI/CD</a></li>
+  <li><a href="#github-actions" id="markdown-toc-github-actions">GitHub Actions</a></li>
+  <li><a href="#docker" id="markdown-toc-docker">Docker</a></li>
+</ul>
+
+<a data-id="" id="introduction" style="top: -81.3333px;"></a><h2><a data-id="" href="#introduction">Introduction</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>So
+ far, we’ve discussed how to build simple web pages using HTML and CSS, 
+and how to use Git and GitHub in order to keep track of changes to our 
+code and collaborate with others. We also familiarized ourselves with 
+the Python programming language, started using Django to create web 
+applications, and learned how to use Django models to store information 
+in our sites. We then introduced JavaScript and learned how to use it to
+ make web pages more interactive, and talked about using animation and 
+React to further improve our User Interfaces.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Today, we’ll learn about best practices when if comes to working on and launching larger projects.</li>
+</ul>
+
+<a data-id="" id="testing" style="top: -81.3333px;"></a><h2><a data-id="" href="#testing">Testing</a></h2>
+
+<p>One important part of the software development process is the act of <strong>Testing</strong>
+ the code we’ve written to make sure everything runs as we expect it to.
+ In this lecture, we’ll discuss several ways that we can improve the way
+ we test our code.</p>
+
+<a data-id="" id="assert" style="top: -81.3333px;"></a><h2><a data-id="" href="#assert">Assert</a></h2>
+
+<p>One of the simplest ways we can run tests in Python is by using the <code class="language-plaintext highlighter-rouge">assert</code> command. This command is followed by some expression that should be <code class="language-plaintext highlighter-rouge">True</code>. If the expression is <code class="language-plaintext highlighter-rouge">True</code>, nothing will happen, and if it is <code class="language-plaintext highlighter-rouge">False</code>, an exception will be thrown. Let’s look at how we could incorporate command to test the <code class="language-plaintext highlighter-rouge">square</code> function we wrote when first learning Python. When the function is written correctly, nothing happens as the <code class="language-plaintext highlighter-rouge">assert</code> is <code class="language-plaintext highlighter-rouge">True</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+
+<span class="k">assert</span> <span class="n">square</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="mi">100</span>
+
+<span class="s">""" Output:
+
+"""</span>
+</code></pre></div></div>
+
+<p>And then when it is written incorrectly, an exception is thrown.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span>
+
+<span class="k">assert</span> <span class="n">square</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="mi">100</span>
+
+<span class="s">""" Output:
+Traceback (most recent call last):
+  File "assert.py", line 4, in &lt;module&gt;
+    assert square(10) == 100
+AssertionError
+"""</span>
+</code></pre></div></div>
+
+<a data-id="" id="test-driven-development" style="top: -81.3333px;"></a><h3><a data-id="" href="#test-driven-development">Test-Driven Development</a></h3>
+
+<p>As you begin building larger projects, you may want to consider using <strong>test-driven development</strong>,
+ a development style where every time you fix a bug, you add a test that
+ checks for that bug to a growing set of tests that are run every time 
+you make changes. This will help you to make sure that additional 
+features you add to a project don’t interfere with your existing 
+features.</p>
+
+<p>Now, let’s look at a slightly more complex function, and think about 
+how writing tests can help us to find errors. We’ll now write a function
+ called <code class="language-plaintext highlighter-rouge">is_prime</code> that returns <code class="language-plaintext highlighter-rouge">True</code> if and only if its input is prime:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">def</span> <span class="nf">is_prime</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+
+    <span class="c1"># We know numbers less than 2 are not prime
+</span>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="c1"># Checking factors up to sqrt(n)
+</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">))):</span>
+
+        <span class="c1"># If i is a factor, return false
+</span>        <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="c1"># If no factors were found, return true
+</span>    <span class="k">return</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<p>Now, let’s take a look at a function we’ve written to test our <code class="language-plaintext highlighter-rouge">prime</code> function:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">prime</span> <span class="kn">import</span> <span class="n">is_prime</span>
+
+<span class="k">def</span> <span class="nf">test_prime</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">is_prime</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">!=</span> <span class="n">expected</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"ERROR on is_prime(</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s">), expected </span><span class="si">{</span><span class="n">expected</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>At this point, we can go into our python interpreter and test out some values:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">test_prime</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test_prime</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test_prime</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+<span class="n">ERROR</span> <span class="n">on</span> <span class="n">is_prime</span><span class="p">(</span><span class="mi">25</span><span class="p">),</span> <span class="n">expected</span> <span class="bp">False</span>
+</code></pre></div></div>
+
+<p>We can see from the output above that 5 and 10 were correctly 
+identified as prime and not prime, but 25 was incorrectly identified as 
+prime, so there must be something wrong with our function. Before we 
+look into what is wrong with our function though, let’s look at a way to
+ automate our testing. One way we can do this is by creating a <strong>shell script</strong>, or some script that can be run inside our terminal. These files require a <code class="language-plaintext highlighter-rouge">.sh</code> extension, so our file will be called <code class="language-plaintext highlighter-rouge">tests0.sh</code>. Each of the lines below consists of</p>
+<ol>
+  <li>A <code class="language-plaintext highlighter-rouge">python3</code> to specify the Python version we’re running</li>
+  <li>A <code class="language-plaintext highlighter-rouge">-c</code> to indicate that we wish to run a command</li>
+  <li>A command to run in string format</li>
+</ol>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-c</span> <span class="s2">"from tests0 import test_prime; test_prime(1, False)"</span>
+python3 <span class="nt">-c</span> <span class="s2">"from tests0 import test_prime; test_prime(2, True)"</span>
+python3 <span class="nt">-c</span> <span class="s2">"from tests0 import test_prime; test_prime(8, False)"</span>
+python3 <span class="nt">-c</span> <span class="s2">"from tests0 import test_prime; test_prime(11, True)"</span>
+python3 <span class="nt">-c</span> <span class="s2">"from tests0 import test_prime; test_prime(25, False)"</span>
+python3 <span class="nt">-c</span> <span class="s2">"from tests0 import test_prime; test_prime(28, False)"</span>
+</code></pre></div></div>
+
+<p>Now we can run these commands by running <code class="language-plaintext highlighter-rouge">./tests0.sh</code> in our terminal, giving us this result:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERROR on is_prime<span class="o">(</span>8<span class="o">)</span>, expected False
+ERROR on is_prime<span class="o">(</span>25<span class="o">)</span>, expected False
+</code></pre></div></div>
+
+<a data-id="" id="unit-testing" style="top: -81.3333px;"></a><h2><a data-id="" href="#unit-testing">Unit Testing</a></h2>
+
+<p>Even though we were able to run tests automatically using the above 
+method, we still might want to avoid having to write out each of those 
+tests. Thankfully, we can use the Python <code class="language-plaintext highlighter-rouge">unittest</code> library to make this process a little bit easier. Let’s take a look at what a testing program might look like for our <code class="language-plaintext highlighter-rouge">is_prime</code> function.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Import the unittest library and our function
+</span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">prime</span> <span class="kn">import</span> <span class="n">is_prime</span>
+
+<span class="c1"># A class containing all of our tests
+</span><span class="k">class</span> <span class="nc">Tests</span><span class="p">(</span><span class="n">unittest</span><span class="p">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Check that 1 is not prime."""</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_prime</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">test_2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Check that 2 is prime."""</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_prime</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">test_8</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Check that 8 is not prime."""</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_prime</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">test_11</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Check that 11 is prime."""</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">is_prime</span><span class="p">(</span><span class="mi">11</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">test_25</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Check that 25 is not prime."""</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_prime</span><span class="p">(</span><span class="mi">25</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">test_28</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Check that 28 is not prime."""</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">is_prime</span><span class="p">(</span><span class="mi">28</span><span class="p">))</span>
+
+
+<span class="c1"># Run each of the testing functions
+</span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="p">.</span><span class="n">main</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Notice that each of the functions within our <code class="language-plaintext highlighter-rouge">Tests</code> class followed a pattern:</p>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>The name of the functions begin with <code class="language-plaintext highlighter-rouge">test_</code>. This is necessary for the functions to be run automatically with the call to <code class="language-plaintext highlighter-rouge">unittest.main()</code>.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Each test takes in the <code class="language-plaintext highlighter-rouge">self</code> argument. This is standard when writing methods within Python classes.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>The first line of each function contains a <strong>docstring</strong>
+ surrounded by three quotation marks. These are not just for the code’s 
+readability. When the tests are run, the comment will be displayed as a 
+discription of the test if it fails.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>The next line of each of the functions contained an assertion in the form <code class="language-plaintext highlighter-rouge">self.assertSOMETHING</code>. There are many different assertions you can make including <code class="language-plaintext highlighter-rouge">assertTrue</code>, <code class="language-plaintext highlighter-rouge">assertFalse</code>, <code class="language-plaintext highlighter-rouge">assertEqual</code>, and <code class="language-plaintext highlighter-rouge">assertGreater</code>. You can find these ones and more by checking out the <a href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertEqual">documentation</a>.</li>
+</ul>
+
+<p>Now, let’s check out the results of these tests:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...F.F
+======================================================================
+FAIL: test_25 (__main__.Tests)
+Check that 25 is not prime.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tests1.py", line 26, in test_25
+    self.assertFalse(is_prime(25))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_8 (__main__.Tests)
+Check that 8 is not prime.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tests1.py", line 18, in test_8
+    self.assertFalse(is_prime(8))
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+FAILED (failures=2)
+</code></pre></div></div>
+
+<p>After running the tests, <code class="language-plaintext highlighter-rouge">unittest</code> provides us with some useful information about what it found. In the first line, it gives us a series of <code class="language-plaintext highlighter-rouge">.</code>s for successes and <code class="language-plaintext highlighter-rouge">F</code>s for failures in the order our tests were written.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...F.F
+</code></pre></div></div>
+
+<p>Next, for each of the tests that failed, we are then given the name of the function that failed:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FAIL: test_25 (__main__.Tests)
+</code></pre></div></div>
+
+<p>the descriptive comment we provided earlier:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Check that 25 is not prime.
+</code></pre></div></div>
+
+<p>And a traceback for the exception:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Traceback (most recent call last):
+  File "tests1.py", line 26, in test_25
+    self.assertFalse(is_prime(25))
+AssertionError: True is not false
+</code></pre></div></div>
+
+<p>And finally, we are given a run through of how many tests were run, how much time they took, and how many failed:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Ran 6 tests in 0.001s
+
+FAILED (failures=2)
+</code></pre></div></div>
+
+<p>Now let’s take a look at fixing the bug in our function. It turns out that we need to test one additional number in our <code class="language-plaintext highlighter-rouge">for</code> loop. For example, when <code class="language-plaintext highlighter-rouge">n</code> is <code class="language-plaintext highlighter-rouge">25</code>, the square root is <code class="language-plaintext highlighter-rouge">5</code>, but when that is one argument in the <code class="language-plaintext highlighter-rouge">range</code> function, the <code class="language-plaintext highlighter-rouge">for</code> loop terminates at the number <code class="language-plaintext highlighter-rouge">4</code>. Therefore, we can simply change the header of our <code class="language-plaintext highlighter-rouge">for</code> loop to:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</code></pre></div></div>
+
+<p>Now, when we run the tests again using our unit tests, we get the following output, indicating that our change fixed the bug.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>......
+----------------------------------------------------------------------
+Ran 6 tests in 0.000s
+
+OK
+</code></pre></div></div>
+
+<p>These automated tests will become even more useful as you work to 
+optimize this function. For example, you might want to use the fact that
+ you don’t need to check all integers as factors, just smaller primes 
+(if a number is not divisible by 3, it is also not divisible by 6, 9, 
+12, …), or you may want to use more advanced probabilistic primality 
+tests such as the <a href="https://en.wikipedia.org/wiki/Fermat_primality_test">Fermat</a> and <a href="https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test">Miller-Rabin</a>
+ primality tests. Whenever you make changes to improve this function, 
+you’ll want the ability to easily run your unit tests again to make sure
+ your function is still correct.</p>
+
+<a data-id="" id="django-testing" style="top: -81.3333px;"></a><h2><a data-id="" href="#django-testing">Django Testing</a></h2>
+
+<p>Now, let’s look at how we can apply the ideas of automated testing 
+when creating Django applications. While working with this, we’ll be 
+using the <code class="language-plaintext highlighter-rouge">flights</code> project we created when we first learned about Django models. We’re first going to add a method to our <code class="language-plaintext highlighter-rouge">Flight</code> model that verifies that a flight is valid by checking for two conditions:</p>
+<ol>
+  <li>The origin is not the same as the destination</li>
+  <li>The duration is greater than 0 minutes</li>
+</ol>
+
+<p>Now, our model could look something like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Flight</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">origin</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Airport</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="p">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">"departures"</span><span class="p">)</span>
+    <span class="n">destination</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Airport</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="p">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">"arrivals"</span><span class="p">)</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">IntegerField</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="nb">id</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">origin</span><span class="si">}</span><span class="s"> to </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">destination</span><span class="si">}</span><span class="s">"</span>
+
+    <span class="k">def</span> <span class="nf">is_valid_flight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">origin</span> <span class="o">!=</span> <span class="bp">self</span><span class="p">.</span><span class="n">destination</span> <span class="ow">or</span> <span class="bp">self</span><span class="p">.</span><span class="n">duration</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</code></pre></div></div>
+
+<p>In order to make sure our application works as expected, whenever we create a new application, we are automatically given a <code class="language-plaintext highlighter-rouge">tests.py</code> file. When we first open this file, we see that Django’s <a href="https://docs.djangoproject.com/en/3.0/topics/testing/overview/">TestCase</a> library is automatically imported:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">TestCase</span>
+</code></pre></div></div>
+
+<p>One advantage to using the <code class="language-plaintext highlighter-rouge">TestCase</code>
+ library is that when we run our tests, an entirely new database will be
+ created for testing purposes only. This is helpful because we avoid the
+ risk of accidentally modifying or deleting existing entries in our 
+databse and we don’t have to worry about removing dummy entries that we 
+created only for testing.</p>
+
+<p>To start using this library, we’ll first want to import all of our models:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Flight</span><span class="p">,</span> <span class="n">Airport</span><span class="p">,</span> <span class="n">Passenger</span>
+</code></pre></div></div>
+
+<p>And then we’ll create a new class that extends the <code class="language-plaintext highlighter-rouge">TestCase</code> class we just imported. Within this class, we’ll define a <code class="language-plaintext highlighter-rouge">setUp</code>
+ function that will be run at the start of the testing process. In this 
+function, we’ll probably want to create. Here’s what our class will look
+ like to start:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">FlightTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># Create airports.
+</span>        <span class="n">a1</span> <span class="o">=</span> <span class="n">Airport</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s">"AAA"</span><span class="p">,</span> <span class="n">city</span><span class="o">=</span><span class="s">"City A"</span><span class="p">)</span>
+        <span class="n">a2</span> <span class="o">=</span> <span class="n">Airport</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s">"BBB"</span><span class="p">,</span> <span class="n">city</span><span class="o">=</span><span class="s">"City B"</span><span class="p">)</span>
+
+        <span class="c1"># Create flights.
+</span>        <span class="n">Flight</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">origin</span><span class="o">=</span><span class="n">a1</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="n">a2</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">Flight</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">origin</span><span class="o">=</span><span class="n">a1</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="n">a1</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+        <span class="n">Flight</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">origin</span><span class="o">=</span><span class="n">a1</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="n">a2</span><span class="p">,</span> <span class="n">duration</span><span class="o">=-</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now that we have some entries in our testing database, let’s add some
+ functions to this class to perform some tests. First, let’s make sure 
+our <code class="language-plaintext highlighter-rouge">departures</code> and <code class="language-plaintext highlighter-rouge">arrivals</code>
+ fields work correctly by attempting to count the number of departures 
+(which we know should be 3) and arrivals (which should be 1) from 
+airport <code class="language-plaintext highlighter-rouge">AAA</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">test_departures_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">Airport</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s">"AAA"</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">departures</span><span class="p">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">test_arrivals_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">Airport</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s">"AAA"</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">arrivals</span><span class="p">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We can also test the <code class="language-plaintext highlighter-rouge">is_valid_flight</code> function we added to our <code class="language-plaintext highlighter-rouge">Flight</code> model. We’ll begin by asserting that the function does return true when the flight is valid:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">test_valid_flight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">a1</span> <span class="o">=</span> <span class="n">Airport</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s">"AAA"</span><span class="p">)</span>
+    <span class="n">a2</span> <span class="o">=</span> <span class="n">Airport</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s">"BBB"</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">Flight</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">origin</span><span class="o">=</span><span class="n">a1</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="n">a2</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">is_valid_flight</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>Next, let’s make sure that flights with invalid destinations and durations return false:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">test_invalid_flight_destination</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">a1</span> <span class="o">=</span> <span class="n">Airport</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s">"AAA"</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">Flight</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">origin</span><span class="o">=</span><span class="n">a1</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="n">a1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">is_valid_flight</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">test_invalid_flight_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">a1</span> <span class="o">=</span> <span class="n">Airport</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s">"AAA"</span><span class="p">)</span>
+    <span class="n">a2</span> <span class="o">=</span> <span class="n">Airport</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s">"BBB"</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">Flight</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">origin</span><span class="o">=</span><span class="n">a1</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="n">a2</span><span class="p">,</span> <span class="n">duration</span><span class="o">=-</span><span class="mi">100</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">is_valid_flight</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>Now, to run our tests, we’ll run <code class="language-plaintext highlighter-rouge">python manage.py test</code>. The output for this is almost identical to the output we saw while using the Python <code class="language-plaintext highlighter-rouge">unittest</code> library, although it also logs that it is creating and destroying a testing database:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+..FF.
+======================================================================
+FAIL: test_invalid_flight_destination (flights.tests.FlightTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/cleggett/Documents/cs50/web_notes_files/7/django/airline/flights/tests.py", line 37, in test_invalid_flight_destination
+    self.assertFalse(f.is_valid_flight())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_invalid_flight_duration (flights.tests.FlightTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/cleggett/Documents/cs50/web_notes_files/7/django/airline/flights/tests.py", line 43, in test_invalid_flight_duration
+    self.assertFalse(f.is_valid_flight())
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.018s
+
+FAILED (failures=2)
+Destroying test database for alias 'default'...
+</code></pre></div></div>
+
+<p>We can see from the above output that there are times when <code class="language-plaintext highlighter-rouge">is_valid_flight</code> returned <code class="language-plaintext highlighter-rouge">True</code> when it should have returned <code class="language-plaintext highlighter-rouge">False</code>. We can see, upon further inspection of our function, that we made the mistake of using <code class="language-plaintext highlighter-rouge">or</code> instead of <code class="language-plaintext highlighter-rouge">and</code>, meaning that only one of the flight requirements must be filled for the flight to be valid. If we change the function to this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">def</span> <span class="nf">is_valid_flight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">origin</span> <span class="o">!=</span> <span class="bp">self</span><span class="p">.</span><span class="n">destination</span> <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">duration</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</code></pre></div></div>
+
+<p>We can then run the tests again with better results:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.014s
+
+OK
+Destroying test database for alias 'default'...
+</code></pre></div></div>
+
+<a data-id="" id="client-testing" style="top: -81.3333px;"></a><h3><a data-id="" href="#client-testing">Client Testing</a></h3>
+
+<p>When creating web applications, we will probably want to check not 
+just whether or not specific functions work, but also whether or not 
+individual web pages load as intended. We can do this by creating a <code class="language-plaintext highlighter-rouge">Client</code> object in our Django testing class, and then making requests using that object. To do this, we’ll first have to add <code class="language-plaintext highlighter-rouge">Client</code> to our imports:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">TestCase</span>
+
+</code></pre></div></div>
+
+<p>For example, let’s now add a test that makes sure that we get an HTTP
+ response code of 200 and that all three of our flights are added to the
+ context of a response:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">test_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="c1"># Set up client to make requests
+</span>    <span class="n">c</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
+
+    <span class="c1"># Send get request to index page and store response
+</span>    <span class="n">response</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"/flights/"</span><span class="p">)</span>
+
+    <span class="c1"># Make sure status code is 200
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+    <span class="c1"># Make sure three flights are returned in the context
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">context</span><span class="p">[</span><span class="s">"flights"</span><span class="p">].</span><span class="n">count</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We can similarly check to make sure we get a valid response code for a
+ valid flight page, and an invalid response code for a flight page that 
+doesn’t exist. (Notice that we use the <code class="language-plaintext highlighter-rouge">Max</code> function to find the maximum <code class="language-plaintext highlighter-rouge">id</code>, which we have access to by including <code class="language-plaintext highlighter-rouge">from django.db.models import Max</code> at the top of our file)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">test_valid_flight_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">a1</span> <span class="o">=</span> <span class="n">Airport</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s">"AAA"</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">Flight</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">origin</span><span class="o">=</span><span class="n">a1</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="n">a1</span><span class="p">)</span>
+
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s">"/flights/</span><span class="si">{</span><span class="n">f</span><span class="p">.</span><span class="nb">id</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">test_invalid_flight_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">max_id</span> <span class="o">=</span> <span class="n">Flight</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="nb">all</span><span class="p">().</span><span class="n">aggregate</span><span class="p">(</span><span class="n">Max</span><span class="p">(</span><span class="s">"id"</span><span class="p">))[</span><span class="s">"id__max"</span><span class="p">]</span>
+
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s">"/flights/</span><span class="si">{</span><span class="n">max_id</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Finally, let’s add some testing to make sure the passengers and non-passengers lists are being generated as expected:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">test_flight_page_passengers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">Flight</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Passenger</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">first</span><span class="o">=</span><span class="s">"Alice"</span><span class="p">,</span> <span class="n">last</span><span class="o">=</span><span class="s">"Adams"</span><span class="p">)</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">passengers</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s">"/flights/</span><span class="si">{</span><span class="n">f</span><span class="p">.</span><span class="nb">id</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">context</span><span class="p">[</span><span class="s">"passengers"</span><span class="p">].</span><span class="n">count</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">test_flight_page_non_passengers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">Flight</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Passenger</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">first</span><span class="o">=</span><span class="s">"Alice"</span><span class="p">,</span> <span class="n">last</span><span class="o">=</span><span class="s">"Adams"</span><span class="p">)</span>
+
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s">"/flights/</span><span class="si">{</span><span class="n">f</span><span class="p">.</span><span class="nb">id</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">context</span><span class="p">[</span><span class="s">"non_passengers"</span><span class="p">].</span><span class="n">count</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now, we can run all of our tests together, and see that at the moment we have no errors!</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+..........
+----------------------------------------------------------------------
+Ran 10 tests in 0.048s
+
+OK
+Destroying test database for alias 'default'...
+</code></pre></div></div>
+
+<a data-id="" id="selenium" style="top: -81.3333px;"></a><h2><a data-id="" href="#selenium">Selenium</a></h2>
+
+<p>So far, we’ve been able to test out the server-side code we’ve 
+written using Python and Django, but as we’re building up our 
+applications we’ll want the ability to create tests for our client-side 
+code as well. For example, let’s think back to our <code class="language-plaintext highlighter-rouge">counter.html</code> page and work on writing some tests for it.</p>
+
+<p>We’ll begin by writing a slightly different counter page where we include a button to decrease the count:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Counter<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;script&gt;</span>
+            
+            <span class="c1">// Wait for page to load</span>
+            <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">DOMContentLoaded</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+
+                <span class="c1">// Initialize variable to 0</span>
+                <span class="kd">let</span> <span class="nx">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+                <span class="c1">// If increase button clicked, increase counter and change inner html</span>
+                <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">#increase</span><span class="dl">'</span><span class="p">).</span><span class="nx">onclick</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                    <span class="nx">counter</span> <span class="o">++</span><span class="p">;</span>
+                    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">h1</span><span class="dl">'</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">counter</span><span class="p">;</span>
+                <span class="p">}</span>
+
+                <span class="c1">// If decrease button clicked, decrease counter and change inner html</span>
+                <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">#decrease</span><span class="dl">'</span><span class="p">).</span><span class="nx">onclick</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                    <span class="nx">counter</span> <span class="o">--</span><span class="p">;</span>
+                    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">h1</span><span class="dl">'</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">counter</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">})</span>
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;h1&gt;</span>0<span class="nt">&lt;/h1&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"increase"</span><span class="nt">&gt;</span>+<span class="nt">&lt;/button&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"decrease"</span><span class="nt">&gt;</span>-<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>Now if we wish to test this code, we could just open up our web 
+browser, click the two buttons, and observe what happens. This, however,
+ would become very tedious as you write larger and larger single page 
+applications, which is why several frameworks have been created that 
+help with in-browser testing, one of which is called <a href="https://www.selenium.dev/">Selenium</a>.</p>
+
+<p>Using Selenium, we’ll be able to define a testing file in Python 
+where we can simulate a user opening a web browser, navigating to our 
+page, and interacting with it. Our main tool when doing this is known as
+ a <strong>Web Driver</strong>, which will open up a web browser on your
+ computer. Let’s take a look at how we could start using this library to
+ begin interacting with pages. Note that below we use both <code class="language-plaintext highlighter-rouge">selenium</code> and <code class="language-plaintext highlighter-rouge">ChromeDriver</code>. Selenium can be installed for python by running <code class="language-plaintext highlighter-rouge">pip install selenium</code>, and <code class="language-plaintext highlighter-rouge">ChromeDriver</code> can be installed by running <code class="language-plaintext highlighter-rouge">pip install chromedriver-py</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+
+<span class="c1"># Finds the Uniform Resourse Identifier of a file
+</span><span class="k">def</span> <span class="nf">file_uri</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">pathlib</span><span class="p">.</span><span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">filename</span><span class="p">)).</span><span class="n">as_uri</span><span class="p">()</span>
+
+<span class="c1"># Sets up web driver using Google chrome
+</span><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="p">.</span><span class="n">Chrome</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>The above code is all of the basic setup we need, so now we can get 
+into some more interesting uses by employing the Python interpreter. One
+ note about the first few lines is that in order to target a specific 
+page, we need that page’s <strong>Uniform Resource Identifier (URI)</strong> which is a unique string that represents that resource.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Find the URI of our newly created file
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">file_uri</span><span class="p">(</span><span class="s">"counter.html"</span><span class="p">)</span>
+
+<span class="c1"># Use the URI to open the web page
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">driver</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+
+<span class="c1"># Access the title of the current page
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">driver</span><span class="p">.</span><span class="n">title</span>
+<span class="s">'Counter'</span>
+
+<span class="c1"># Access the source code of the page
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">driver</span><span class="p">.</span><span class="n">page_source</span>
+<span class="s">'&lt;html lang="en"&gt;&lt;head&gt;</span><span class="se">\n</span><span class="s">        &lt;title&gt;Counter&lt;/title&gt;</span><span class="se">\n</span><span class="s">        &lt;script&gt;</span><span class="se">\n</span><span class="s">            </span><span class="se">\n</span><span class="s">            // Wait for page to load</span><span class="se">\n</span><span class="s">            document.addEventListener(</span><span class="se">\'</span><span class="s">DOMContentLoaded</span><span class="se">\'</span><span class="s">, () =&gt; {</span><span class="se">\n\n</span><span class="s">                // Initialize variable to 0</span><span class="se">\n</span><span class="s">                let counter = 0;</span><span class="se">\n\n</span><span class="s">                // If increase button clicked, increase counter and change inner html</span><span class="se">\n</span><span class="s">                document.querySelector(</span><span class="se">\'</span><span class="s">#increase</span><span class="se">\'</span><span class="s">).onclick = () =&gt; {</span><span class="se">\n</span><span class="s">                    counter ++;</span><span class="se">\n</span><span class="s">                    document.querySelector(</span><span class="se">\'</span><span class="s">h1</span><span class="se">\'</span><span class="s">).innerHTML = counter;</span><span class="se">\n</span><span class="s">                }</span><span class="se">\n\n</span><span class="s">                // If decrease button clicked, decrease counter and change inner html</span><span class="se">\n</span><span class="s">                document.querySelector(</span><span class="se">\'</span><span class="s">#decrease</span><span class="se">\'</span><span class="s">).onclick = () =&gt; {</span><span class="se">\n</span><span class="s">                    counter --;</span><span class="se">\n</span><span class="s">                    document.querySelector(</span><span class="se">\'</span><span class="s">h1</span><span class="se">\'</span><span class="s">).innerHTML = counter;</span><span class="se">\n</span><span class="s">                }</span><span class="se">\n</span><span class="s">            })</span><span class="se">\n</span><span class="s">        &lt;/script&gt;</span><span class="se">\n</span><span class="s">    &lt;/head&gt;</span><span class="se">\n</span><span class="s">    &lt;body&gt;</span><span class="se">\n</span><span class="s">        &lt;h1&gt;0&lt;/h1&gt;</span><span class="se">\n</span><span class="s">        &lt;button id="increase"&gt;+&lt;/button&gt;</span><span class="se">\n</span><span class="s">        &lt;button id="decrease"&gt;-&lt;/button&gt;</span><span class="se">\n</span><span class="s">    </span><span class="se">\n</span><span class="s">&lt;/body&gt;&lt;/html&gt;'</span>
+
+<span class="c1"># Find and store the increase and decrease buttons:
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">increase</span> <span class="o">=</span> <span class="n">driver</span><span class="p">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">"increase"</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">decrease</span> <span class="o">=</span> <span class="n">driver</span><span class="p">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">"decrease"</span><span class="p">)</span>
+
+<span class="c1"># Simulate the user clicking on the two buttons
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">increase</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">increase</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">decrease</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+
+<span class="c1"># We can even include clicks within other Python constructs:
+</span><span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">25</span><span class="p">):</span>
+<span class="p">...</span>     <span class="n">increase</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Now let’s take a look at how we can use this simulation to create automated tests of our page:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Standard outline of testing class
+</span><span class="k">class</span> <span class="nc">WebpageTests</span><span class="p">(</span><span class="n">unittest</span><span class="p">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Make sure title is correct"""</span>
+        <span class="n">driver</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">file_uri</span><span class="p">(</span><span class="s">"counter.html"</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">driver</span><span class="p">.</span><span class="n">title</span><span class="p">,</span> <span class="s">"Counter"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_increase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Make sure header updated to 1 after 1 click of increase button"""</span>
+        <span class="n">driver</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">file_uri</span><span class="p">(</span><span class="s">"counter.html"</span><span class="p">))</span>
+        <span class="n">increase</span> <span class="o">=</span> <span class="n">driver</span><span class="p">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">"increase"</span><span class="p">)</span>
+        <span class="n">increase</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">driver</span><span class="p">.</span><span class="n">find_element_by_tag_name</span><span class="p">(</span><span class="s">"h1"</span><span class="p">).</span><span class="n">text</span><span class="p">,</span> <span class="s">"1"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_decrease</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Make sure header updated to -1 after 1 click of decrease button"""</span>
+        <span class="n">driver</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">file_uri</span><span class="p">(</span><span class="s">"counter.html"</span><span class="p">))</span>
+        <span class="n">decrease</span> <span class="o">=</span> <span class="n">driver</span><span class="p">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">"decrease"</span><span class="p">)</span>
+        <span class="n">decrease</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">driver</span><span class="p">.</span><span class="n">find_element_by_tag_name</span><span class="p">(</span><span class="s">"h1"</span><span class="p">).</span><span class="n">text</span><span class="p">,</span> <span class="s">"-1"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_multiple_increase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Make sure header updated to 3 after 3 clicks of increase button"""</span>
+        <span class="n">driver</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">file_uri</span><span class="p">(</span><span class="s">"counter.html"</span><span class="p">))</span>
+        <span class="n">increase</span> <span class="o">=</span> <span class="n">driver</span><span class="p">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">"increase"</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+            <span class="n">increase</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">driver</span><span class="p">.</span><span class="n">find_element_by_tag_name</span><span class="p">(</span><span class="s">"h1"</span><span class="p">).</span><span class="n">text</span><span class="p">,</span> <span class="s">"3"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="p">.</span><span class="n">main</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Now, if we run <code class="language-plaintext highlighter-rouge">python tests.py</code>,
+ our simulations will be carried out in the browser, and then the 
+results of the tests will be printed to the console. Here’s an example 
+of what this might look like when we have a bug in the code a test 
+fails:</p>
+
+<p><img src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/fail.gif" alt="failed selenium test"></p>
+
+<a data-id="" id="cicd" style="top: -81.3333px;"></a><h2><a data-id="" href="#cicd">CI/CD</a></h2>
+
+<p><strong>CI/CD</strong>, which stands for <strong>Continuous Integration and Continuous Delivery</strong>,
+ is a set of software development best practices that dictate how code 
+is written by a team of people, and how that code is later delivered to 
+users of the application. As the name implies, this method consists of 
+two main parts:</p>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Continuous Integration:
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Frequent merges to the main branch</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Automated unit testing with each merge</li>
+    </ul>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Continuous Delivery:
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Short release schedules, meaning new versions of an application are released frequently.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>CI/CD has become more and more popular among software development teams for a number of reasons:</p>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>When
+ different team members are working on different features, many 
+compatibility issues can arise when multiple features are combined at 
+the same time. Continuous integration allows teams to tackle small 
+conflicts as they come.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Because
+ unit tests are run with each Merge, when a test fails it is easier to 
+isolate the part of the code that is causing the problem.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Frequently releasing new versions of an application allows developers to isolate problems if they arise after launch.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Releasing
+ small, incremental changes allows users to slowly get used to new app 
+features rather than being overwhelmed with an entirely different 
+version</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Not waiting to release new features allows companies to stay ahead in a competitive market.</li>
+</ul>
+
+<a data-id="" id="github-actions" style="top: -81.3333px;"></a><h2><a data-id="" href="#github-actions">GitHub Actions</a></h2>
+
+<p>One popular tool used to help with continuous integration is known as <a href="https://github.com/features/actions">GitHub Actions</a>.
+ GitHub Actions will allow us to create workflows where we can specify 
+certain actions to be performed every time someone pushes to a git 
+repository. For example, we might want to check with every push that a 
+style guide is adhered to, or that a set of unit tests is passed.</p>
+
+<p>In order to set up a GitHub action, we’ll use a configuration language called <strong>YAML</strong>.
+ YAML structures its data around key-value pairs (like a JSON object or 
+Python Dictionary). Here’s an example of a simple YAML file:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">key1</span><span class="pi">:</span> <span class="s">value1</span>
+<span class="na">key2</span><span class="pi">:</span> <span class="s">value2</span>
+<span class="na">key3</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">item1</span>
+    <span class="pi">-</span> <span class="s">item2</span>
+    <span class="pi">-</span> <span class="s">item3</span>
+</code></pre></div></div>
+
+<p>Now, let’s look at an example of how we would configure a YAML file (which takes the form <code class="language-plaintext highlighter-rouge">name.yml</code> or <code class="language-plaintext highlighter-rouge">name.yaml</code>) that works with GitHub Actions. To do this, I’ll create a <code class="language-plaintext highlighter-rouge">.github</code> directory in my repository, and then a <code class="language-plaintext highlighter-rouge">workflows</code> directory inside of that, and finally a <code class="language-plaintext highlighter-rouge">ci.yml</code> file within that. In that file, we’ll write:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Testing</span>
+<span class="na">on</span><span class="pi">:</span> <span class="s">push</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">test_project</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">steps</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v2</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Run Django unit tests</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">pip3 install --user django</span>
+        <span class="s">python3 manage.py test</span>
+</code></pre></div></div>
+
+<p>Since this is our first time using GitHub Actions, let’s go through what each part of this file is doing:</p>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>First, we give the workflow a <code class="language-plaintext highlighter-rouge">name</code>, which in our case is Testing.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Next, with the <code class="language-plaintext highlighter-rouge">on</code>
+ key, we specify when the workflow should run. In our case, we wish to 
+perform the tests every time someone pushes to the repository.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>The rest of the file is contained within a <code class="language-plaintext highlighter-rouge">jobs</code> key, which indicates which jobs should be run at every push.
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>In our case, the only job is <code class="language-plaintext highlighter-rouge">test_project</code>. Every job must define two componenets
+        <ul class="fa-ul">
+          <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>The <code class="language-plaintext highlighter-rouge">runs-on</code> key specifies which of GitHub’s virtual machines we would like our code to be run on.</li>
+          <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>The <code class="language-plaintext highlighter-rouge">steps</code> key provides the actions that should occur when this job is run
+            <ul class="fa-ul">
+              <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>In the <code class="language-plaintext highlighter-rouge">uses</code> key we specify which GitHub action we wish to use. <code class="language-plaintext highlighter-rouge">actions/checkout@v2</code> is an action written by GitHub that we can use.</li>
+              <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>The <code class="language-plaintext highlighter-rouge">name</code> key here allows us to proide a description of the action we’re taking</li>
+              <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>After the <code class="language-plaintext highlighter-rouge">run</code>
+ key, we type the commands we wish to run on GitHub’s server. In our 
+case we wish to install Django and then run the testing file.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>Now, let’s open up our repository in GitHub and take a look at some of the tabs near the top of the page:</p>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>Code</strong>: This is the tab that we’ve been using most frequently, as it allows us to view the files and folders within our directory.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>Issues</strong>:
+ Here we can open and close issues, which are requests for bug fixes or 
+new features. We can think of this as a to-do list for our application.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>Pull Requests</strong>:
+ Requests from people who wish to merge some code from one branch into 
+another one. This is a useful tool, as it allows people to perform <strong>code reviews</strong> where they comment and provide suggestions before code is integrated into the master branch.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>GitHub Actions</strong>:
+ This is the tab we’ll use when working on continuous integration, as it
+ provides logs of the actions that have taken place after each push.</li>
+</ul>
+
+<p>Here, let’s imagine that we pushed our changes <em>before</em> we fixed the bug we had in the <code class="language-plaintext highlighter-rouge">is_valid_flight</code> function in <code class="language-plaintext highlighter-rouge">models.py</code> within our <code class="language-plaintext highlighter-rouge">airport</code> project. We can now navigate to the <strong>GitHub Actions</strong> tab, click on our most recent push, click on the action that failed, and view the log:</p>
+
+<p><img src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/action.gif" alt="action"></p>
+
+<p>Now, after fixing the bug, we could bush again and find a better outcome:</p>
+
+<p><img src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/action_success.gif" alt="action success"></p>
+
+<a data-id="" id="docker" style="top: -81.3333px;"></a><h2><a data-id="" href="#docker">Docker</a></h2>
+
+<p>Problems can arise in the world of software development when the 
+configuration on your computer is different than the one your 
+application is being run on. You may have a different version of Python 
+or some additional packages installed that allow the application to run 
+smoothly on your computer, while it would crash on your server. To avoid
+ these problems, we need a way to make sure everyone working on a 
+project is using the same environment. One way to do this is to use a 
+tool called <strong>Docker</strong>, which is a containerization 
+software, meaning it creates an isolated environment within your 
+computer that can be standardized among many collaborators and the 
+server on which your site is run. While Docker is a bit like a <strong>Virtual Machine</strong>, they are in fact different technologies. A virtual machine (like the one used on GitHub Actions or when you launch an <a href="https://cs50.harvard.edu/web/2020/notes/7/">AWS</a>
+ server) is effectively an entire virtual computer with its own 
+operating system, meaning it ends up taking a lot of space wherever it 
+is running. Dockers, on the other hand, work by setting up a container 
+within an existing computer, therefore taking up less space.</p>
+
+<p>Now that we have an idea of what a Docker container is, let’s take a 
+look at how we can configure one on our computers. Our first step in 
+doing this will be to create a <strong>Docker File</strong> which we’ll name <code class="language-plaintext highlighter-rouge">Dockerfile</code>. Inside this file, we’ll provide instructions for how to create a <strong>Docker Image</strong> which describes the libraries and binaries we wish to include in our container. Here’s an example of what our <code class="language-plaintext highlighter-rouge">Dockerfile</code> might look like:</p>
+
+<div class="language-dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> python:3</span>
+<span class="k">COPY</span><span class="s"> .  /usr/src/app</span>
+<span class="k">WORKDIR</span><span class="s"> /usr/src/app</span>
+<span class="k">RUN </span>pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
+<span class="k">CMD</span><span class="s"> ["python3", "manage.py", "runserver", "0.0.0.0:8000"]</span>
+</code></pre></div></div>
+
+<p>Here, we’ll take an in-depth look at what the above file actually does:</p>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">FROM python3</code>:
+ this shows that we are basing this image off of a standard image in 
+which Python 3 is installed. This is fairly common when writing a Docker
+ File, as it allows you to avoid the work of re-defining the same basic 
+setup with each new image.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">COPY . /usr/src/app</code>: This shows that we wish to copy everything from our current directory (<code class="language-plaintext highlighter-rouge">.</code>) and store it in the <code class="language-plaintext highlighter-rouge">/usr/src/app</code> directory in our new container.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">WORKDIR /usr/src/app</code>: This sets up where we will run commands within the container. (A bit like <code class="language-plaintext highlighter-rouge">cd</code> on the terminal)</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">RUN pip install -r requirements.txt</code>: In this line, assuming you’ve included all of your requirements to a file called <code class="language-plaintext highlighter-rouge">requirements.txt</code>, they will all be installed within the container.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]</code>: Finally, we specify the command that should be run when we start up the container.</li>
+</ul>
+
+<p>So far in this class, we’ve only been using SQLite as that’s the 
+default database management system for Django. In live applications with
+ real users though, SQLite is almost never used, as it is not as easily 
+scaled as other systems. Thankfully, if we wish to run a separate server
+ for our database, we can simply add another Docker container, and run 
+them together using a feature called <strong>Docker Compose</strong>. 
+This will allow two different servers to run in separate containers, but
+ also be able to communicate with one another. To specify this, we’ll 
+use a YAML file called <code class="language-plaintext highlighter-rouge">docker-compose.yml</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3'</span>
+
+<span class="na">services</span><span class="pi">:</span>
+    <span class="na">db</span><span class="pi">:</span>
+        <span class="na">image</span><span class="pi">:</span> <span class="s">postgres</span>
+
+    <span class="na">web</span><span class="pi">:</span>
+        <span class="na">build</span><span class="pi">:</span> <span class="s">.</span>
+        <span class="na">volumes</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="s">.:/usr/src/app</span>
+        <span class="na">ports</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="s2">"</span><span class="s">8000:8000"</span>
+</code></pre></div></div>
+
+<p>In the above file we:</p>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Specify that we’re using version 3 of Docker Compose</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Outline two services:
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">db</code> sets up our database container based on an image already written by Postgres.</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">web</code> sets up our server’s container by instructing Docker to:
+        <ul class="fa-ul">
+          <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Use the Dockerfile within the current directory.</li>
+          <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Use the specified path within the container.</li>
+          <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Link port 8000 within the container to port 8000 on our computer.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>Now, we’re ready to start up our services with the command <code class="language-plaintext highlighter-rouge">docker-compose up</code>. This will launch both of our servers inside of new Docker containers.</p>
+
+<p>At this point, we may want to run commands within our Docker 
+container to add database entries or run tests. To do this, we’ll first 
+run <code class="language-plaintext highlighter-rouge">docker ps</code> to show all of the docker containers that are running. Then, well find the <code class="language-plaintext highlighter-rouge">CONTAINER ID</code> of the container we wish to enter and run <code class="language-plaintext highlighter-rouge">docker exec -it CONTAINER_ID bash -l</code>. This will move you inside the <code class="language-plaintext highlighter-rouge">usr/src/app</code> directory we set up within our container. We can run any commands we wish inside that container and then exit by running <code class="language-plaintext highlighter-rouge">CTRL-D</code>.</p>
+
+<p>That’s all for this lecture! Next time, we’ll working on scaling up our projects and making sure they are secure.</p>
+
+
+                </main>
+
+            </div>
+
+        </div>
+
+        
+ 
+        <script src="Lecture%207%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/page.js"></script>
+
+    
+
+
+</body></html>

@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html class="wf-ptsans-n4-active wf-ptsans-n7-active wf-active" lang="en-us"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width"><meta property="og:description" content="This course picks up where Harvard University's CS50 leaves off, diving more deeply into the design and implementation of web apps with Python, JavaScript, and SQL using frameworks like Django, React, and Bootstrap. Topics include database design, scalability, security, and user experience. Through hands-on projects, students learn to write and use APIs, create interactive UIs, and leverage cloud services like GitHub and Heroku. By semester’s end, students emerge with knowledge and experience in principles, languages, and tools that empower them to design and deploy applications on the Internet.">
+
+        <meta property="og:image" content="https://img.youtube.com/vi/24Kf3v7kZyE/maxresdefault.jpg"><meta property="og:title" content="Lecture 1 - CS50's Web Programming with Python and JavaScript">
+
+        <link href="https://cs50.harvard.edu/web/2020/favicon.ico?1645555620" rel="icon">
+
+        <!-- https://fonts.google.com/specimen/PT+Sans?query=PT+Sans&selection.family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700 -->
+        <script src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/webfont.js"></script>
+
+        <!-- http://getbootstrap.com/docs/4.6/getting-started/introduction/ -->
+        <script src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/jquery.js"></script>
+        <script src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap.js"></script>
+
+        <!-- https://bootstrap-table.com/docs/getting-started/introduction/ -->
+        <link href="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap-table.css" rel="stylesheet">
+        <script src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap-table.js"></script>
+        <script src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap-table-mobile.js"></script>
+
+        <!-- https://fontawesome.com/how-to-use/on-the-web/referencing-icons/basic-use -->
+        <link href="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/all.css" rel="stylesheet">
+
+        <!-- https://moment.github.io/luxon/ -->
+        <script src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/luxon.js"></script>
+
+        <!-- http://docs.mathjax.org/ -->
+        <!-- https://www.jsdelivr.com/package/npm/mathjax?path=es5 -->
+        <script crossorigin="anonymous" integrity="sha256-+nfSJ1LiSvANSK3wvi6FjM+oFwoIQvURU1frozp5z6o=" src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/tex-chtml.js"></script><style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuSlider {  left: .1em;}
+.CtxtMenu_SliderValue {  position:absolute; right:.1em; padding-top:.25em; color:#333333;  font-size: .75em}
+.CtxtMenu_SliderBar {  outline: none; background: #d3d3d3}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_SelectionMenu {  position:relative; float:left;  border-bottom: none; -webkit-box-shadow:none; -webkit-border-radius:0px; }
+.CtxtMenu_SelectionItem {  padding-right: 1em;}
+.CtxtMenu_Selection {  right: 40%; width:50%; }
+.CtxtMenu_SelectionBox {  padding: 0em; max-height:20em; max-width: none;  background-color:#FFFFFF;}
+.CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style>
+
+        <!-- https://github.com/verlok/vanilla-lazyload -->
+        <script src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/intersection-observer.js"></script>
+        <script src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/lazyload.js"></script>
+
+        <!-- https://github.com/davidjbradshaw/iframe-resizer -->
+        <!-- https://www.jsdelivr.com/package/npm/iframe-resizer?path=js -->
+        <script crossorigin="anonymous" integrity="sha256-S8f0Q/V9VcfrqYgWo9EFS9zuDMdPTBMC+CBW0RjxQbs=" src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/iframeResizer.js"></script>
+
+        <!-- https://github.com/scratchblocks/scratchblocks/releases -->
+        <script src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/scratchblocks.js"></script><style><![CDATA[ .sb-label {
+      font-family: Lucida Grande, Verdana, Arial, DejaVu Sans, sans-serif;
+      font-weight: bold;
+      fill: #fff;
+      font-size: 10px;
+      word-spacing: +1px;
+    }
+
+    .sb-obsolete { fill: #d42828; }
+    .sb-motion { fill: #4a6cd4; }
+    .sb-looks { fill: #8a55d7; }
+    .sb-sound { fill: #bb42c3; }
+    .sb-pen { fill: #0e9a6c;  }
+    .sb-events { fill: #c88330; }
+    .sb-control { fill: #e1a91a; }
+    .sb-sensing { fill: #2ca5e2; }
+    .sb-operators { fill: #5cb712; }
+    .sb-variables { fill: #ee7d16; }
+    .sb-list { fill: #cc5b22 }
+    .sb-custom { fill: #632d99; }
+    .sb-custom-arg { fill: #5947b1; }
+    .sb-extension { fill: #4b4a60; }
+    .sb-grey { fill: #969696; }
+
+    .sb-bevel {
+      filter: url(#bevelFilter);
+    }
+
+    .sb-input {
+      filter: url(#inputBevelFilter);
+    }
+    .sb-input-number,
+    .sb-input-string,
+    .sb-input-number-dropdown {
+      fill: #fff;
+    }
+    .sb-literal-number,
+    .sb-literal-string,
+    .sb-literal-number-dropdown,
+    .sb-literal-dropdown {
+      font-weight: normal;
+      font-size: 9px;
+      word-spacing: 0;
+    }
+    .sb-literal-number,
+    .sb-literal-string,
+    .sb-literal-number-dropdown {
+      fill: #000;
+    }
+
+    .sb-darker {
+      filter: url(#inputDarkFilter);
+    }
+
+    .sb-outline {
+      stroke: #fff;
+      stroke-opacity: 0.2;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .sb-define-hat-cap {
+      stroke: #632d99;
+      stroke-width: 1;
+      fill: #8e2ec2;
+    }
+
+    .sb-comment {
+      fill: #ffffa5;
+      stroke: #d0d1d2;
+      stroke-width: 1;
+    }
+    .sb-comment-line {
+      fill: #ffff80;
+    }
+    .sb-comment-label {
+      font-family: Helevetica, Arial, DejaVu Sans, sans-serif;
+      font-weight: bold;
+      fill: #5c5d5f;
+      word-spacing: 0;
+      font-size: 12px;
+    }
+
+    .sb-diff {
+      fill: none;
+      stroke: #000;
+    }
+    .sb-diff-ins {
+      stroke-width: 2px;
+    }
+    .sb-diff-del {
+      stroke-width: 3px;
+    }
+  ]]></style><style><![CDATA[ .sb3-label {
+      font: 500 12pt Helevetica Neue, Helvetica, sans-serif;
+      fill: #fff;
+      word-spacing: +1pt;
+    }
+
+    .sb3-motion { fill: #4c97ff; stroke: #3373cc; }
+    .sb3-motion-alt { fill: #4280d7; }
+    .sb3-motion-dark { fill: #4c97ff; }
+    .sb3-looks { fill: #9966ff; stroke: #774dcb; }
+    .sb3-looks-alt { fill: #855cd6; }
+    .sb3-looks-dark { fill: #bd42bd; }
+    .sb3-sound { fill: #cf63cf; stroke: #bd42bd; }
+    .sb3-sound-alt { fill: #c94fc9; }
+    .sb3-sound-dark { fill: #bd42bd; }
+    .sb3-control { fill: #ffab19; stroke: #cf8b17; }
+    .sb3-control-alt { fill: #ec9c13; }
+    .sb3-control-dark { fill: #cf8b17; }
+    .sb3-events { fill: #ffbf00; stroke: #cc9900; }
+    .sb3-events-alt { fill: #e6ac00; }
+    .sb3-events-dark { fill: #cc9900; }
+    .sb3-sensing { fill: #5cb1d6; stroke: #2e8eb8; }
+    .sb3-sensing-alt { fill: #47a8d1; }
+    .sb3-sensing-dark { fill: #2e8eb8; }
+    .sb3-operators { fill: #59c059; stroke: #389438; }
+    .sb3-operators-alt { fill: #46b946; }
+    .sb3-operators-dark { fill: #389438; }
+    .sb3-variables { fill: #ff8c1a; stroke: #db6e00; }
+    .sb3-variables-alt { fill: #ff8000; }
+    .sb3-variables-dark { fill: #db6e00; }
+    .sb3-list { fill: #ff661a; stroke: #e64d00; }
+    .sb3-list-alt { fill: #ff5500; }
+    .sb3-list-dark { fill: #e64d00; }
+    .sb3-custom { fill: #ff6680; stroke: #ff3355; }
+    .sb3-custom-alt { fill: #ff4d6a; }
+    .sb3-custom-dark { fill: #ff3355; }
+    .sb3-custom-arg { fill: #ff6680; stroke: #ff3355; }
+
+    /* extension blocks, e.g. pen */
+    .sb3-extension { fill: #0fbd8c; stroke: #0b8e69; }
+    .sb3-extension-alt { fill: #0da57a; }
+    .sb3-extension-line { stroke: #0da57a; }
+    .sb3-extension-dark { fill: #0b8e69; }
+
+    /* obsolete colors: chosen by hand, indicates invalid blocks */
+    .sb3-obsolete { fill: #ed4242; stroke: #ca2b2b; }
+    .sb3-obsolete-alt { fill: #db3333; }
+    .sb3-obsolete-dark { fill: #ca2b2b; }
+
+    /* grey: special color from the Scratch 3.0 design mockups */
+    .sb3-grey { fill: #bfbfbf; stroke: #909090; }
+    .sb3-grey-alt { fill: #b2b2b2; }
+    .sb3-grey-dark { fill: #909090; }
+
+    .sb3-input-color {
+      stroke: #fff;
+    }
+
+    .sb3-input-number,
+    .sb3-input-string {
+      fill: #fff;
+    }
+    .sb3-literal-number,
+    .sb3-literal-string,
+    .sb3-literal-number-dropdown,
+    .sb3-literal-dropdown {
+      word-spacing: 0;
+    }
+    .sb3-literal-number,
+    .sb3-literal-string {
+      fill: #575e75;
+    }
+
+    .sb3-comment {
+      fill: #ffffa5;
+      stroke: #d0d1d2;
+      stroke-width: 1;
+    }
+    .sb3-comment-line {
+      fill: #ffff80;
+    }
+    .sb3-comment-label {
+      font: 400 12pt Helevetica Neue, Helvetica, sans-serif;
+      fill: #000;
+      word-spacing: 0;
+    }
+
+    .sb3-diff {
+      fill: none;
+      stroke: #000;
+    }
+    .sb3-diff-ins {
+      stroke-width: 2px;
+    }
+    .sb3-diff-del {
+      stroke-width: 3px;
+    }
+  ]]></style>
+
+        
+
+        <link href="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/page.css" rel="stylesheet">
+        <link rel="stylesheet" href="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/css.css" media="all"><script src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/jekyll-theme-cs50.js"></script>
+
+        <script>
+            window.CS50 = {
+                local: {"day":"numeric","hour":"numeric","minute":"numeric","month":"long","timeZoneName":"short","weekday":"long","year":"numeric"},
+                locale: "en",
+                tz: "America/New_York"
+            };
+        </script>
+
+        <title>Lecture 1 - CS50's Web Programming with Python and JavaScript</title>
+
+
+    <style id="MJX-CHTML-styles">
+mjx-container[jax="CHTML"] {
+  line-height: 0;
+}
+
+mjx-container [space="1"] {
+  margin-left: .111em;
+}
+
+mjx-container [space="2"] {
+  margin-left: .167em;
+}
+
+mjx-container [space="3"] {
+  margin-left: .222em;
+}
+
+mjx-container [space="4"] {
+  margin-left: .278em;
+}
+
+mjx-container [space="5"] {
+  margin-left: .333em;
+}
+
+mjx-container [rspace="1"] {
+  margin-right: .111em;
+}
+
+mjx-container [rspace="2"] {
+  margin-right: .167em;
+}
+
+mjx-container [rspace="3"] {
+  margin-right: .222em;
+}
+
+mjx-container [rspace="4"] {
+  margin-right: .278em;
+}
+
+mjx-container [rspace="5"] {
+  margin-right: .333em;
+}
+
+mjx-container [size="s"] {
+  font-size: 70.7%;
+}
+
+mjx-container [size="ss"] {
+  font-size: 50%;
+}
+
+mjx-container [size="Tn"] {
+  font-size: 60%;
+}
+
+mjx-container [size="sm"] {
+  font-size: 85%;
+}
+
+mjx-container [size="lg"] {
+  font-size: 120%;
+}
+
+mjx-container [size="Lg"] {
+  font-size: 144%;
+}
+
+mjx-container [size="LG"] {
+  font-size: 173%;
+}
+
+mjx-container [size="hg"] {
+  font-size: 207%;
+}
+
+mjx-container [size="HG"] {
+  font-size: 249%;
+}
+
+mjx-container [width="full"] {
+  width: 100%;
+}
+
+mjx-box {
+  display: inline-block;
+}
+
+mjx-block {
+  display: block;
+}
+
+mjx-itable {
+  display: inline-table;
+}
+
+mjx-row {
+  display: table-row;
+}
+
+mjx-row > * {
+  display: table-cell;
+}
+
+mjx-mtext {
+  display: inline-block;
+}
+
+mjx-mstyle {
+  display: inline-block;
+}
+
+mjx-merror {
+  display: inline-block;
+  color: red;
+  background-color: yellow;
+}
+
+mjx-mphantom {
+  visibility: hidden;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-c::before {
+  display: block;
+  width: 0;
+}
+
+.MJX-TEX {
+  font-family: MJXZERO, MJXTEX;
+}
+
+.TEX-B {
+  font-family: MJXZERO, MJXTEX-B;
+}
+
+.TEX-I {
+  font-family: MJXZERO, MJXTEX-I;
+}
+
+.TEX-MI {
+  font-family: MJXZERO, MJXTEX-MI;
+}
+
+.TEX-BI {
+  font-family: MJXZERO, MJXTEX-BI;
+}
+
+.TEX-S1 {
+  font-family: MJXZERO, MJXTEX-S1;
+}
+
+.TEX-S2 {
+  font-family: MJXZERO, MJXTEX-S2;
+}
+
+.TEX-S3 {
+  font-family: MJXZERO, MJXTEX-S3;
+}
+
+.TEX-S4 {
+  font-family: MJXZERO, MJXTEX-S4;
+}
+
+.TEX-A {
+  font-family: MJXZERO, MJXTEX-A;
+}
+
+.TEX-C {
+  font-family: MJXZERO, MJXTEX-C;
+}
+
+.TEX-CB {
+  font-family: MJXZERO, MJXTEX-CB;
+}
+
+.TEX-FR {
+  font-family: MJXZERO, MJXTEX-FR;
+}
+
+.TEX-FRB {
+  font-family: MJXZERO, MJXTEX-FRB;
+}
+
+.TEX-SS {
+  font-family: MJXZERO, MJXTEX-SS;
+}
+
+.TEX-SSB {
+  font-family: MJXZERO, MJXTEX-SSB;
+}
+
+.TEX-SSI {
+  font-family: MJXZERO, MJXTEX-SSI;
+}
+
+.TEX-SC {
+  font-family: MJXZERO, MJXTEX-SC;
+}
+
+.TEX-T {
+  font-family: MJXZERO, MJXTEX-T;
+}
+
+.TEX-V {
+  font-family: MJXZERO, MJXTEX-V;
+}
+
+.TEX-VB {
+  font-family: MJXZERO, MJXTEX-VB;
+}
+
+mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
+  font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+}
+
+@font-face /* 0 */ {
+  font-family: MJXZERO;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff");
+}
+
+@font-face /* 1 */ {
+  font-family: MJXTEX;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff");
+}
+
+@font-face /* 2 */ {
+  font-family: MJXTEX-B;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff");
+}
+
+@font-face /* 3 */ {
+  font-family: MJXTEX-I;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff");
+}
+
+@font-face /* 4 */ {
+  font-family: MJXTEX-MI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff");
+}
+
+@font-face /* 5 */ {
+  font-family: MJXTEX-BI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff");
+}
+
+@font-face /* 6 */ {
+  font-family: MJXTEX-S1;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff");
+}
+
+@font-face /* 7 */ {
+  font-family: MJXTEX-S2;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff");
+}
+
+@font-face /* 8 */ {
+  font-family: MJXTEX-S3;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff");
+}
+
+@font-face /* 9 */ {
+  font-family: MJXTEX-S4;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff");
+}
+
+@font-face /* 10 */ {
+  font-family: MJXTEX-A;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff");
+}
+
+@font-face /* 11 */ {
+  font-family: MJXTEX-C;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff");
+}
+
+@font-face /* 12 */ {
+  font-family: MJXTEX-CB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff");
+}
+
+@font-face /* 13 */ {
+  font-family: MJXTEX-FR;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff");
+}
+
+@font-face /* 14 */ {
+  font-family: MJXTEX-FRB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff");
+}
+
+@font-face /* 15 */ {
+  font-family: MJXTEX-SS;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff");
+}
+
+@font-face /* 16 */ {
+  font-family: MJXTEX-SSB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff");
+}
+
+@font-face /* 17 */ {
+  font-family: MJXTEX-SSI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff");
+}
+
+@font-face /* 18 */ {
+  font-family: MJXTEX-SC;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff");
+}
+
+@font-face /* 19 */ {
+  font-family: MJXTEX-T;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff");
+}
+
+@font-face /* 20 */ {
+  font-family: MJXTEX-V;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff");
+}
+
+@font-face /* 21 */ {
+  font-family: MJXTEX-VB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff");
+}
+</style></head>
+
+    <body class="">
+
+        <div class="alert fixed-top mb-0 rounded-0 shadow alert-success alert-dismissible" data-alert="success dismissible" data-hash="edc24fffed7a3a9ad8c189ef5e2aca41" id="alert" role="alert">
+            <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button><p>Interested in <a href="https://cs50.harvard.edu/web/2020/#how-to-take-this-course" class="alert-link">a verified certificate, a professional certificate, or transfer credit and accreditation</a>?
+And get vaccinated (as soon as it’s available to you). 💉 <a href="https://www.who.int/news-room/feature-stories/detail/getting-the-covid-19-vaccine" class="alert-link">Here’s why</a>. <a href="https://www.google.com/search?q=covid-19+vaccine+finder" class="alert-link">Here’s how</a>.</p></div>
+        
+
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <aside class="col-md" style="height: 513.667px; top: 81.3333px;">
+ 
+                    <header><h1 data-id="cs50s-web-programming-with-python-and-javascript"><a href="https://cs50.harvard.edu/web/2020/">CS50’s Web Programming with Python and JavaScript</a></h1>
+
+<p>OpenCourseWare</p>
+
+<p><a class="pr-1 small" href="https://cs50.harvard.edu/donate">Donate<i aria-hidden="true" class="fas fa-external-link-alt ps-2"></i></a></p>
+
+<p><a href="https://brianyu.me/">Brian Yu</a><br>
+<a href="mailto:brian@cs.harvard.edu">brian@cs.harvard.edu</a></p>
+
+<p><a href="https://cs.harvard.edu/malan/">David J. Malan</a>
+<br>
+<a href="mailto:malan@harvard.edu">malan@harvard.edu</a>
+<br>
+<a class="mr-1" href="https://www.facebook.com/dmalan"><i aria-hidden="true" class="fab fa-facebook-f" title="Facebook"></i><span class="sr-only">Facebook</span></a>
+<a class="mr-1" href="https://github.com/dmalan"><i aria-hidden="true" class="fab fa-github" title="GitHub"></i><span class="sr-only">GitHub</span></a>
+<a class="mr-1" href="https://www.instagram.com/davidjmalan/"><i aria-hidden="true" class="fab fa-instagram" title="Instagram"></i><span class="sr-only">Instagram</span></a>
+<a class="mr-1" href="https://www.linkedin.com/in/malan/"><i aria-hidden="true" class="fab fa-linkedin" title="LinkedIn"></i><span class="sr-only">LinkedIn</span></a>
+<a class="mr-1" href="https://orcid.org/0000-0001-5338-2522"><i aria-hidden="true" class="fab fa-orcid" title="ORCID"></i><span class="sr-only">ORCID</span></a>
+<a class="mr-1" href="https://www.quora.com/profile/David-J-Malan"><i aria-hidden="true" class="fab fa-quora" title="Quora"></i><span class="sr-only">Quora</span></a>
+<a class="mr-1" href="https://www.reddit.com/user/davidjmalan"><i aria-hidden="true" class="fab fa-reddit-alien" title="Reddit"></i><span class="sr-only">Reddit</span></a>
+<a class="mr-1" href="https://www.tiktok.com/@davidjmalan"><i aria-hidden="true" class="fab fa-tiktok" title="TikTok"></i><span class="sr-only">Twitter</span></a>
+<a class="mr-1" href="https://twitter.com/davidjmalan"><i aria-hidden="true" class="fab fa-twitter" title="Twitter"></i><span class="sr-only">Twitter</span></a></p></header>
+
+                    
+
+                    <button aria-controls="nav" aria-expanded="false" class="btn btn-sm collapsed d-md-none" data-bs-target="aside &gt; nav" data-bs-toggle="collapse">
+                        Menu
+                    </button>
+
+                    <nav class="collapse d-md-block" id="nav"><hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/x/movie/">🍿 CS50x Movie Night 2022</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/x/puzzles/"><i class="fas fa-puzzle-piece pe-2"></i>CS50x Puzzle Day 2022</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/x/prepare/"><i class="fas fa-book pe-2"></i>How to Prepare for Technical Interviews</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.ly/zoom"><i class="fas fa-video pe-2"></i>Zoom Meetings</a></li>
+</ul>
+
+<hr>
+
+<ol start="0">
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/0/">HTML, CSS</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/1/">Git</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/2/">Python</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/3/">Django</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/4/">SQL, Models, and Migrations</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/5/">JavaScript</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/6/">User Interfaces</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/7/">Testing, CI/CD</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/8/">Scalability and Security</a></li>
+</ol>
+
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/honesty/">Academic Honesty</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/certificate/">CS50 Certificate</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/faqs/">FAQs</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.me/cs50w">Gradebook</a></li>
+</ul>
+
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/ed">Ed Discussion</a> for Q&amp;A</li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://us.edstem.org/quickstart/ed-discussion.pdf">Quick Start Guide</a></li>
+</ul>
+
+<hr>
+
+<ul class="small fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/web">edX</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://itunes.apple.com/us/course/id1505432709">iTunes U</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.youtube.com/playlist?list=PLhQjrBD2T380xvFSUmToMMzERZ3qB5Ueu">YouTube</a></li>
+</ul>
+
+<hr>
+
+<ul class="small fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.noticeable.news/">Changelog</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.statuspage.io/">Status Page</a></li>
+</ul>
+
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/communities/"><strong>Communities</strong></a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.clubhouse.com/club/cs50">Clubhouse</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://discord.gg/cs50">Discord</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/ed">Ed</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.facebook.com/groups/cs50/">Facebook Group</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.facebook.com/cs50/">Facebook Page</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://github.com/cs50">GitHub</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://gitter.im/cs50/x">Gitter</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://instagram.com/cs50">Instagram</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.linkedin.com/groups/7437240/">LinkedIn Group</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.linkedin.com/school/CS50/">LinkedIn Page</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.medium.com/">Medium</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.quora.com/topic/CS50">Quora</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.reddit.com/r/cs50/">Reddit</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/slack">Slack</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.snapchat.com/add/cs50">Snapchat</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://soundcloud.com/cs50">SoundCloud</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.stackexchange.com/">Stack Exchange</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.tiktok.com/@cs50">TikTok</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://twitter.com/cs50">Twitter</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="http://www.youtube.com/subscription_center?add_user=cs50tv">YouTube</a></li>
+</ul>
+
+<hr>
+
+<p><a href="https://cs50.harvardshop.com/"><img src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/GGMdcKt.png" alt="Harvard Shop"></a></p>
+
+<hr>
+
+<p><a href="https://cs50.harvard.edu/web/2020/license/" class="small"><i class="fab fa-creative-commons me-1"></i>License</a></p></nav>
+
+                    <footer></footer>
+
+                </aside>
+
+                <main class="col-md" style="margin-bottom: 0px; margin-top: 81.3333px;">
+
+                    <a data-id="" id="lecture-1" style="top: -81.3333px;"></a><h1 class="no_toc"><a data-id="" href="#lecture-1">Lecture 1</a></h1>
+
+<ul id="markdown-toc">
+  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
+  <li><a href="#git" id="markdown-toc-git">Git</a></li>
+  <li><a href="#github" id="markdown-toc-github">GitHub</a></li>
+  <li><a href="#commits" id="markdown-toc-commits">Commits</a></li>
+  <li><a href="#merge-conflicts" id="markdown-toc-merge-conflicts">Merge Conflicts</a></li>
+  <li><a href="#branching" id="markdown-toc-branching">Branching</a>    <ul>
+      <li><a href="#more-github-features" id="markdown-toc-more-github-features">More GitHub Features</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a data-id="" id="introduction" style="top: -81.3333px;"></a><h2><a data-id="" href="#introduction">Introduction</a></h2>
+
+<p>Welcome back to lecture 1! In lecture 0, we introduced HTML, CSS, and
+ Sass as tools we can use to create some basic web pages. Today, we’ll 
+be learning about using Git and GitHub to help us in developing web 
+programming applications.</p>
+
+<a data-id="" id="git" style="top: -81.3333px;"></a><h2><a data-id="" href="#git">Git</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://git-scm.com/">Git</a> is a command line tool that will help us with version control in several different ways:
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Allowing us to keep track of changes we make to our code by saving snapshots of our code at a given point in time.</li>
+    </ul>
+
+    <p><img src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/change_file.png" alt="Changing File"></p>
+
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Allowing
+ us to easily synchronize code between different people working on the 
+same project by allowing multiple people to pull information from and 
+push information to a repository stored on the web.</li>
+    </ul>
+
+    <p><img src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/mult_users.png" alt="Multiple Users"></p>
+
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Allowing us to make changes to and test out code on a different <em>branch</em> without altering our main code base, and then merging the two together.</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Allowing us to revert back to earlier versions of our code if we realize we’ve made a mistake.</li>
+    </ul>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>In the above explanations, we used the word <strong>repository</strong>,
+ which we haven’t explained yet. A Git repository is a file location 
+where we’ll store all of the files related to a given project. These can
+ either be remote (stored online) or local (stored on your computer).</li>
+</ul>
+
+<a data-id="" id="github" style="top: -81.3333px;"></a><h2><a data-id="" href="#github">GitHub</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.github.com/">GitHub</a> is a website that allows us to store Git repositories remotely on the web.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Let’s get started by creating a new repository online
+    <ol>
+      <li>Make sure that you have a GitHub account set up. If you don’t have one yet, you can make one <a href="https://github.com/join?ref_cta=Sign+up&amp;ref_loc=header+logged+out&amp;ref_page=%2F&amp;source=header-home">here</a>.</li>
+      <li>Click the <strong>+</strong> in the top-right corner, and then click “New repository”</li>
+      <li>Create a repository name that describes your project</li>
+      <li>(Optional) Provide a description for your repository</li>
+      <li>Choose whether the repository should be public (visible to 
+anyone on the web) or private (visible just to you and others you 
+specifically grant access)</li>
+      <li>(Optional) Decide whether you want to add a README, which is a file describing your new repository.</li>
+    </ol>
+
+    <p><img src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/new_repo.png" alt="New repo demo"></p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Once we have a repository, we’ll probably want to add some files to it. In order to do this, we’ll take our newly created <em>remote</em> repository and create a copy, or clone, of it as a <em>local</em> repository on our computer.
+    <ol>
+      <li>Make sure you have git installed on your computer by typing <code class="language-plaintext highlighter-rouge">git</code> into your terminal. If it is not installed, you can download it <a href="https://git-scm.com/downloads">here</a>.</li>
+      <li>
+        <p>Click the green “Clone or Download” button on your 
+repository’s page, and copy the url that pops down. If you didn’t create
+ a README, this link will appear near the top of the page in the “Quick 
+Setup” section.</p>
+
+        <p><img src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/clone_and_add.png" alt="clone and add"></p>
+      </li>
+      <li>
+        <p>In your terminal, run <code class="language-plaintext highlighter-rouge">git clone &lt;repository url&gt;</code>. This will download the repository to your computer. If you didn’t create a README, you will get the warning: <code class="language-plaintext highlighter-rouge">You appear to have cloned into an empty repository.</code> This is normal, and there’s no need to worry about it.</p>
+
+        <p><img src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/clone.png" alt="clone demo"></p>
+      </li>
+      <li>Run <code class="language-plaintext highlighter-rouge">ls</code>,
+ which is a command that lists all files and folders in your current 
+directory. You should see the name of the repository you’ve just cloned.</li>
+      <li>Run <code class="language-plaintext highlighter-rouge">cd &lt;repository name&gt;</code> to change directory into that folder.</li>
+      <li>Run <code class="language-plaintext highlighter-rouge">touch &lt;new file name&gt;</code>
+ to create a new file in that folder. You can now make edits to that 
+file. Alternatively, you can open the folder in your text editor and 
+manually add new files.</li>
+      <li>
+        <p>Now, to let Git know that it should be keeping track of the new file you’ve made, Run <code class="language-plaintext highlighter-rouge">git add &lt;new file name&gt;</code> to track that specific file, or <code class="language-plaintext highlighter-rouge">git add .</code> to track all files within that directory.</p>
+
+        <p><img src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/create_and_add.png" alt="-am same time"></p>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<a data-id="" id="commits" style="top: -81.3333px;"></a><h2><a data-id="" href="#commits">Commits</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Now, we’ll start to get into what Git can be really useful for. After making some changes to a file, we can <em>commit</em> those changes, taking a snapshot of the current state of our code. To do this, we run: <code class="language-plaintext highlighter-rouge">git commit -m "some message"</code> where the message describes the changes you just made.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>After this change, we can run <code class="language-plaintext highlighter-rouge">git status</code> to see how our code compares to the code on the remote repository</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>When we’re ready to publish our local commits to Github, we can run <code class="language-plaintext highlighter-rouge">git push</code>. Now, when we go to GitHub in our web browser, our changes will be reflected.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>If you’ve only changed existing files and not created new ones, instead of using <code class="language-plaintext highlighter-rouge">git add .</code> and then <code class="language-plaintext highlighter-rouge">git commit...</code>, we can condense this into one command: <code class="language-plaintext highlighter-rouge">git commit -am "some message"</code>. This command will commit all the changes that you made.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Sometimes,
+ the remote repository on GitHub will be more up to date than the local 
+version. In this case, you want to first commit any changes, and then 
+run <code class="language-plaintext highlighter-rouge">git pull</code> to pull any remote changes to your repository.</li>
+</ul>
+
+<a data-id="" id="merge-conflicts" style="top: -81.3333px;"></a><h2><a data-id="" href="#merge-conflicts">Merge Conflicts</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>One
+ problem that can emerge when working with Git, especially when you’re 
+collaborating with other people, is something called a <strong>merge conflict</strong>. A merge conflict occurs when two people attempt to change a file in ways that conflict with each other.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>This will typically occur when you either <code class="language-plaintext highlighter-rouge">git push</code> or <code class="language-plaintext highlighter-rouge">git pull</code>.
+ When this happens, Git will automatically change the file into a format
+ that clearly outlines what the conflict is. Here’s an example where the
+ same line was added in two different ways:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">&lt;&lt;&lt;&lt;&lt;</span> <span class="n">HEAD</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="o">=====</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="o">&gt;&gt;&gt;&gt;&gt;</span> <span class="mi">56782736387980937883</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">e</span> <span class="o">=</span> <span class="mi">5</span>
+</code></pre></div></div>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>In the above example, you added the line <code class="language-plaintext highlighter-rouge">b = 2</code> and another person wrote <code class="language-plaintext highlighter-rouge">b = 3</code>, and now we must choose one of those to keep. The long number is a <em>hash</em>
+ that represents the commit that is conflicting with your edits. Many 
+text editors will also provide highlighting and simple options such as 
+“accept current” or “accept incoming” that save you the time of deleting
+ the added lines above.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Another potentially useful git command is <code class="language-plaintext highlighter-rouge">git log</code>, which gives you a history of all of your commits on that repository.</li>
+</ul>
+
+<p><img src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/git_log.png" alt="Git Log"></p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Potentially
+ even more helpful, if you realize that you’ve made a mistake, you can 
+revert back to a previous commit using the command <code class="language-plaintext highlighter-rouge">git reset</code> in one of two ways:
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">git reset --hard &lt;commit&gt;</code>
+ reverts your code to exactly how it was after the specified commit. To 
+specify the commit, use the commit hash associated with a commit which 
+can be found using <code class="language-plaintext highlighter-rouge">git log</code> as shown above.</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">git reset --hard origin/master</code> reverts your code to the version currently stored online on Github.</li>
+    </ul>
+  </li>
+</ul>
+
+<a data-id="" id="branching" style="top: -81.3333px;"></a><h2><a data-id="" href="#branching">Branching</a></h2>
+
+<p>After you’ve been working on a project for some time, you may decide 
+that you want to add an additional feature. At the moment, we may just 
+commit changes to this new feature as shown in the graphic below</p>
+
+<p><img src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/no_branch.png" alt="No Branch"></p>
+
+<p>But this could become problematic if we then discover a bug in our 
+original code, and want to revert back without changing the new feature.
+ This is where branching can become really useful.</p>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Branching
+ is a method of moving into a new direction when creating a new feature,
+ and only combining this new feature with the main part of your code, or
+ the main branch, once you’re finished. This workflow will look more 
+like the below graphic:</li>
+</ul>
+
+<p><img src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/branch.png" alt="Branch"></p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>The branch you are currently looking at is determined by the <code class="language-plaintext highlighter-rouge">HEAD</code>,
+ which points to one of the two branches. By default, the HEAD is 
+pointed at the master branch, but we can check out other branches as 
+well.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Now, let’s get into how we actually implement branching in our git repositories:
+    <ol>
+      <li>Run <code class="language-plaintext highlighter-rouge">git branch</code> to see which branch you’re currently working on, which will have an asterisk to the left of its name.</li>
+    </ol>
+
+    <p><img src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/git_branch.png" alt="Branch terminal"></p>
+
+    <ol>
+      <li>To make a new branch, we’ll run <code class="language-plaintext highlighter-rouge">git checkout -b &lt;new branch name&gt;</code></li>
+    </ol>
+
+    <p><img src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/new_branch.png" alt="New Branch"></p>
+
+    <ol>
+      <li>Switch between branches using the command <code class="language-plaintext highlighter-rouge">git checkout &lt;branch name&gt;</code> and commit any changes to each branch.</li>
+      <li>When we’re ready to merge our two branches together, we’ll 
+check out the branch we wish to keep (almost always the master branch) 
+and then run the command <code class="language-plaintext highlighter-rouge">git merge &lt;other branch name&gt;</code>. This will be treated similarly to a push or pull, and merge conflicts may appear.</li>
+    </ol>
+  </li>
+</ul>
+
+<a data-id="" id="more-github-features" style="top: -81.3333px;"></a><h3><a data-id="" href="#more-github-features">More GitHub Features</a></h3>
+
+<p>There are some useful features specific to GitHub that can help when you’re working on a project:</p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>Forking</strong>: As a GitHub user, you have the ability to <em>fork</em>
+ any repository that you have access to, which creates a copy of the 
+repository that you are the owner of. We do this by clicking the “Fork” 
+button in the top-right.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>Pull Requests</strong>:
+ Once you’ve forked a repository and made some changes to your version, 
+you may want to request that those changes be added to the main version 
+of the repository. For example, if you wanted to add a new feature to 
+Bootstrap, you could fork the repository, make some changes, and then 
+submit a pull request. This pull request could then be evaluated and 
+possibly accepted by the people who run the Bootsrap repository. This 
+process of people making a few edits and then requesting that they be 
+merged into a main repository is vital for what is known as <em>open source software</em>, or software that created by contributions from a number of developers.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>GitHub Pages</strong>:
+ GitHub Pages is a simple way to publish a static site to the web. 
+(We’ll learn later about static vs dynamic sites.) In order to do this:
+    <ol>
+      <li>Create a new GitHub repository.</li>
+      <li>Clone the repository and make changes locally, making sure to include an <code class="language-plaintext highlighter-rouge">index.html</code> file which will be the landing page for your website.</li>
+      <li>Push those changes to GitHub.</li>
+      <li>Navigate to the Settings page of your repository, scroll down 
+to GitHub Pages, and choose the master branch in the dropdown menu.</li>
+      <li>Scroll back down to the GitHub Pages part of the settings 
+page, and after a few minutes, you should see a notification that “Your 
+site is published at: …” including a URL where you can find your site!</li>
+    </ol>
+  </li>
+</ul>
+
+<p>That’s all for this lecture! Next time, we’ll be looking at Python!</p>
+
+
+                </main>
+
+            </div>
+
+        </div>
+
+        
+ 
+        <script src="Lecture%201%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/page.js"></script>
+
+    
+
+
+</body></html>

@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html class="wf-ptsans-n4-active wf-ptsans-n7-active wf-active" lang="en-us"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width"><meta property="og:description" content="This course picks up where Harvard University's CS50 leaves off, diving more deeply into the design and implementation of web apps with Python, JavaScript, and SQL using frameworks like Django, React, and Bootstrap. Topics include database design, scalability, security, and user experience. Through hands-on projects, students learn to write and use APIs, create interactive UIs, and leverage cloud services like GitHub and Heroku. By semester’s end, students emerge with knowledge and experience in principles, languages, and tools that empower them to design and deploy applications on the Internet.">
+
+        <meta property="og:image" content="https://img.youtube.com/vi/24Kf3v7kZyE/maxresdefault.jpg"><meta property="og:title" content="Lecture 0 - CS50's Web Programming with Python and JavaScript">
+
+        <link href="https://cs50.harvard.edu/web/2020/favicon.ico?1645555620" rel="icon">
+
+        <!-- https://fonts.google.com/specimen/PT+Sans?query=PT+Sans&selection.family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700 -->
+        <script src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/webfont.js"></script>
+
+        <!-- http://getbootstrap.com/docs/4.6/getting-started/introduction/ -->
+        <script src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/jquery.js"></script>
+        <script src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap.js"></script>
+
+        <!-- https://bootstrap-table.com/docs/getting-started/introduction/ -->
+        <link href="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap-table.css" rel="stylesheet">
+        <script src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap-table.js"></script>
+        <script src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap-table-mobile.js"></script>
+
+        <!-- https://fontawesome.com/how-to-use/on-the-web/referencing-icons/basic-use -->
+        <link href="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/all.css" rel="stylesheet">
+
+        <!-- https://moment.github.io/luxon/ -->
+        <script src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/luxon.js"></script>
+
+        <!-- http://docs.mathjax.org/ -->
+        <!-- https://www.jsdelivr.com/package/npm/mathjax?path=es5 -->
+        <script crossorigin="anonymous" integrity="sha256-+nfSJ1LiSvANSK3wvi6FjM+oFwoIQvURU1frozp5z6o=" src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/tex-chtml.js"></script><style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuSlider {  left: .1em;}
+.CtxtMenu_SliderValue {  position:absolute; right:.1em; padding-top:.25em; color:#333333;  font-size: .75em}
+.CtxtMenu_SliderBar {  outline: none; background: #d3d3d3}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_SelectionMenu {  position:relative; float:left;  border-bottom: none; -webkit-box-shadow:none; -webkit-border-radius:0px; }
+.CtxtMenu_SelectionItem {  padding-right: 1em;}
+.CtxtMenu_Selection {  right: 40%; width:50%; }
+.CtxtMenu_SelectionBox {  padding: 0em; max-height:20em; max-width: none;  background-color:#FFFFFF;}
+.CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style>
+
+        <!-- https://github.com/verlok/vanilla-lazyload -->
+        <script src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/intersection-observer.js"></script>
+        <script src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/lazyload.js"></script>
+
+        <!-- https://github.com/davidjbradshaw/iframe-resizer -->
+        <!-- https://www.jsdelivr.com/package/npm/iframe-resizer?path=js -->
+        <script crossorigin="anonymous" integrity="sha256-S8f0Q/V9VcfrqYgWo9EFS9zuDMdPTBMC+CBW0RjxQbs=" src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/iframeResizer.js"></script>
+
+        <!-- https://github.com/scratchblocks/scratchblocks/releases -->
+        <script src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/scratchblocks.js"></script><style><![CDATA[ .sb-label {
+      font-family: Lucida Grande, Verdana, Arial, DejaVu Sans, sans-serif;
+      font-weight: bold;
+      fill: #fff;
+      font-size: 10px;
+      word-spacing: +1px;
+    }
+
+    .sb-obsolete { fill: #d42828; }
+    .sb-motion { fill: #4a6cd4; }
+    .sb-looks { fill: #8a55d7; }
+    .sb-sound { fill: #bb42c3; }
+    .sb-pen { fill: #0e9a6c;  }
+    .sb-events { fill: #c88330; }
+    .sb-control { fill: #e1a91a; }
+    .sb-sensing { fill: #2ca5e2; }
+    .sb-operators { fill: #5cb712; }
+    .sb-variables { fill: #ee7d16; }
+    .sb-list { fill: #cc5b22 }
+    .sb-custom { fill: #632d99; }
+    .sb-custom-arg { fill: #5947b1; }
+    .sb-extension { fill: #4b4a60; }
+    .sb-grey { fill: #969696; }
+
+    .sb-bevel {
+      filter: url(#bevelFilter);
+    }
+
+    .sb-input {
+      filter: url(#inputBevelFilter);
+    }
+    .sb-input-number,
+    .sb-input-string,
+    .sb-input-number-dropdown {
+      fill: #fff;
+    }
+    .sb-literal-number,
+    .sb-literal-string,
+    .sb-literal-number-dropdown,
+    .sb-literal-dropdown {
+      font-weight: normal;
+      font-size: 9px;
+      word-spacing: 0;
+    }
+    .sb-literal-number,
+    .sb-literal-string,
+    .sb-literal-number-dropdown {
+      fill: #000;
+    }
+
+    .sb-darker {
+      filter: url(#inputDarkFilter);
+    }
+
+    .sb-outline {
+      stroke: #fff;
+      stroke-opacity: 0.2;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .sb-define-hat-cap {
+      stroke: #632d99;
+      stroke-width: 1;
+      fill: #8e2ec2;
+    }
+
+    .sb-comment {
+      fill: #ffffa5;
+      stroke: #d0d1d2;
+      stroke-width: 1;
+    }
+    .sb-comment-line {
+      fill: #ffff80;
+    }
+    .sb-comment-label {
+      font-family: Helevetica, Arial, DejaVu Sans, sans-serif;
+      font-weight: bold;
+      fill: #5c5d5f;
+      word-spacing: 0;
+      font-size: 12px;
+    }
+
+    .sb-diff {
+      fill: none;
+      stroke: #000;
+    }
+    .sb-diff-ins {
+      stroke-width: 2px;
+    }
+    .sb-diff-del {
+      stroke-width: 3px;
+    }
+  ]]></style><style><![CDATA[ .sb3-label {
+      font: 500 12pt Helevetica Neue, Helvetica, sans-serif;
+      fill: #fff;
+      word-spacing: +1pt;
+    }
+
+    .sb3-motion { fill: #4c97ff; stroke: #3373cc; }
+    .sb3-motion-alt { fill: #4280d7; }
+    .sb3-motion-dark { fill: #4c97ff; }
+    .sb3-looks { fill: #9966ff; stroke: #774dcb; }
+    .sb3-looks-alt { fill: #855cd6; }
+    .sb3-looks-dark { fill: #bd42bd; }
+    .sb3-sound { fill: #cf63cf; stroke: #bd42bd; }
+    .sb3-sound-alt { fill: #c94fc9; }
+    .sb3-sound-dark { fill: #bd42bd; }
+    .sb3-control { fill: #ffab19; stroke: #cf8b17; }
+    .sb3-control-alt { fill: #ec9c13; }
+    .sb3-control-dark { fill: #cf8b17; }
+    .sb3-events { fill: #ffbf00; stroke: #cc9900; }
+    .sb3-events-alt { fill: #e6ac00; }
+    .sb3-events-dark { fill: #cc9900; }
+    .sb3-sensing { fill: #5cb1d6; stroke: #2e8eb8; }
+    .sb3-sensing-alt { fill: #47a8d1; }
+    .sb3-sensing-dark { fill: #2e8eb8; }
+    .sb3-operators { fill: #59c059; stroke: #389438; }
+    .sb3-operators-alt { fill: #46b946; }
+    .sb3-operators-dark { fill: #389438; }
+    .sb3-variables { fill: #ff8c1a; stroke: #db6e00; }
+    .sb3-variables-alt { fill: #ff8000; }
+    .sb3-variables-dark { fill: #db6e00; }
+    .sb3-list { fill: #ff661a; stroke: #e64d00; }
+    .sb3-list-alt { fill: #ff5500; }
+    .sb3-list-dark { fill: #e64d00; }
+    .sb3-custom { fill: #ff6680; stroke: #ff3355; }
+    .sb3-custom-alt { fill: #ff4d6a; }
+    .sb3-custom-dark { fill: #ff3355; }
+    .sb3-custom-arg { fill: #ff6680; stroke: #ff3355; }
+
+    /* extension blocks, e.g. pen */
+    .sb3-extension { fill: #0fbd8c; stroke: #0b8e69; }
+    .sb3-extension-alt { fill: #0da57a; }
+    .sb3-extension-line { stroke: #0da57a; }
+    .sb3-extension-dark { fill: #0b8e69; }
+
+    /* obsolete colors: chosen by hand, indicates invalid blocks */
+    .sb3-obsolete { fill: #ed4242; stroke: #ca2b2b; }
+    .sb3-obsolete-alt { fill: #db3333; }
+    .sb3-obsolete-dark { fill: #ca2b2b; }
+
+    /* grey: special color from the Scratch 3.0 design mockups */
+    .sb3-grey { fill: #bfbfbf; stroke: #909090; }
+    .sb3-grey-alt { fill: #b2b2b2; }
+    .sb3-grey-dark { fill: #909090; }
+
+    .sb3-input-color {
+      stroke: #fff;
+    }
+
+    .sb3-input-number,
+    .sb3-input-string {
+      fill: #fff;
+    }
+    .sb3-literal-number,
+    .sb3-literal-string,
+    .sb3-literal-number-dropdown,
+    .sb3-literal-dropdown {
+      word-spacing: 0;
+    }
+    .sb3-literal-number,
+    .sb3-literal-string {
+      fill: #575e75;
+    }
+
+    .sb3-comment {
+      fill: #ffffa5;
+      stroke: #d0d1d2;
+      stroke-width: 1;
+    }
+    .sb3-comment-line {
+      fill: #ffff80;
+    }
+    .sb3-comment-label {
+      font: 400 12pt Helevetica Neue, Helvetica, sans-serif;
+      fill: #000;
+      word-spacing: 0;
+    }
+
+    .sb3-diff {
+      fill: none;
+      stroke: #000;
+    }
+    .sb3-diff-ins {
+      stroke-width: 2px;
+    }
+    .sb3-diff-del {
+      stroke-width: 3px;
+    }
+  ]]></style>
+
+        
+
+        <link href="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/page.css" rel="stylesheet">
+        <link rel="stylesheet" href="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/css.css" media="all"><script src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/jekyll-theme-cs50.js"></script>
+
+        <script>
+            window.CS50 = {
+                local: {"day":"numeric","hour":"numeric","minute":"numeric","month":"long","timeZoneName":"short","weekday":"long","year":"numeric"},
+                locale: "en",
+                tz: "America/New_York"
+            };
+        </script>
+
+        <title>Lecture 0 - CS50's Web Programming with Python and JavaScript</title>
+
+
+    <style id="MJX-CHTML-styles">
+mjx-container[jax="CHTML"] {
+  line-height: 0;
+}
+
+mjx-container [space="1"] {
+  margin-left: .111em;
+}
+
+mjx-container [space="2"] {
+  margin-left: .167em;
+}
+
+mjx-container [space="3"] {
+  margin-left: .222em;
+}
+
+mjx-container [space="4"] {
+  margin-left: .278em;
+}
+
+mjx-container [space="5"] {
+  margin-left: .333em;
+}
+
+mjx-container [rspace="1"] {
+  margin-right: .111em;
+}
+
+mjx-container [rspace="2"] {
+  margin-right: .167em;
+}
+
+mjx-container [rspace="3"] {
+  margin-right: .222em;
+}
+
+mjx-container [rspace="4"] {
+  margin-right: .278em;
+}
+
+mjx-container [rspace="5"] {
+  margin-right: .333em;
+}
+
+mjx-container [size="s"] {
+  font-size: 70.7%;
+}
+
+mjx-container [size="ss"] {
+  font-size: 50%;
+}
+
+mjx-container [size="Tn"] {
+  font-size: 60%;
+}
+
+mjx-container [size="sm"] {
+  font-size: 85%;
+}
+
+mjx-container [size="lg"] {
+  font-size: 120%;
+}
+
+mjx-container [size="Lg"] {
+  font-size: 144%;
+}
+
+mjx-container [size="LG"] {
+  font-size: 173%;
+}
+
+mjx-container [size="hg"] {
+  font-size: 207%;
+}
+
+mjx-container [size="HG"] {
+  font-size: 249%;
+}
+
+mjx-container [width="full"] {
+  width: 100%;
+}
+
+mjx-box {
+  display: inline-block;
+}
+
+mjx-block {
+  display: block;
+}
+
+mjx-itable {
+  display: inline-table;
+}
+
+mjx-row {
+  display: table-row;
+}
+
+mjx-row > * {
+  display: table-cell;
+}
+
+mjx-mtext {
+  display: inline-block;
+}
+
+mjx-mstyle {
+  display: inline-block;
+}
+
+mjx-merror {
+  display: inline-block;
+  color: red;
+  background-color: yellow;
+}
+
+mjx-mphantom {
+  visibility: hidden;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-c::before {
+  display: block;
+  width: 0;
+}
+
+.MJX-TEX {
+  font-family: MJXZERO, MJXTEX;
+}
+
+.TEX-B {
+  font-family: MJXZERO, MJXTEX-B;
+}
+
+.TEX-I {
+  font-family: MJXZERO, MJXTEX-I;
+}
+
+.TEX-MI {
+  font-family: MJXZERO, MJXTEX-MI;
+}
+
+.TEX-BI {
+  font-family: MJXZERO, MJXTEX-BI;
+}
+
+.TEX-S1 {
+  font-family: MJXZERO, MJXTEX-S1;
+}
+
+.TEX-S2 {
+  font-family: MJXZERO, MJXTEX-S2;
+}
+
+.TEX-S3 {
+  font-family: MJXZERO, MJXTEX-S3;
+}
+
+.TEX-S4 {
+  font-family: MJXZERO, MJXTEX-S4;
+}
+
+.TEX-A {
+  font-family: MJXZERO, MJXTEX-A;
+}
+
+.TEX-C {
+  font-family: MJXZERO, MJXTEX-C;
+}
+
+.TEX-CB {
+  font-family: MJXZERO, MJXTEX-CB;
+}
+
+.TEX-FR {
+  font-family: MJXZERO, MJXTEX-FR;
+}
+
+.TEX-FRB {
+  font-family: MJXZERO, MJXTEX-FRB;
+}
+
+.TEX-SS {
+  font-family: MJXZERO, MJXTEX-SS;
+}
+
+.TEX-SSB {
+  font-family: MJXZERO, MJXTEX-SSB;
+}
+
+.TEX-SSI {
+  font-family: MJXZERO, MJXTEX-SSI;
+}
+
+.TEX-SC {
+  font-family: MJXZERO, MJXTEX-SC;
+}
+
+.TEX-T {
+  font-family: MJXZERO, MJXTEX-T;
+}
+
+.TEX-V {
+  font-family: MJXZERO, MJXTEX-V;
+}
+
+.TEX-VB {
+  font-family: MJXZERO, MJXTEX-VB;
+}
+
+mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
+  font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+}
+
+@font-face /* 0 */ {
+  font-family: MJXZERO;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff");
+}
+
+@font-face /* 1 */ {
+  font-family: MJXTEX;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff");
+}
+
+@font-face /* 2 */ {
+  font-family: MJXTEX-B;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff");
+}
+
+@font-face /* 3 */ {
+  font-family: MJXTEX-I;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff");
+}
+
+@font-face /* 4 */ {
+  font-family: MJXTEX-MI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff");
+}
+
+@font-face /* 5 */ {
+  font-family: MJXTEX-BI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff");
+}
+
+@font-face /* 6 */ {
+  font-family: MJXTEX-S1;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff");
+}
+
+@font-face /* 7 */ {
+  font-family: MJXTEX-S2;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff");
+}
+
+@font-face /* 8 */ {
+  font-family: MJXTEX-S3;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff");
+}
+
+@font-face /* 9 */ {
+  font-family: MJXTEX-S4;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff");
+}
+
+@font-face /* 10 */ {
+  font-family: MJXTEX-A;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff");
+}
+
+@font-face /* 11 */ {
+  font-family: MJXTEX-C;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff");
+}
+
+@font-face /* 12 */ {
+  font-family: MJXTEX-CB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff");
+}
+
+@font-face /* 13 */ {
+  font-family: MJXTEX-FR;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff");
+}
+
+@font-face /* 14 */ {
+  font-family: MJXTEX-FRB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff");
+}
+
+@font-face /* 15 */ {
+  font-family: MJXTEX-SS;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff");
+}
+
+@font-face /* 16 */ {
+  font-family: MJXTEX-SSB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff");
+}
+
+@font-face /* 17 */ {
+  font-family: MJXTEX-SSI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff");
+}
+
+@font-face /* 18 */ {
+  font-family: MJXTEX-SC;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff");
+}
+
+@font-face /* 19 */ {
+  font-family: MJXTEX-T;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff");
+}
+
+@font-face /* 20 */ {
+  font-family: MJXTEX-V;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff");
+}
+
+@font-face /* 21 */ {
+  font-family: MJXTEX-VB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff");
+}
+</style></head>
+
+    <body class="">
+
+        <div class="alert fixed-top mb-0 rounded-0 shadow alert-success alert-dismissible" data-alert="success dismissible" data-hash="edc24fffed7a3a9ad8c189ef5e2aca41" id="alert" role="alert">
+            <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button><p>Interested in <a href="https://cs50.harvard.edu/web/2020/#how-to-take-this-course" class="alert-link">a verified certificate, a professional certificate, or transfer credit and accreditation</a>?
+And get vaccinated (as soon as it’s available to you). 💉 <a href="https://www.who.int/news-room/feature-stories/detail/getting-the-covid-19-vaccine" class="alert-link">Here’s why</a>. <a href="https://www.google.com/search?q=covid-19+vaccine+finder" class="alert-link">Here’s how</a>.</p></div>
+        
+
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <aside class="col-md" style="height: 513.667px; top: 81.3333px;">
+ 
+                    <header><h1 data-id="cs50s-web-programming-with-python-and-javascript"><a href="https://cs50.harvard.edu/web/2020/">CS50’s Web Programming with Python and JavaScript</a></h1>
+
+<p>OpenCourseWare</p>
+
+<p><a class="pr-1 small" href="https://cs50.harvard.edu/donate">Donate<i aria-hidden="true" class="fas fa-external-link-alt ps-2"></i></a></p>
+
+<p><a href="https://brianyu.me/">Brian Yu</a><br>
+<a href="mailto:brian@cs.harvard.edu">brian@cs.harvard.edu</a></p>
+
+<p><a href="https://cs.harvard.edu/malan/">David J. Malan</a>
+<br>
+<a href="mailto:malan@harvard.edu">malan@harvard.edu</a>
+<br>
+<a class="mr-1" href="https://www.facebook.com/dmalan"><i aria-hidden="true" class="fab fa-facebook-f" title="Facebook"></i><span class="sr-only">Facebook</span></a>
+<a class="mr-1" href="https://github.com/dmalan"><i aria-hidden="true" class="fab fa-github" title="GitHub"></i><span class="sr-only">GitHub</span></a>
+<a class="mr-1" href="https://www.instagram.com/davidjmalan/"><i aria-hidden="true" class="fab fa-instagram" title="Instagram"></i><span class="sr-only">Instagram</span></a>
+<a class="mr-1" href="https://www.linkedin.com/in/malan/"><i aria-hidden="true" class="fab fa-linkedin" title="LinkedIn"></i><span class="sr-only">LinkedIn</span></a>
+<a class="mr-1" href="https://orcid.org/0000-0001-5338-2522"><i aria-hidden="true" class="fab fa-orcid" title="ORCID"></i><span class="sr-only">ORCID</span></a>
+<a class="mr-1" href="https://www.quora.com/profile/David-J-Malan"><i aria-hidden="true" class="fab fa-quora" title="Quora"></i><span class="sr-only">Quora</span></a>
+<a class="mr-1" href="https://www.reddit.com/user/davidjmalan"><i aria-hidden="true" class="fab fa-reddit-alien" title="Reddit"></i><span class="sr-only">Reddit</span></a>
+<a class="mr-1" href="https://www.tiktok.com/@davidjmalan"><i aria-hidden="true" class="fab fa-tiktok" title="TikTok"></i><span class="sr-only">Twitter</span></a>
+<a class="mr-1" href="https://twitter.com/davidjmalan"><i aria-hidden="true" class="fab fa-twitter" title="Twitter"></i><span class="sr-only">Twitter</span></a></p></header>
+
+                    
+
+                    <button aria-controls="nav" aria-expanded="false" class="btn btn-sm collapsed d-md-none" data-bs-target="aside &gt; nav" data-bs-toggle="collapse">
+                        Menu
+                    </button>
+
+                    <nav class="collapse d-md-block" id="nav"><hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/x/movie/">🍿 CS50x Movie Night 2022</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/x/puzzles/"><i class="fas fa-puzzle-piece pe-2"></i>CS50x Puzzle Day 2022</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/x/prepare/"><i class="fas fa-book pe-2"></i>How to Prepare for Technical Interviews</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.ly/zoom"><i class="fas fa-video pe-2"></i>Zoom Meetings</a></li>
+</ul>
+
+<hr>
+
+<ol start="0">
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/0/">HTML, CSS</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/1/">Git</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/2/">Python</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/3/">Django</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/4/">SQL, Models, and Migrations</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/5/">JavaScript</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/6/">User Interfaces</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/7/">Testing, CI/CD</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/8/">Scalability and Security</a></li>
+</ol>
+
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/honesty/">Academic Honesty</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/certificate/">CS50 Certificate</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/faqs/">FAQs</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.me/cs50w">Gradebook</a></li>
+</ul>
+
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/ed">Ed Discussion</a> for Q&amp;A</li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://us.edstem.org/quickstart/ed-discussion.pdf">Quick Start Guide</a></li>
+</ul>
+
+<hr>
+
+<ul class="small fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/web">edX</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://itunes.apple.com/us/course/id1505432709">iTunes U</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.youtube.com/playlist?list=PLhQjrBD2T380xvFSUmToMMzERZ3qB5Ueu">YouTube</a></li>
+</ul>
+
+<hr>
+
+<ul class="small fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.noticeable.news/">Changelog</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.statuspage.io/">Status Page</a></li>
+</ul>
+
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/communities/"><strong>Communities</strong></a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.clubhouse.com/club/cs50">Clubhouse</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://discord.gg/cs50">Discord</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/ed">Ed</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.facebook.com/groups/cs50/">Facebook Group</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.facebook.com/cs50/">Facebook Page</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://github.com/cs50">GitHub</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://gitter.im/cs50/x">Gitter</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://instagram.com/cs50">Instagram</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.linkedin.com/groups/7437240/">LinkedIn Group</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.linkedin.com/school/CS50/">LinkedIn Page</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.medium.com/">Medium</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.quora.com/topic/CS50">Quora</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.reddit.com/r/cs50/">Reddit</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/slack">Slack</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.snapchat.com/add/cs50">Snapchat</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://soundcloud.com/cs50">SoundCloud</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.stackexchange.com/">Stack Exchange</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.tiktok.com/@cs50">TikTok</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://twitter.com/cs50">Twitter</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="http://www.youtube.com/subscription_center?add_user=cs50tv">YouTube</a></li>
+</ul>
+
+<hr>
+
+<p><a href="https://cs50.harvardshop.com/"><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/GGMdcKt.png" alt="Harvard Shop"></a></p>
+
+<hr>
+
+<p><a href="https://cs50.harvard.edu/web/2020/license/" class="small"><i class="fab fa-creative-commons me-1"></i>License</a></p></nav>
+
+                    <footer></footer>
+
+                </aside>
+
+                <main class="col-md" style="margin-bottom: 0px; margin-top: 81.3333px;">
+
+                    <a data-id="" id="lecture-0" style="top: -81.3333px;"></a><h1 class="no_toc"><a data-id="" href="#lecture-0">Lecture 0</a></h1>
+
+<ul id="markdown-toc">
+  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
+  <li><a href="#web-programming" id="markdown-toc-web-programming">Web Programming</a></li>
+  <li><a href="#html-hypertext-markup-language" id="markdown-toc-html-hypertext-markup-language">HTML (Hypertext Markup Language)</a>    <ul>
+      <li><a href="#document-object-model-dom" id="markdown-toc-document-object-model-dom">Document Object Model (DOM)</a></li>
+      <li><a href="#more-html-elements" id="markdown-toc-more-html-elements">More HTML Elements</a></li>
+      <li><a href="#forms" id="markdown-toc-forms">Forms</a></li>
+    </ul>
+  </li>
+  <li><a href="#css-cascading-style-sheets" id="markdown-toc-css-cascading-style-sheets">CSS (Cascading Style Sheets)</a></li>
+  <li><a href="#responsive-design" id="markdown-toc-responsive-design">Responsive Design</a></li>
+  <li><a href="#bootstrap" id="markdown-toc-bootstrap">Bootstrap</a></li>
+  <li><a href="#sass-syntactically-awesome-style-sheets" id="markdown-toc-sass-syntactically-awesome-style-sheets">Sass (Syntactically Awesome Style Sheets)</a></li>
+</ul>
+
+<a data-id="" id="introduction" style="top: -81.3333px;"></a><h2><a data-id="" href="#introduction">Introduction</a></h2>
+
+<p>In this course, we’re picking up where CS50 left off and diving into 
+the design and creation of web applications. We’ll build our web-design 
+skills by working on a number of projects throughout the course, 
+including an open-ended final project where you’ll have the chance to 
+create a website of your own!</p>
+
+<p>In this course, you’ll need a text editor where you can write code locally on your computer. Some popular ones include <a href="https://code.visualstudio.com/">Visual Studios Code</a>, <a href="https://www.sublimetext.com/">Sublime Text</a>, <a href="https://atom.io/">Atom</a>, and <a href="https://www.vim.org/">Vim</a>, but there are many more to choose from!</p>
+
+<a data-id="" id="web-programming" style="top: -81.3333px;"></a><h2><a data-id="" href="#web-programming">Web Programming</a></h2>
+
+<p><strong>Course Topics:</strong> We’ll go into more detail later, but here’s a brief overview of what we’ll be working on during this course:</p>
+
+<ol>
+  <li><strong>HTML and CSS</strong> (a markup language used to outline a webpage, and a procedure for making our sites more visually appealing)</li>
+  <li><strong>Git</strong> (used for version control and collaboration)</li>
+  <li><strong>Python</strong> (a widely-used programming language we’ll use to make our sites more dynamic)</li>
+  <li><strong>Django</strong> (a popular web framework we’ll use for the backend of our sites)</li>
+  <li><strong>SQL, Models, and Migrations</strong> (a language used for 
+storing and retrieving data, and Django-specific methods that make it 
+easier to interact with SQL databases)</li>
+  <li><strong>JavaScript</strong> (a programming language used to make websites faster and more interactive)</li>
+  <li><strong>User Interfaces</strong> (methods used to make a website as easy to use as possible)</li>
+  <li><strong>Testing, CI, CD</strong> (learning about different methods used to make sure updates to web pages proceed smoothly)</li>
+  <li><strong>Scalability and Security</strong> (making sure our websites can be accessed by many users at once, and that they are safe from malicious intent)</li>
+</ol>
+
+<a data-id="" id="html-hypertext-markup-language" style="top: -81.3333px;"></a><h2><a data-id="" href="#html-hypertext-markup-language">HTML (Hypertext Markup Language)</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>HTML
+ is a markup language that defines the structure of a web page. It is 
+interpreted by your web browser (Safari, Google Chrome, Firefox, etc.) 
+in order to display content on your screen.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Let’s get started by writing a simple HTML file!</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Hello!<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        Hello, world!
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+</code></pre></div></div>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>When we open up this file in our browser, we get:</li>
+</ul>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/hello0.png" alt="Hello Page"></p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Now, let’s take some time to talk about the file we just wrote, which seems to be pretty complicated for such a simple page.
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>In the first line, we are declaring (to the web browser) that we are writing the document in the latest version of HTML: HTML5.</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>After that, the page consists of nested <strong>HTML elements</strong> (such as html and body), each with an <strong>opening and closing tag</strong> marked with either <code class="language-plaintext highlighter-rouge">&lt;element&gt;</code> for an opening and <code class="language-plaintext highlighter-rouge">&lt;/element&gt;</code> for a closing.</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Notice
+ how each of the inner elements is indented just a bit further than the 
+last. While this is not necessarily required by the browser, it will be 
+very helpful to keep this up in your own code.</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>HTML elements can include <strong>attributes</strong>, which give the browser extra information about the element. For example, when we include <code class="language-plaintext highlighter-rouge">lang="en"</code> in our initial tag, we are telling the browser that we are using English as our primary language.</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Inside the HTML element, we typically want to include both a <code class="language-plaintext highlighter-rouge">head</code> and a <code class="language-plaintext highlighter-rouge">body</code>
+ tag. The head element will include information about your page that is 
+not necessarily displayed, and the body element will contain what is 
+actually visible to users who visit the site.</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Within the head, we have included a <code class="language-plaintext highlighter-rouge">title</code> for our webpage, which you’ll notice is displayed in the tab at the top of our web browser.</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Finally, we’ve included the text “Hello, world!” in the body, which is the visible part of our page.</li>
+    </ul>
+  </li>
+</ul>
+
+<a data-id="" id="document-object-model-dom" style="top: -81.3333px;"></a><h3><a data-id="" href="#document-object-model-dom">Document Object Model (DOM)</a></h3>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/dom.png" alt="DOM"></p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>The
+ DOM is a convenient way of visualizing the way HTML elements relate to 
+each other using a tree-like structure. Above is an example of the DOM 
+layout for the page we just wrote.</li>
+</ul>
+
+<a data-id="" id="more-html-elements" style="top: -81.3333px;"></a><h3><a data-id="" href="#more-html-elements">More HTML Elements</a></h3>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>There
+ are many HTML elements you may want to use to customize your page, 
+including headings, lists, and bolded sections. In this next example, 
+we’ll see a few of of these in action.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>One more thing to note: <code class="language-plaintext highlighter-rouge">&lt;!-- --&gt;</code> gives us a comment in HTML, so we’ll use that below to explain some of the elements.</li>
+</ul>
+
+<pre><code class="language-HTML">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;head&gt;
+        &lt;title&gt;HTML Elements&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;!-- We can create headings using h1 through h6 as tags. 
+--&gt;
+        &lt;h1&gt;A Large Heading&lt;/h1&gt;
+        &lt;h2&gt;A Smaller Heading&lt;/h2&gt;
+        &lt;h6&gt;The Smallest Heading&lt;/h6&gt;
+
+        &lt;!-- The strong and i tags give us bold and italics 
+respectively. --&gt;
+        A &lt;strong&gt;bold&lt;/strong&gt; word and an 
+&lt;i&gt;italicized&lt;/i&gt; word!
+
+        &lt;!-- We can link to another page (such as cs50's page) using 
+a. --&gt;
+        View the &lt;a href="https://cs50.harvard.edu/"&gt;CS50 
+Website&lt;/a&gt;!
+
+        &lt;!-- We used ul for an unordered list and ol for an ordered 
+one. both ordered and unordered lists contain li, or list items. --&gt;
+        An unordered list:
+        &lt;ul&gt;
+            &lt;li&gt;foo&lt;/li&gt;
+            &lt;li&gt;bar&lt;/li&gt;
+            &lt;li&gt;baz&lt;/li&gt;
+        &lt;/ul&gt;
+        An ordered list:
+        &lt;ol&gt;
+            &lt;li&gt;foo&lt;/li&gt;
+            &lt;li&gt;bar&lt;/li&gt;
+            &lt;li&gt;baz&lt;/li&gt;
+        &lt;/ol&gt;
+
+        &lt;!-- Images require a src attribute, which can be either the 
+path to a file on your computer or the link to an image online. It also 
+includes an alt attribute, which gives a description in case the image 
+can't be loaded. --&gt;
+        An image:
+        &lt;img src="../../images/duck.jpeg" alt="Rubber Duck 
+Picture"&gt;
+        &lt;!-- We can also see above that for some elements that don't 
+contain other ones, closing tags are not necessary. --&gt;
+
+        &lt;!-- Here, we use a br tag to add white space to the page. 
+--&gt;
+        &lt;br/&gt; &lt;br/&gt;
+
+        &lt;!-- A few different tags are necessary to create a table. 
+--&gt;
+        &lt;table&gt;
+            &lt;thead&gt;
+                &lt;th&gt;Ocean&lt;/th&gt;
+                &lt;th&gt;Average Depth&lt;/th&gt;
+                &lt;th&gt;Maximum Depth&lt;/th&gt;
+            &lt;/thead&gt;
+            &lt;tbody&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;Pacific&lt;/td&gt;
+                    &lt;td&gt;4280 m&lt;/td&gt;
+                    &lt;td&gt;10911 m&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;Atlantic&lt;/td&gt;
+                    &lt;td&gt;3646 m&lt;/td&gt;
+                    &lt;td&gt;8486 m&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+    &lt;/body&gt;
+&lt;html&gt;
+</code></pre>
+
+<p>This page, when rendered, looks something like this:</p>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/elements.png" alt="Elements"></p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>In
+ case you’re worried about it, know that you’ll never have to memorize 
+these elements. It’s very easy to simply search something like “image in
+ HTML” to find the <code class="language-plaintext highlighter-rouge">img</code> tag. One resource that’s especially helpful for learning about these elements is <a href="https://www.w3schools.com/html/html_elements.asp">W3 Schools</a>.</li>
+</ul>
+
+<a data-id="" id="forms" style="top: -81.3333px;"></a><h3><a data-id="" href="#forms">Forms</a></h3>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Another
+ set of elements that is really important when creating a website is how
+ to collect information from users. You can allow users to enter 
+information using an HTML form, which can contain several different 
+types of input. Later in the course, we’ll learn about how to handle 
+information once a form has been submitted.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Just as with other HTML elements, there’s no need to memorize these, and W3 Schools is a great resource for learning about them!</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Forms<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;form&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">placeholder=</span><span class="s">"First Name"</span> <span class="na">name=</span><span class="s">"first"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">placeholder=</span><span class="s">"Password"</span> <span class="na">name=</span><span class="s">"password"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div&gt;</span>
+            Favorite Color:
+            <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"color"</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">value=</span><span class="s">"blue"</span><span class="nt">&gt;</span> Blue
+            <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"color"</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">value=</span><span class="s">"green"</span><span class="nt">&gt;</span> Green
+            <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"color"</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">value=</span><span class="s">"yellow"</span><span class="nt">&gt;</span> Yellow
+            <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"color"</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">value=</span><span class="s">"red"</span><span class="nt">&gt;</span> Red
+
+        <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/form.png" alt="form"></p>
+
+<a data-id="" id="css-cascading-style-sheets" style="top: -81.3333px;"></a><h2><a data-id="" href="#css-cascading-style-sheets">CSS (Cascading Style Sheets)</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>CSS is used to customize the appearance of a website.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>While we’re just getting, started, we can add a style attribute to any HTML element in order to apply some CSS to it.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>We change style by altering the CSS properties of an element, writing something like <code class="language-plaintext highlighter-rouge">color: blue</code> or <code class="language-plaintext highlighter-rouge">text-align: center</code></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>In this example below, we make a slight change to our very first file to give it a colorful heading:</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Hello!<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;h1</span> <span class="na">style=</span><span class="s">"color: blue; text-align: center;"</span><span class="nt">&gt;</span>A Colorful Heading!<span class="nt">&lt;/h1&gt;</span>
+        Hello, world!
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/style0.png" alt="blue heading"></p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>If
+ we style an outer element, all of the inner elements automatically take
+ on that style. We can see this if we move the styling we just applied 
+from the header tag to the body tag:</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Hello!<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body</span> <span class="na">style=</span><span class="s">"color: blue; text-align: center;"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;h1</span> <span class="nt">&gt;</span>A Colorful Heading!<span class="nt">&lt;/h1&gt;</span>
+        Hello, world!
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/style1.png" alt="blue everywhere"></p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>While
+ we can style our web page as we’ve done above, to achieve better 
+design, we should be able to move our styling away from the individual 
+lines.
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>One way of doing this is to add your styling between <code class="language-plaintext highlighter-rouge">&lt;style&gt;</code> tags in the <code class="language-plaintext highlighter-rouge">head</code>.
+ Inside these tags, we write which types of elements we want to be 
+style, and the styling we wish to apply to them. For example:</li>
+    </ul>
+
+    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+  <span class="cp">&lt;!DOCTYPE html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+      <span class="nt">&lt;title&gt;</span>Hello!<span class="nt">&lt;/title&gt;</span>
+      <span class="nt">&lt;style&gt;</span>
+          <span class="nt">h1</span> <span class="p">{</span>
+              <span class="nl">color</span><span class="p">:</span> <span class="no">blue</span><span class="p">;</span>
+              <span class="nl">text-align</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+          <span class="p">}</span>
+      <span class="nt">&lt;/style&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+      <span class="nt">&lt;h1</span> <span class="nt">&gt;</span>A Colorful Heading!<span class="nt">&lt;/h1&gt;</span>
+      Hello, world!
+  <span class="nt">&lt;/body&gt;</span>
+  <span class="nt">&lt;/html&gt;</span>
+</code></pre></div>    </div>
+
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Another way is to include in a <code class="language-plaintext highlighter-rouge">&lt;link&gt;</code> element in your <code class="language-plaintext highlighter-rouge">head</code> with a link to a styles.css file that contains some styling. This means the HTML file would look like:</li>
+    </ul>
+
+    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+  <span class="cp">&lt;!DOCTYPE html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+      <span class="nt">&lt;title&gt;</span>Hello!<span class="nt">&lt;/title&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"styles.css"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+      <span class="nt">&lt;h1</span> <span class="nt">&gt;</span>A Colorful Heading!<span class="nt">&lt;/h1&gt;</span>
+      Hello, world!
+  <span class="nt">&lt;/body&gt;</span>
+  <span class="nt">&lt;/html&gt;</span>
+</code></pre></div>    </div>
+
+    <p>And our file called <code class="language-plaintext highlighter-rouge">styles.css</code> would look like:</p>
+
+    <div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">h1</span> <span class="p">{</span>
+      <span class="nl">color</span><span class="p">:</span> <span class="no">blue</span><span class="p">;</span>
+      <span class="nl">text-align</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+  <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>There
+ are far too many CSS properties to go over here, but just like HTML 
+elements, it’s typically easy to Google something along the lines of 
+“change font to blue CSS” to get the result. Some of the most common 
+ones though are:
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">color</code>: the color of text</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">text-align</code>: where elements are placed on the page</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">background-color</code>: can be set to any color</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">width</code>: in pixels or percent of a page</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">height</code>: in pixels or percent of a page</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">padding</code>: how much space should be left inside an element</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">margin</code>: how much space should be left outside an element</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">font-family</code>: type of font for text on page</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">font-size</code>: in pixels</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">border</code>: size type (solid, dashed, etc) color</li>
+    </ul>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Let’s use some of what we just learned to improve upon our oceans table from above. Here’s some HTML to start us off:</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Nicer Table<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;table&gt;</span>
+            <span class="nt">&lt;thead&gt;</span>
+                <span class="nt">&lt;th&gt;</span>Ocean<span class="nt">&lt;/th&gt;</span>
+                <span class="nt">&lt;th&gt;</span>Average Depth<span class="nt">&lt;/th&gt;</span>
+                <span class="nt">&lt;th&gt;</span>Maximum Depth<span class="nt">&lt;/th&gt;</span>
+            <span class="nt">&lt;/thead&gt;</span>
+            <span class="nt">&lt;tbody&gt;</span>
+                <span class="nt">&lt;tr&gt;</span>
+                    <span class="nt">&lt;td&gt;</span>Pacific<span class="nt">&lt;/td&gt;</span>
+                    <span class="nt">&lt;td&gt;</span>4280 m<span class="nt">&lt;/td&gt;</span>
+                    <span class="nt">&lt;td&gt;</span>10911 m<span class="nt">&lt;/td&gt;</span>
+                <span class="nt">&lt;/tr&gt;</span>
+                <span class="nt">&lt;tr&gt;</span>
+                    <span class="nt">&lt;td&gt;</span>Atlantic<span class="nt">&lt;/td&gt;</span>
+                    <span class="nt">&lt;td&gt;</span>3646 m<span class="nt">&lt;/td&gt;</span>
+                    <span class="nt">&lt;td&gt;</span>8486 m<span class="nt">&lt;/td&gt;</span>
+                <span class="nt">&lt;/tr&gt;</span>
+            <span class="nt">&lt;/tbody&gt;</span>
+        <span class="nt">&lt;/table&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/table0.png" alt="table bad"></p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>The above looks a lot like what we had before, but now, either by including a <code class="language-plaintext highlighter-rouge">style</code> tag or a <code class="language-plaintext highlighter-rouge">link</code> to a stylesheet in the head element, we add the following css:</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">table</span> <span class="p">{</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="no">black</span><span class="p">;</span>
+    <span class="nl">border-collapse</span><span class="p">:</span> <span class="nb">collapse</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">td</span> <span class="p">{</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="no">black</span><span class="p">;</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">2px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">th</span> <span class="p">{</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="no">black</span><span class="p">;</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">2px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Which leaves us with this nicer-looking table:</p>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/table1.png" alt="table good"></p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>You may already be thinking that there’s some needless repetition in our CSS at the moment, as <code class="language-plaintext highlighter-rouge">td</code> and <code class="language-plaintext highlighter-rouge">th</code>
+ have the same styling. We can (and should) condense this down to the 
+following code, using a comma to show the styling should apply to more 
+than one element type.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">table</span> <span class="p">{</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="no">black</span><span class="p">;</span>
+    <span class="nl">border-collapse</span><span class="p">:</span> <span class="nb">collapse</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">td</span><span class="o">,</span> <span class="nt">th</span> <span class="p">{</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="no">black</span><span class="p">;</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">2px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>This is a good introduction into what are known as <a href="https://www.w3schools.com/cssref/css_selectors.asp">CSS selectors</a>. There are many ways to determine which HTML elements you are styling, some of which we’ll mention here:
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>element type</strong>: this is what we’ve been doing so far: styling all elements of the same type.</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>id</strong>: Another option is to give our HTML elements an id like so: <code class="language-plaintext highlighter-rouge">&lt;h1 id="first-header"&gt;Hello!&lt;/h1&gt;</code> and then applying styling using <code class="language-plaintext highlighter-rouge">#first-header{...}</code>
+ using the hashtag to show that we’re searching by id. Importantly, no 
+two elements can have the same id, and no element can have more than one
+ id.</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>class</strong>:
+ This is similar to id, but a class can be shared by more than one 
+element, and a single element can have more than one class. We add 
+classes to an HTML element like this: <code class="language-plaintext highlighter-rouge">&lt;h1 class="page-text muted"&gt;Hello!&lt;/h1&gt;</code> (note that we just added two classes to the element: <code class="language-plaintext highlighter-rouge">page-text</code> and <code class="language-plaintext highlighter-rouge">muted</code>). We then style based on class using a period instead of a hashtag: <code class="language-plaintext highlighter-rouge">.muted {...}</code></li>
+    </ul>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Now,
+ we also have to deal with the problem of potentially conflicting CSS. 
+What happens when a header should be red based on its class but blue 
+based on its id? CSS has a specificity order that goes:
+    <ol>
+      <li>In-line styling</li>
+      <li>id</li>
+      <li>class</li>
+      <li>element type</li>
+    </ol>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>In
+ addition to the comma for multiple selectors, there are several other 
+ways to specify which elements you would like to style. This table from 
+lecture provides a few, and we’ll go through a few examples below:</li>
+</ul>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/selectors.png" alt="selectors"></p>
+
+<p><strong>Descendant Selector</strong>: Here, we use the descendant selector to only apply styling to list items found within an unordered list:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Using Selectors<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;style&gt;</span>
+            <span class="nt">ul</span> <span class="nt">li</span> <span class="p">{</span>
+                <span class="nl">color</span><span class="p">:</span> <span class="no">blue</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="nt">&lt;/style&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;ol&gt;</span>
+            <span class="nt">&lt;li&gt;</span>foo<span class="nt">&lt;/li&gt;</span>
+            <span class="nt">&lt;li&gt;</span> bar
+                <span class="nt">&lt;ul&gt;</span>
+                    <span class="nt">&lt;li&gt;</span>hello<span class="nt">&lt;/li&gt;</span>
+                    <span class="nt">&lt;li&gt;</span>goodbye<span class="nt">&lt;/li&gt;</span>
+                    <span class="nt">&lt;li&gt;</span>hello<span class="nt">&lt;/li&gt;</span>
+                <span class="nt">&lt;/ul&gt;</span>
+            <span class="nt">&lt;/li&gt;</span>
+            <span class="nt">&lt;li&gt;</span>baz<span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;/ol&gt;</span>
+
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/selectors0.png" alt="list selector"></p>
+
+<p><strong>Attributes as Selectors</strong>: We can also narrow down our
+ selection based on the attributes we assign to HTML elements using 
+brackets. For example, in the following list of links, we choose to only
+ make the link to Amazon red:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Using Selectors<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;style&gt;</span>
+            <span class="nt">a</span><span class="o">[</span><span class="nt">href</span><span class="o">=</span><span class="s1">"https://www.amazon.com/"</span><span class="o">]</span> <span class="p">{</span>
+                <span class="nl">color</span><span class="p">:</span> <span class="no">red</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="nt">&lt;/style&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;ol&gt;</span>
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://www.google.com/"</span><span class="nt">&gt;</span>Google<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://www.amazon.com/"</span><span class="nt">&gt;</span>Amazon<span class="nt">&lt;/a&gt;</span> <span class="nt">&lt;/li&gt;</span>
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://www.facebook.com/"</span><span class="nt">&gt;</span>Facebook<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="nt">&lt;/ol&gt;</span>
+
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/selectors2.png" alt="link selectors"></p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Not
+ only can we use CSS to change what an element looks like permanently, 
+but also what it looks like under certain conditions. For example, what 
+if we wanted a button to change color when we hover over it? We can 
+acheive this using a <a href="https://www.w3schools.com/css/css_pseudo_classes.asp">CSS pseudoclass</a>,
+ which provides additional styling during special circumstances. We 
+write this by adding a colon after our selector, and then adding the 
+circumstance after that colon.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>In the case of the button, we would add <code class="language-plaintext highlighter-rouge">:hover</code> to the button selector to specify the design only when hovering:</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Pseudoclasses<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;style&gt;</span>
+            <span class="nt">button</span> <span class="p">{</span>
+                <span class="nl">background-color</span><span class="p">:</span> <span class="no">red</span><span class="p">;</span>
+                <span class="nl">width</span><span class="p">:</span> <span class="m">200px</span><span class="p">;</span>
+                <span class="nl">height</span><span class="p">:</span> <span class="m">50px</span><span class="p">;</span>
+                <span class="nl">font-size</span><span class="p">:</span> <span class="m">24px</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="nt">button</span><span class="nd">:hover</span> <span class="p">{</span>
+                <span class="nl">background-color</span><span class="p">:</span> <span class="no">green</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="nt">&lt;/style&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;button&gt;</span>Button 1<span class="nt">&lt;/button&gt;</span>
+        <span class="nt">&lt;button&gt;</span>Button 2<span class="nt">&lt;/button&gt;</span>
+        <span class="nt">&lt;button&gt;</span>Button 3<span class="nt">&lt;/button&gt;</span>
+
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/buttons.gif" alt="buttons"></p>
+
+<a data-id="" id="responsive-design" style="top: -81.3333px;"></a><h2><a data-id="" href="#responsive-design">Responsive Design</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Today,
+ many people view websites on devices other than computers, such as 
+smartphones and tablets. It’s important to make sure your website is 
+readable to people on all devices.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>One way we can achieve this is through knowledge of the <strong>viewport</strong>.
+ The viewport is the part of the screen that is actually visible to the 
+user at any given time. By default, many webpages assume that the 
+viewport is the same on any device, which is what leads to many sites 
+(especially older ones) being difficult to interact with on mobile 
+devices.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>One
+ simple way to improve the appearance of a site on a mobile device is to
+ add the following line in the head of our HTML files. This line tells 
+the mobile device to use a viewport that is the same width as that of 
+the device you’re using rather than a much larger one.</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Another way we can deal with different devices is through <a href="https://www.w3schools.com/cssref/css3_pr_mediaquery.asp">media queries</a>. Media queries are ways of changing the style of a page based on how the page is being viewed.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>For
+ an example of a media query, let’s try to simply change the color of 
+the screen when it shrinks down to a certain size. We signal a media 
+query by typing <code class="language-plaintext highlighter-rouge">@media</code> followed by the type of query in parentheses:</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Screen Size<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;style&gt;</span>
+            <span class="k">@media</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">600px</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nt">body</span> <span class="p">{</span>
+                    <span class="nl">background-color</span><span class="p">:</span> <span class="no">red</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">@media</span> <span class="p">(</span><span class="n">max-width</span><span class="p">:</span> <span class="m">599px</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nt">body</span> <span class="p">{</span>
+                    <span class="nl">background-color</span><span class="p">:</span> <span class="no">blue</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="nt">&lt;/style&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;h1&gt;</span>Welcome to the page!<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/responsive0.gif" alt="screen size"></p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Another way to deal with differing screen size is using a new CSS attribute known as a <a href="https://www.w3schools.com/css/css3_flexbox.asp">flexbox</a>.
+ This allows us to easily have elements wrap around to the next line if 
+they don’t fit horizontally. We do this by putting all of our elements 
+in a <code class="language-plaintext highlighter-rouge">div</code> that 
+we’ll call our container. We then add some styling to that div 
+specifying that we want to use a flexbox display for the elements inside
+ of it. We’ve also added some additional styling to the inner divs to 
+better illustrate the wrapping that’s occuring here.</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Screen Size<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;style&gt;</span>
+            <span class="nf">#container</span> <span class="p">{</span>
+                <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+                <span class="nl">flex-wrap</span><span class="p">:</span> <span class="n">wrap</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="nf">#container</span> <span class="o">&gt;</span> <span class="nt">div</span> <span class="p">{</span>
+                <span class="nl">background-color</span><span class="p">:</span> <span class="no">green</span><span class="p">;</span>
+                <span class="nl">font-size</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+                <span class="nl">margin</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+                <span class="nl">padding</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+                <span class="nl">width</span><span class="p">:</span> <span class="m">200px</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="nt">&lt;/style&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div&gt;</span>Some text 1!<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div&gt;</span>Some text 2!<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div&gt;</span>Some text 3!<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div&gt;</span>Some text 4!<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div&gt;</span>Some text 5!<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div&gt;</span>Some text 6!<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div&gt;</span>Some text 7!<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div&gt;</span>Some text 8!<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div&gt;</span>Some text 9!<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div&gt;</span>Some text 10!<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div&gt;</span>Some text 11!<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div&gt;</span>Some text 12!<span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/flexbox.gif" alt="flexbox"></p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Another popular way of styling a page is using an HTML <a href="https://www.w3schools.com/css/css_grid.asp">grid</a>.
+ In this grid, we can specify style attributes such as column widths and
+ gaps between columns and rows, as demonstrated below. Note that when we
+ specify column widths, we say the third one is <code class="language-plaintext highlighter-rouge">auto</code>, meaning it should fill the rest of the page.</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>My Web Page!<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;style&gt;</span>
+            <span class="nc">.grid</span> <span class="p">{</span>
+                <span class="nl">background-color</span><span class="p">:</span> <span class="no">green</span><span class="p">;</span>
+                <span class="nl">display</span><span class="p">:</span> <span class="n">grid</span><span class="p">;</span>
+                <span class="nl">padding</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+                <span class="py">grid-column-gap</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+                <span class="py">grid-row-gap</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+                <span class="py">grid-template-columns</span><span class="p">:</span> <span class="m">200px</span> <span class="m">200px</span> <span class="nb">auto</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="nc">.grid-item</span> <span class="p">{</span>
+                <span class="nl">background-color</span><span class="p">:</span> <span class="no">white</span><span class="p">;</span>
+                <span class="nl">font-size</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+                <span class="nl">padding</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+                <span class="nl">text-align</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="nt">&lt;/style&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid-item"</span><span class="nt">&gt;</span>1<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid-item"</span><span class="nt">&gt;</span>2<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid-item"</span><span class="nt">&gt;</span>3<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid-item"</span><span class="nt">&gt;</span>4<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid-item"</span><span class="nt">&gt;</span>5<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid-item"</span><span class="nt">&gt;</span>6<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid-item"</span><span class="nt">&gt;</span>7<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid-item"</span><span class="nt">&gt;</span>8<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid-item"</span><span class="nt">&gt;</span>9<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid-item"</span><span class="nt">&gt;</span>10<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid-item"</span><span class="nt">&gt;</span>11<span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid-item"</span><span class="nt">&gt;</span>12<span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/grid.gif" alt="grid"></p>
+
+<a data-id="" id="bootstrap" style="top: -81.3333px;"></a><h2><a data-id="" href="#bootstrap">Bootstrap</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>It
+ turns out that there are many libraries that other people have already 
+written that can make the styling of a webpage even simpler. One popular
+ library that we’ll use throughout the course is known as <a href="https://getbootstrap.com/">bootstrap</a>.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>We can include bootstrap in our code by adding a single line to the head of our HTML file:</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"</span> <span class="na">integrity=</span><span class="s">"sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"</span> <span class="na">crossorigin=</span><span class="s">"anonymous"</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Next, we can look at some of bootstrap’s features by navigating to the <a href="https://getbootstrap.com/docs/4.5/components/">documentation</a>
+ portion of their website. On this page, you’ll find many examples of 
+classes you can add to elements that allow them to be styled with 
+bootstrap.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>One popular bootstrap feature is their <a href="https://getbootstrap.com/docs/4.0/layout/grid/">grid system</a>.
+ Bootstrap automatically splits a page into 12 columns, and we can 
+decide how many columns an element takes up by adding the class <code class="language-plaintext highlighter-rouge">col-x</code> where <code class="language-plaintext highlighter-rouge">x</code>
+ is a number between 1 and 12. For example, in the following page, we 
+have a row of columns of equal width, and then a row where the center 
+column is larger:</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>My Web Page!<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"</span> <span class="na">integrity=</span><span class="s">"sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"</span> <span class="na">crossorigin=</span><span class="s">"anonymous"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;style&gt;</span>
+            <span class="nc">.row</span> <span class="o">&gt;</span> <span class="nt">div</span> <span class="p">{</span>
+                <span class="nl">padding</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+                <span class="nl">background-color</span><span class="p">:</span> <span class="no">teal</span><span class="p">;</span>
+                <span class="nl">border</span><span class="p">:</span> <span class="m">2px</span> <span class="nb">solid</span> <span class="no">black</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="nt">&lt;/style&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-4"</span><span class="nt">&gt;</span>
+                    This is a section.
+                <span class="nt">&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-4"</span><span class="nt">&gt;</span>
+                    This is another section.
+                <span class="nt">&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-4"</span><span class="nt">&gt;</span>
+                    This is a third section.
+                <span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;br/&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-3"</span><span class="nt">&gt;</span>
+                    This is a section.
+                <span class="nt">&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-6"</span><span class="nt">&gt;</span>
+                    This is another section.
+                <span class="nt">&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-3"</span><span class="nt">&gt;</span>
+                    This is a third section.
+                <span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/cols1.gif" alt="columns"></p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>To
+ improve mobile-responsiveness, bootstrap also allows us to specify 
+column sizes that differ depending on the screen size. In the following 
+example, we use <code class="language-plaintext highlighter-rouge">col-lg-3</code> to show that an element should take up 3 columns on a large screen, and <code class="language-plaintext highlighter-rouge">col-sm-6</code> to show an element should take up 6 columns when the screen is small:</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>My Web Page!<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"</span> <span class="na">integrity=</span><span class="s">"sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"</span> <span class="na">crossorigin=</span><span class="s">"anonymous"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;style&gt;</span>
+            <span class="nc">.row</span> <span class="o">&gt;</span> <span class="nt">div</span> <span class="p">{</span>
+                <span class="nl">padding</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+                <span class="nl">background-color</span><span class="p">:</span> <span class="no">teal</span><span class="p">;</span>
+                <span class="nl">border</span><span class="p">:</span> <span class="m">2px</span> <span class="nb">solid</span> <span class="no">black</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="nt">&lt;/style&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-lg-3 col-sm-6"</span><span class="nt">&gt;</span>
+                    This is a section.
+                <span class="nt">&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-lg-3 col-sm-6"</span><span class="nt">&gt;</span>
+                    This is another section.
+                <span class="nt">&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-lg-3 col-sm-6"</span><span class="nt">&gt;</span>
+                    This is a third section.
+                <span class="nt">&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-lg-3 col-sm-6"</span><span class="nt">&gt;</span>
+                    This is a fourth section.
+                <span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/cols2.gif" alt="wrap columns"></p>
+
+<a data-id="" id="sass-syntactically-awesome-style-sheets" style="top: -81.3333px;"></a><h2><a data-id="" href="#sass-syntactically-awesome-style-sheets">Sass (Syntactically Awesome Style Sheets)</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>So
+ far, we’ve found a few ways to eliminate redundancy in CSS such as 
+moving it to separate files or using bootstrap, but there are still 
+quite a few places where we can still make improvements. For example, 
+what if we want several elements to have different styles, but for all 
+of them to be the same color? If we decide later we want to change the 
+color, then we would have to change it within several different 
+elements.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://sass-lang.com/">Sass</a>
+ is a language that allows us to write CSS more efficiently in several 
+ways, one of which is by allowing us to have variables, as in the 
+following example.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>When writing in Sass, we create a new file with the extension <code class="language-plaintext highlighter-rouge">filename.scss</code>. In this file, we can create a new variable by adding a <code class="language-plaintext highlighter-rouge">$</code> before a name, then a colon, then a value. For example, we would write <code class="language-plaintext highlighter-rouge">$color: red</code> to set the variable color to the value red. We then access that variable using <code class="language-plaintext highlighter-rouge">$color</code>. Here’s an example of our variables.scss file:</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span><span class="nt">color</span><span class="o">:</span> <span class="nt">red</span><span class="o">;</span>
+
+<span class="nt">ul</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">14px</span><span class="p">;</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="err">$</span><span class="n">color</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">ol</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">18px</span><span class="p">;</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="err">$</span><span class="n">color</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Now, in order to link this styling to our HTML file, we can’t just link to the <code class="language-plaintext highlighter-rouge">.scss</code> file because most web browsers only recognize <code class="language-plaintext highlighter-rouge">.css</code> files. To deal with this problem, we have to <a href="https://sass-lang.com/install">download a program called Sass</a> onto our computers. Then, in our terminal, we write <code class="language-plaintext highlighter-rouge">sass variables.scss:variables.css</code> This command will compile a .scss file named <code class="language-plaintext highlighter-rouge">variables.scss</code> into a .css file named <code class="language-plaintext highlighter-rouge">variables.css</code>, to which you can add a link in your HTML page.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>To speed up this process, we can use the command <code class="language-plaintext highlighter-rouge">sass --watch variables.scss:variables.css</code> which automatically changes the <code class="language-plaintext highlighter-rouge">.css</code> file every time a change is detected in the <code class="language-plaintext highlighter-rouge">.scss</code> file.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>While
+ using Sass, we can also physically nest our styling rather than use the
+ CSS selectors we talked about earlier. For example, if we want to apply
+ some styling only to paragraphs and unordered lists within a div, we 
+can write the following:</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">div</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">18px</span><span class="p">;</span>
+
+    <span class="err">p</span> <span class="err">{</span>
+        <span class="nl">color</span><span class="p">:</span> <span class="no">blue</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nt">ul</span> <span class="p">{</span>
+        <span class="nl">color</span><span class="p">:</span> <span class="no">green</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="err">}</span>
+</code></pre></div></div>
+
+<p>Once compiled into CSS, we would get a file that looks like:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">div</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">18px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">div</span> <span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="no">blue</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">div</span> <span class="nt">ul</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="no">green</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>One more feature that Sass gives us is known as <a href="https://sass-lang.com/guide">inheritance</a>. This allows us to create a basic set of styling that can be shared by several different elements. We do this by adding a <code class="language-plaintext highlighter-rouge">%</code> before a name of a class, adding some styling, and then later adding the line <code class="language-plaintext highlighter-rouge">@extend %classname</code> to the beginning of some styling. For example, the following code applies the styling within the <code class="language-plaintext highlighter-rouge">message</code> class to each of the different classes below, resulting in a webpage that looks like the one below.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="nt">message</span> <span class="p">{</span>
+    <span class="nl">font-family</span><span class="p">:</span> <span class="nb">sans-serif</span><span class="p">;</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">18px</span><span class="p">;</span>
+    <span class="nl">font-weight</span><span class="p">:</span> <span class="nb">bold</span><span class="p">;</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="no">black</span><span class="p">;</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.success</span> <span class="p">{</span>
+    <span class="err">@extend</span> <span class="err">%message;</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="no">green</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.warning</span> <span class="p">{</span>
+    <span class="err">@extend</span> <span class="err">%message;</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="no">orange</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.error</span> <span class="p">{</span>
+    <span class="err">@extend</span> <span class="err">%message;</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="no">red</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/inherit.png" alt="inheritance"></p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>That wraps up our content for today!</li>
+</ul>
+
+
+                </main>
+
+            </div>
+
+        </div>
+
+        
+ 
+        <script src="Lecture%200%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/page.js"></script>
+
+    
+
+
+</body></html>

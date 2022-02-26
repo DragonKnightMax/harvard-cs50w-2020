@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html class="wf-ptsans-n4-active wf-ptsans-n7-active wf-active" lang="en-us"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width"><meta property="og:description" content="This course picks up where Harvard University's CS50 leaves off, diving more deeply into the design and implementation of web apps with Python, JavaScript, and SQL using frameworks like Django, React, and Bootstrap. Topics include database design, scalability, security, and user experience. Through hands-on projects, students learn to write and use APIs, create interactive UIs, and leverage cloud services like GitHub and Heroku. By semester’s end, students emerge with knowledge and experience in principles, languages, and tools that empower them to design and deploy applications on the Internet.">
+
+        <meta property="og:image" content="https://img.youtube.com/vi/24Kf3v7kZyE/maxresdefault.jpg"><meta property="og:title" content="Lecture 2 - CS50's Web Programming with Python and JavaScript">
+
+        <link href="https://cs50.harvard.edu/web/2020/favicon.ico?1645555620" rel="icon">
+
+        <!-- https://fonts.google.com/specimen/PT+Sans?query=PT+Sans&selection.family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700 -->
+        <script src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/webfont.js"></script>
+
+        <!-- http://getbootstrap.com/docs/4.6/getting-started/introduction/ -->
+        <script src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/jquery.js"></script>
+        <script src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap.js"></script>
+
+        <!-- https://bootstrap-table.com/docs/getting-started/introduction/ -->
+        <link href="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap-table.css" rel="stylesheet">
+        <script src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap-table.js"></script>
+        <script src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap-table-mobile.js"></script>
+
+        <!-- https://fontawesome.com/how-to-use/on-the-web/referencing-icons/basic-use -->
+        <link href="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/all.css" rel="stylesheet">
+
+        <!-- https://moment.github.io/luxon/ -->
+        <script src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/luxon.js"></script>
+
+        <!-- http://docs.mathjax.org/ -->
+        <!-- https://www.jsdelivr.com/package/npm/mathjax?path=es5 -->
+        <script crossorigin="anonymous" integrity="sha256-+nfSJ1LiSvANSK3wvi6FjM+oFwoIQvURU1frozp5z6o=" src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/tex-chtml.js"></script><style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuSlider {  left: .1em;}
+.CtxtMenu_SliderValue {  position:absolute; right:.1em; padding-top:.25em; color:#333333;  font-size: .75em}
+.CtxtMenu_SliderBar {  outline: none; background: #d3d3d3}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_SelectionMenu {  position:relative; float:left;  border-bottom: none; -webkit-box-shadow:none; -webkit-border-radius:0px; }
+.CtxtMenu_SelectionItem {  padding-right: 1em;}
+.CtxtMenu_Selection {  right: 40%; width:50%; }
+.CtxtMenu_SelectionBox {  padding: 0em; max-height:20em; max-width: none;  background-color:#FFFFFF;}
+.CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style>
+
+        <!-- https://github.com/verlok/vanilla-lazyload -->
+        <script src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/intersection-observer.js"></script>
+        <script src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/lazyload.js"></script>
+
+        <!-- https://github.com/davidjbradshaw/iframe-resizer -->
+        <!-- https://www.jsdelivr.com/package/npm/iframe-resizer?path=js -->
+        <script crossorigin="anonymous" integrity="sha256-S8f0Q/V9VcfrqYgWo9EFS9zuDMdPTBMC+CBW0RjxQbs=" src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/iframeResizer.js"></script>
+
+        <!-- https://github.com/scratchblocks/scratchblocks/releases -->
+        <script src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/scratchblocks.js"></script><style><![CDATA[ .sb-label {
+      font-family: Lucida Grande, Verdana, Arial, DejaVu Sans, sans-serif;
+      font-weight: bold;
+      fill: #fff;
+      font-size: 10px;
+      word-spacing: +1px;
+    }
+
+    .sb-obsolete { fill: #d42828; }
+    .sb-motion { fill: #4a6cd4; }
+    .sb-looks { fill: #8a55d7; }
+    .sb-sound { fill: #bb42c3; }
+    .sb-pen { fill: #0e9a6c;  }
+    .sb-events { fill: #c88330; }
+    .sb-control { fill: #e1a91a; }
+    .sb-sensing { fill: #2ca5e2; }
+    .sb-operators { fill: #5cb712; }
+    .sb-variables { fill: #ee7d16; }
+    .sb-list { fill: #cc5b22 }
+    .sb-custom { fill: #632d99; }
+    .sb-custom-arg { fill: #5947b1; }
+    .sb-extension { fill: #4b4a60; }
+    .sb-grey { fill: #969696; }
+
+    .sb-bevel {
+      filter: url(#bevelFilter);
+    }
+
+    .sb-input {
+      filter: url(#inputBevelFilter);
+    }
+    .sb-input-number,
+    .sb-input-string,
+    .sb-input-number-dropdown {
+      fill: #fff;
+    }
+    .sb-literal-number,
+    .sb-literal-string,
+    .sb-literal-number-dropdown,
+    .sb-literal-dropdown {
+      font-weight: normal;
+      font-size: 9px;
+      word-spacing: 0;
+    }
+    .sb-literal-number,
+    .sb-literal-string,
+    .sb-literal-number-dropdown {
+      fill: #000;
+    }
+
+    .sb-darker {
+      filter: url(#inputDarkFilter);
+    }
+
+    .sb-outline {
+      stroke: #fff;
+      stroke-opacity: 0.2;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .sb-define-hat-cap {
+      stroke: #632d99;
+      stroke-width: 1;
+      fill: #8e2ec2;
+    }
+
+    .sb-comment {
+      fill: #ffffa5;
+      stroke: #d0d1d2;
+      stroke-width: 1;
+    }
+    .sb-comment-line {
+      fill: #ffff80;
+    }
+    .sb-comment-label {
+      font-family: Helevetica, Arial, DejaVu Sans, sans-serif;
+      font-weight: bold;
+      fill: #5c5d5f;
+      word-spacing: 0;
+      font-size: 12px;
+    }
+
+    .sb-diff {
+      fill: none;
+      stroke: #000;
+    }
+    .sb-diff-ins {
+      stroke-width: 2px;
+    }
+    .sb-diff-del {
+      stroke-width: 3px;
+    }
+  ]]></style><style><![CDATA[ .sb3-label {
+      font: 500 12pt Helevetica Neue, Helvetica, sans-serif;
+      fill: #fff;
+      word-spacing: +1pt;
+    }
+
+    .sb3-motion { fill: #4c97ff; stroke: #3373cc; }
+    .sb3-motion-alt { fill: #4280d7; }
+    .sb3-motion-dark { fill: #4c97ff; }
+    .sb3-looks { fill: #9966ff; stroke: #774dcb; }
+    .sb3-looks-alt { fill: #855cd6; }
+    .sb3-looks-dark { fill: #bd42bd; }
+    .sb3-sound { fill: #cf63cf; stroke: #bd42bd; }
+    .sb3-sound-alt { fill: #c94fc9; }
+    .sb3-sound-dark { fill: #bd42bd; }
+    .sb3-control { fill: #ffab19; stroke: #cf8b17; }
+    .sb3-control-alt { fill: #ec9c13; }
+    .sb3-control-dark { fill: #cf8b17; }
+    .sb3-events { fill: #ffbf00; stroke: #cc9900; }
+    .sb3-events-alt { fill: #e6ac00; }
+    .sb3-events-dark { fill: #cc9900; }
+    .sb3-sensing { fill: #5cb1d6; stroke: #2e8eb8; }
+    .sb3-sensing-alt { fill: #47a8d1; }
+    .sb3-sensing-dark { fill: #2e8eb8; }
+    .sb3-operators { fill: #59c059; stroke: #389438; }
+    .sb3-operators-alt { fill: #46b946; }
+    .sb3-operators-dark { fill: #389438; }
+    .sb3-variables { fill: #ff8c1a; stroke: #db6e00; }
+    .sb3-variables-alt { fill: #ff8000; }
+    .sb3-variables-dark { fill: #db6e00; }
+    .sb3-list { fill: #ff661a; stroke: #e64d00; }
+    .sb3-list-alt { fill: #ff5500; }
+    .sb3-list-dark { fill: #e64d00; }
+    .sb3-custom { fill: #ff6680; stroke: #ff3355; }
+    .sb3-custom-alt { fill: #ff4d6a; }
+    .sb3-custom-dark { fill: #ff3355; }
+    .sb3-custom-arg { fill: #ff6680; stroke: #ff3355; }
+
+    /* extension blocks, e.g. pen */
+    .sb3-extension { fill: #0fbd8c; stroke: #0b8e69; }
+    .sb3-extension-alt { fill: #0da57a; }
+    .sb3-extension-line { stroke: #0da57a; }
+    .sb3-extension-dark { fill: #0b8e69; }
+
+    /* obsolete colors: chosen by hand, indicates invalid blocks */
+    .sb3-obsolete { fill: #ed4242; stroke: #ca2b2b; }
+    .sb3-obsolete-alt { fill: #db3333; }
+    .sb3-obsolete-dark { fill: #ca2b2b; }
+
+    /* grey: special color from the Scratch 3.0 design mockups */
+    .sb3-grey { fill: #bfbfbf; stroke: #909090; }
+    .sb3-grey-alt { fill: #b2b2b2; }
+    .sb3-grey-dark { fill: #909090; }
+
+    .sb3-input-color {
+      stroke: #fff;
+    }
+
+    .sb3-input-number,
+    .sb3-input-string {
+      fill: #fff;
+    }
+    .sb3-literal-number,
+    .sb3-literal-string,
+    .sb3-literal-number-dropdown,
+    .sb3-literal-dropdown {
+      word-spacing: 0;
+    }
+    .sb3-literal-number,
+    .sb3-literal-string {
+      fill: #575e75;
+    }
+
+    .sb3-comment {
+      fill: #ffffa5;
+      stroke: #d0d1d2;
+      stroke-width: 1;
+    }
+    .sb3-comment-line {
+      fill: #ffff80;
+    }
+    .sb3-comment-label {
+      font: 400 12pt Helevetica Neue, Helvetica, sans-serif;
+      fill: #000;
+      word-spacing: 0;
+    }
+
+    .sb3-diff {
+      fill: none;
+      stroke: #000;
+    }
+    .sb3-diff-ins {
+      stroke-width: 2px;
+    }
+    .sb3-diff-del {
+      stroke-width: 3px;
+    }
+  ]]></style>
+
+        
+
+        <link href="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/page.css" rel="stylesheet">
+        <link rel="stylesheet" href="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/css.css" media="all"><script src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/jekyll-theme-cs50.js"></script>
+
+        <script>
+            window.CS50 = {
+                local: {"day":"numeric","hour":"numeric","minute":"numeric","month":"long","timeZoneName":"short","weekday":"long","year":"numeric"},
+                locale: "en",
+                tz: "America/New_York"
+            };
+        </script>
+
+        <title>Lecture 2 - CS50's Web Programming with Python and JavaScript</title>
+
+
+    <style id="MJX-CHTML-styles">
+mjx-container[jax="CHTML"] {
+  line-height: 0;
+}
+
+mjx-container [space="1"] {
+  margin-left: .111em;
+}
+
+mjx-container [space="2"] {
+  margin-left: .167em;
+}
+
+mjx-container [space="3"] {
+  margin-left: .222em;
+}
+
+mjx-container [space="4"] {
+  margin-left: .278em;
+}
+
+mjx-container [space="5"] {
+  margin-left: .333em;
+}
+
+mjx-container [rspace="1"] {
+  margin-right: .111em;
+}
+
+mjx-container [rspace="2"] {
+  margin-right: .167em;
+}
+
+mjx-container [rspace="3"] {
+  margin-right: .222em;
+}
+
+mjx-container [rspace="4"] {
+  margin-right: .278em;
+}
+
+mjx-container [rspace="5"] {
+  margin-right: .333em;
+}
+
+mjx-container [size="s"] {
+  font-size: 70.7%;
+}
+
+mjx-container [size="ss"] {
+  font-size: 50%;
+}
+
+mjx-container [size="Tn"] {
+  font-size: 60%;
+}
+
+mjx-container [size="sm"] {
+  font-size: 85%;
+}
+
+mjx-container [size="lg"] {
+  font-size: 120%;
+}
+
+mjx-container [size="Lg"] {
+  font-size: 144%;
+}
+
+mjx-container [size="LG"] {
+  font-size: 173%;
+}
+
+mjx-container [size="hg"] {
+  font-size: 207%;
+}
+
+mjx-container [size="HG"] {
+  font-size: 249%;
+}
+
+mjx-container [width="full"] {
+  width: 100%;
+}
+
+mjx-box {
+  display: inline-block;
+}
+
+mjx-block {
+  display: block;
+}
+
+mjx-itable {
+  display: inline-table;
+}
+
+mjx-row {
+  display: table-row;
+}
+
+mjx-row > * {
+  display: table-cell;
+}
+
+mjx-mtext {
+  display: inline-block;
+}
+
+mjx-mstyle {
+  display: inline-block;
+}
+
+mjx-merror {
+  display: inline-block;
+  color: red;
+  background-color: yellow;
+}
+
+mjx-mphantom {
+  visibility: hidden;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-c::before {
+  display: block;
+  width: 0;
+}
+
+.MJX-TEX {
+  font-family: MJXZERO, MJXTEX;
+}
+
+.TEX-B {
+  font-family: MJXZERO, MJXTEX-B;
+}
+
+.TEX-I {
+  font-family: MJXZERO, MJXTEX-I;
+}
+
+.TEX-MI {
+  font-family: MJXZERO, MJXTEX-MI;
+}
+
+.TEX-BI {
+  font-family: MJXZERO, MJXTEX-BI;
+}
+
+.TEX-S1 {
+  font-family: MJXZERO, MJXTEX-S1;
+}
+
+.TEX-S2 {
+  font-family: MJXZERO, MJXTEX-S2;
+}
+
+.TEX-S3 {
+  font-family: MJXZERO, MJXTEX-S3;
+}
+
+.TEX-S4 {
+  font-family: MJXZERO, MJXTEX-S4;
+}
+
+.TEX-A {
+  font-family: MJXZERO, MJXTEX-A;
+}
+
+.TEX-C {
+  font-family: MJXZERO, MJXTEX-C;
+}
+
+.TEX-CB {
+  font-family: MJXZERO, MJXTEX-CB;
+}
+
+.TEX-FR {
+  font-family: MJXZERO, MJXTEX-FR;
+}
+
+.TEX-FRB {
+  font-family: MJXZERO, MJXTEX-FRB;
+}
+
+.TEX-SS {
+  font-family: MJXZERO, MJXTEX-SS;
+}
+
+.TEX-SSB {
+  font-family: MJXZERO, MJXTEX-SSB;
+}
+
+.TEX-SSI {
+  font-family: MJXZERO, MJXTEX-SSI;
+}
+
+.TEX-SC {
+  font-family: MJXZERO, MJXTEX-SC;
+}
+
+.TEX-T {
+  font-family: MJXZERO, MJXTEX-T;
+}
+
+.TEX-V {
+  font-family: MJXZERO, MJXTEX-V;
+}
+
+.TEX-VB {
+  font-family: MJXZERO, MJXTEX-VB;
+}
+
+mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
+  font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+}
+
+@font-face /* 0 */ {
+  font-family: MJXZERO;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff");
+}
+
+@font-face /* 1 */ {
+  font-family: MJXTEX;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff");
+}
+
+@font-face /* 2 */ {
+  font-family: MJXTEX-B;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff");
+}
+
+@font-face /* 3 */ {
+  font-family: MJXTEX-I;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff");
+}
+
+@font-face /* 4 */ {
+  font-family: MJXTEX-MI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff");
+}
+
+@font-face /* 5 */ {
+  font-family: MJXTEX-BI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff");
+}
+
+@font-face /* 6 */ {
+  font-family: MJXTEX-S1;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff");
+}
+
+@font-face /* 7 */ {
+  font-family: MJXTEX-S2;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff");
+}
+
+@font-face /* 8 */ {
+  font-family: MJXTEX-S3;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff");
+}
+
+@font-face /* 9 */ {
+  font-family: MJXTEX-S4;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff");
+}
+
+@font-face /* 10 */ {
+  font-family: MJXTEX-A;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff");
+}
+
+@font-face /* 11 */ {
+  font-family: MJXTEX-C;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff");
+}
+
+@font-face /* 12 */ {
+  font-family: MJXTEX-CB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff");
+}
+
+@font-face /* 13 */ {
+  font-family: MJXTEX-FR;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff");
+}
+
+@font-face /* 14 */ {
+  font-family: MJXTEX-FRB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff");
+}
+
+@font-face /* 15 */ {
+  font-family: MJXTEX-SS;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff");
+}
+
+@font-face /* 16 */ {
+  font-family: MJXTEX-SSB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff");
+}
+
+@font-face /* 17 */ {
+  font-family: MJXTEX-SSI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff");
+}
+
+@font-face /* 18 */ {
+  font-family: MJXTEX-SC;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff");
+}
+
+@font-face /* 19 */ {
+  font-family: MJXTEX-T;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff");
+}
+
+@font-face /* 20 */ {
+  font-family: MJXTEX-V;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff");
+}
+
+@font-face /* 21 */ {
+  font-family: MJXTEX-VB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff");
+}
+</style></head>
+
+    <body class="">
+
+        <div class="alert fixed-top mb-0 rounded-0 shadow alert-success alert-dismissible" data-alert="success dismissible" data-hash="edc24fffed7a3a9ad8c189ef5e2aca41" id="alert" role="alert">
+            <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button><p>Interested in <a href="https://cs50.harvard.edu/web/2020/#how-to-take-this-course" class="alert-link">a verified certificate, a professional certificate, or transfer credit and accreditation</a>?
+And get vaccinated (as soon as it’s available to you). 💉 <a href="https://www.who.int/news-room/feature-stories/detail/getting-the-covid-19-vaccine" class="alert-link">Here’s why</a>. <a href="https://www.google.com/search?q=covid-19+vaccine+finder" class="alert-link">Here’s how</a>.</p></div>
+        
+
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <aside class="col-md" style="height: 513.667px; top: 81.3333px;">
+ 
+                    <header><h1 data-id="cs50s-web-programming-with-python-and-javascript"><a href="https://cs50.harvard.edu/web/2020/">CS50’s Web Programming with Python and JavaScript</a></h1>
+
+<p>OpenCourseWare</p>
+
+<p><a class="pr-1 small" href="https://cs50.harvard.edu/donate">Donate<i aria-hidden="true" class="fas fa-external-link-alt ps-2"></i></a></p>
+
+<p><a href="https://brianyu.me/">Brian Yu</a><br>
+<a href="mailto:brian@cs.harvard.edu">brian@cs.harvard.edu</a></p>
+
+<p><a href="https://cs.harvard.edu/malan/">David J. Malan</a>
+<br>
+<a href="mailto:malan@harvard.edu">malan@harvard.edu</a>
+<br>
+<a class="mr-1" href="https://www.facebook.com/dmalan"><i aria-hidden="true" class="fab fa-facebook-f" title="Facebook"></i><span class="sr-only">Facebook</span></a>
+<a class="mr-1" href="https://github.com/dmalan"><i aria-hidden="true" class="fab fa-github" title="GitHub"></i><span class="sr-only">GitHub</span></a>
+<a class="mr-1" href="https://www.instagram.com/davidjmalan/"><i aria-hidden="true" class="fab fa-instagram" title="Instagram"></i><span class="sr-only">Instagram</span></a>
+<a class="mr-1" href="https://www.linkedin.com/in/malan/"><i aria-hidden="true" class="fab fa-linkedin" title="LinkedIn"></i><span class="sr-only">LinkedIn</span></a>
+<a class="mr-1" href="https://orcid.org/0000-0001-5338-2522"><i aria-hidden="true" class="fab fa-orcid" title="ORCID"></i><span class="sr-only">ORCID</span></a>
+<a class="mr-1" href="https://www.quora.com/profile/David-J-Malan"><i aria-hidden="true" class="fab fa-quora" title="Quora"></i><span class="sr-only">Quora</span></a>
+<a class="mr-1" href="https://www.reddit.com/user/davidjmalan"><i aria-hidden="true" class="fab fa-reddit-alien" title="Reddit"></i><span class="sr-only">Reddit</span></a>
+<a class="mr-1" href="https://www.tiktok.com/@davidjmalan"><i aria-hidden="true" class="fab fa-tiktok" title="TikTok"></i><span class="sr-only">Twitter</span></a>
+<a class="mr-1" href="https://twitter.com/davidjmalan"><i aria-hidden="true" class="fab fa-twitter" title="Twitter"></i><span class="sr-only">Twitter</span></a></p></header>
+
+                    
+
+                    <button aria-controls="nav" aria-expanded="false" class="btn btn-sm collapsed d-md-none" data-bs-target="aside &gt; nav" data-bs-toggle="collapse">
+                        Menu
+                    </button>
+
+                    <nav class="collapse d-md-block" id="nav"><hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/x/movie/">🍿 CS50x Movie Night 2022</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/x/puzzles/"><i class="fas fa-puzzle-piece pe-2"></i>CS50x Puzzle Day 2022</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/x/prepare/"><i class="fas fa-book pe-2"></i>How to Prepare for Technical Interviews</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.ly/zoom"><i class="fas fa-video pe-2"></i>Zoom Meetings</a></li>
+</ul>
+
+<hr>
+
+<ol start="0">
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/0/">HTML, CSS</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/1/">Git</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/2/">Python</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/3/">Django</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/4/">SQL, Models, and Migrations</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/5/">JavaScript</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/6/">User Interfaces</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/7/">Testing, CI/CD</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/8/">Scalability and Security</a></li>
+</ol>
+
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/honesty/">Academic Honesty</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/certificate/">CS50 Certificate</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/faqs/">FAQs</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.me/cs50w">Gradebook</a></li>
+</ul>
+
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/ed">Ed Discussion</a> for Q&amp;A</li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://us.edstem.org/quickstart/ed-discussion.pdf">Quick Start Guide</a></li>
+</ul>
+
+<hr>
+
+<ul class="small fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/web">edX</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://itunes.apple.com/us/course/id1505432709">iTunes U</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.youtube.com/playlist?list=PLhQjrBD2T380xvFSUmToMMzERZ3qB5Ueu">YouTube</a></li>
+</ul>
+
+<hr>
+
+<ul class="small fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.noticeable.news/">Changelog</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.statuspage.io/">Status Page</a></li>
+</ul>
+
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/communities/"><strong>Communities</strong></a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.clubhouse.com/club/cs50">Clubhouse</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://discord.gg/cs50">Discord</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/ed">Ed</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.facebook.com/groups/cs50/">Facebook Group</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.facebook.com/cs50/">Facebook Page</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://github.com/cs50">GitHub</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://gitter.im/cs50/x">Gitter</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://instagram.com/cs50">Instagram</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.linkedin.com/groups/7437240/">LinkedIn Group</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.linkedin.com/school/CS50/">LinkedIn Page</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.medium.com/">Medium</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.quora.com/topic/CS50">Quora</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.reddit.com/r/cs50/">Reddit</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/slack">Slack</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.snapchat.com/add/cs50">Snapchat</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://soundcloud.com/cs50">SoundCloud</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.stackexchange.com/">Stack Exchange</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.tiktok.com/@cs50">TikTok</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://twitter.com/cs50">Twitter</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="http://www.youtube.com/subscription_center?add_user=cs50tv">YouTube</a></li>
+</ul>
+
+<hr>
+
+<p><a href="https://cs50.harvardshop.com/"><img src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/GGMdcKt.png" alt="Harvard Shop"></a></p>
+
+<hr>
+
+<p><a href="https://cs50.harvard.edu/web/2020/license/" class="small"><i class="fab fa-creative-commons me-1"></i>License</a></p></nav>
+
+                    <footer></footer>
+
+                </aside>
+
+                <main class="col-md" style="margin-bottom: 0px; margin-top: 81.3333px;">
+
+                    <a data-id="" id="lecture-2" style="top: -81.3333px;"></a><h1 class="no_toc"><a data-id="" href="#lecture-2">Lecture 2</a></h1>
+
+<ul id="markdown-toc">
+  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
+  <li><a href="#python" id="markdown-toc-python">Python</a></li>
+  <li><a href="#variables" id="markdown-toc-variables">Variables</a></li>
+  <li><a href="#formatting-strings" id="markdown-toc-formatting-strings">Formatting Strings</a></li>
+  <li><a href="#conditions" id="markdown-toc-conditions">Conditions</a></li>
+  <li><a href="#sequences" id="markdown-toc-sequences">Sequences</a>    <ul>
+      <li><a href="#strings" id="markdown-toc-strings">Strings</a></li>
+      <li><a href="#lists" id="markdown-toc-lists">Lists</a></li>
+      <li><a href="#tuples" id="markdown-toc-tuples">Tuples</a></li>
+      <li><a href="#sets" id="markdown-toc-sets">Sets</a></li>
+      <li><a href="#dictionaries" id="markdown-toc-dictionaries">Dictionaries</a></li>
+      <li><a href="#loops" id="markdown-toc-loops">Loops</a></li>
+    </ul>
+  </li>
+  <li><a href="#functions" id="markdown-toc-functions">Functions</a></li>
+  <li><a href="#modules" id="markdown-toc-modules">Modules</a></li>
+  <li><a href="#object-oriented-programming" id="markdown-toc-object-oriented-programming">Object-Oriented Programming</a></li>
+  <li><a href="#functional-programming" id="markdown-toc-functional-programming">Functional Programming</a>    <ul>
+      <li><a href="#decorators" id="markdown-toc-decorators">Decorators</a></li>
+      <li><a href="#lambda-functions" id="markdown-toc-lambda-functions">Lambda Functions</a></li>
+    </ul>
+  </li>
+  <li><a href="#exceptions" id="markdown-toc-exceptions">Exceptions</a></li>
+</ul>
+
+<a data-id="" id="introduction" style="top: -81.3333px;"></a><h2><a data-id="" href="#introduction">Introduction</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>So
+ far, we’ve discussed how to build simple web pages using HTML and CSS, 
+and how to use Git and GitHub in order to keep track of changes to our 
+code and collaborate with others.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Today, we’ll dive into Python, one of the two main programming languages we’ll use throughout this course.</li>
+</ul>
+
+<a data-id="" id="python" style="top: -81.3333px;"></a><h2><a data-id="" href="#python">Python</a></h2>
+
+<p><img src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/python.png" alt="Python Logo"></p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>
+    <p>Python is a very powerful and widely-used language that will 
+allow us to quickly build fairly complicated web applications. In this 
+course, we’ll be using Python 3, although Python 2 is still in use in 
+some places. When looking at outside resources, be careful to make sure 
+they’re using the same version.</p>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>
+    <p>Let’s start where we start with many programming languages: Hello, world. This program, written in Python, would look like this:</p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"Hello, world!"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>To break down what’s going on in that line, there is a <code class="language-plaintext highlighter-rouge">print</code> <strong>function</strong> built in to the python language, that takes an <strong>argument</strong> in parentheses, and displays that argument on the command line.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>To
+ actually write and run this program on your computers, you’ll first 
+type this line into your text editor of choice, and then save the file 
+as <code class="language-plaintext highlighter-rouge">something.py</code>. Next, you’ll head over to your terminal, navigate to the directory containing your file, and type <code class="language-plaintext highlighter-rouge">python something.py</code>. In the case of the above program, the words “Hello, world!” will then be displayed in the terminal.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Depending on how your computer is set up, you may have to type <code class="language-plaintext highlighter-rouge">python3</code> instead of <code class="language-plaintext highlighter-rouge">python</code> before the file name, and you may even have to <a href="https://www.python.org/downloads/">download Python</a> if you haven’t already. After installing Python, we recommend that you also <a href="https://pip.pypa.io/en/stable/installing/">download Pip</a>, as you’ll need that later in the course.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>When you type <code class="language-plaintext highlighter-rouge">python file.py</code> in your terminal, a program called an <strong>interpreter</strong>,
+ which you downloaded together with Python, reads through your file line
+ by line, and executes each line of the code. This is different than 
+languages like <strong>C</strong> or <strong>Java</strong>, which need to be <strong>compiled</strong> into machine code before they can be run.</li>
+</ul>
+
+<a data-id="" id="variables" style="top: -81.3333px;"></a><h2><a data-id="" href="#variables">Variables</a></h2>
+
+<p>A key part of any programming language is the ability to create and 
+manipulate variables. In order to assign a value to a variable in 
+Python, the syntax looks like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="mi">28</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mf">1.5</span>
+<span class="n">c</span> <span class="o">=</span> <span class="s">"Hello!"</span>
+<span class="n">d</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">e</span> <span class="o">=</span> <span class="bp">None</span>
+</code></pre></div></div>
+
+<p>Each of these lines is taking the value to the right of the <code class="language-plaintext highlighter-rouge">=</code>, and storing it in the variable name to the left.</p>
+
+<p>Unlike in some other programming languages, Python variable types are
+ inferred, meaning that while each variable does have a type, we do not 
+have to explicitly state which type it is when we create the variable. 
+Some of the most common variable types are:</p>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>int</strong>: An integer</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>float</strong>: A decimal number</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>chr</strong>: A single character</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>str</strong>: A string, or sequence of characters</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>bool</strong>: A value that is either <code class="language-plaintext highlighter-rouge">True</code> or <code class="language-plaintext highlighter-rouge">False</code></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>NoneType</strong>: A special value (<code class="language-plaintext highlighter-rouge">None</code>) indicating the absence of a value.</li>
+</ul>
+
+<p>Now, we’ll work on writing a more interesting program that can take 
+input from the user and say hello to that user. To do this, we’ll use 
+another built in function called <code class="language-plaintext highlighter-rouge">input</code>
+ which displays a prompt to the user, and returns whatever the user 
+provides as input. For example, we can write the following in a file 
+called <code class="language-plaintext highlighter-rouge">name.py</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">"Name: "</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Hello, "</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>When run on the terminal, this is what the program looks like:</p>
+
+<p><img src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/hello.png" alt="Hello"></p>
+
+<p>A couple of things to point out here:</p>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>In the first line, instead of assigning the variable name to an explicit value, we’re assigning it to whatever the <code class="language-plaintext highlighter-rouge">input</code> function returns.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>In the second line, we’re using the <code class="language-plaintext highlighter-rouge">+</code> operator to combine, or <strong>concatenate</strong>, two strings. In python, the <code class="language-plaintext highlighter-rouge">+</code> operator can be used to add numbers or concatenate strings and lists.</li>
+</ul>
+
+<a data-id="" id="formatting-strings" style="top: -81.3333px;"></a><h2><a data-id="" href="#formatting-strings">Formatting Strings</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>While we can use the <code class="language-plaintext highlighter-rouge">+</code>
+ operator to combine strings as we did above, in the latest versions of 
+python, there are even easier ways to work with strings, known as <a href="https://realpython.com/python-f-strings/">formatted strings</a>, or <strong>f-strings</strong> for short.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>To indicate that we’re using formatted strings, we simply add an <code class="language-plaintext highlighter-rouge">f</code> before the quotation marks. For example, instead of using <code class="language-plaintext highlighter-rouge">"Hello, " + name</code> as we did above, we could write <code class="language-plaintext highlighter-rouge">f"Hello, {name}"</code> for the same result. We can even plug a function into this string if we want, and turn our program above into the single line:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Hello, </span><span class="si">{</span><span class="nb">input</span><span class="p">(</span><span class="s">"Name: "</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<a data-id="" id="conditions" style="top: -81.3333px;"></a><h2><a data-id="" href="#conditions">Conditions</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Just like in other programming languages, Python gives us the ability to run different segments of code based on different <a href="https://realpython.com/python-conditional-statements/">conditions</a>. For example, in the program below, we’ll change our output depending on the number a user types in:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">num</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">"Number: "</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Number is positive"</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Number is negative"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Number is 0"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Getting into how the above program works, conditionals in python contain a keyword (<code class="language-plaintext highlighter-rouge">if</code>, <code class="language-plaintext highlighter-rouge">elif</code>, or <code class="language-plaintext highlighter-rouge">else</code>) and then (except in the <code class="language-plaintext highlighter-rouge">else</code> case) a boolean expression, or an expression that evaluates to either <code class="language-plaintext highlighter-rouge">True</code> or <code class="language-plaintext highlighter-rouge">False</code>. Then, all of the code we want to run if a certain expression is true is <strong>indented</strong> directly below the statement. Indentation is required as part of the Python syntax.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>However, when we run this program, we run into an <a href="https://docs.python.org/3/tutorial/errors.html">exception</a> that looks like this:</li>
+</ul>
+
+<p><img src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/cond.png" alt="condition"></p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>An
+ exception is what happens when an error occurs while we’re running our 
+python code, and over time you’ll get better and better at interpreting 
+these errors, which is a very valuable skill to have.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Let’s look a bit more closely at this specific exception: If we look at the bottom, we’ll see that we ran into a <code class="language-plaintext highlighter-rouge">TypeError</code>,
+ which generally means Python expected a certain variable to be of one 
+type, but found it to be of another type. In this case, the exception 
+tells us that we cannot use the <code class="language-plaintext highlighter-rouge">&gt;</code> symbol to compare a <code class="language-plaintext highlighter-rouge">str</code> and <code class="language-plaintext highlighter-rouge">int</code>, and then above we can see that this comparison occurs in line 2.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>In this case, it’s obvious that <code class="language-plaintext highlighter-rouge">0</code> is an integer, so it must be the case that our <code class="language-plaintext highlighter-rouge">num</code> variable is a string. This is happening because it turns out that the <code class="language-plaintext highlighter-rouge">input</code> function always returns a string, and we have to specify that it should be turned into (or <strong>cast</strong> into) an integer using the <code class="language-plaintext highlighter-rouge">int</code> function. This means our first line would now look like:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">"Number: "</span><span class="p">))</span>
+</code></pre></div></div>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Now, the program will work just as we intended!</li>
+</ul>
+
+<a data-id="" id="sequences" style="top: -81.3333px;"></a><h2><a data-id="" href="#sequences">Sequences</a></h2>
+
+<p>One of the most powerful parts of the Python language is its ability to work with <strong>sequences</strong> of data in addition to individual variables.</p>
+
+<p>There are several types of sequences that are similar in some ways, 
+but different in others. When explaining those differences, we’ll use 
+the terms <strong>mutable/immutable</strong> and <strong>ordered/unordered</strong>. <strong>Mutable</strong> means that once a sequence has been defined, we can change individual elements of that sequence, and <strong>ordered</strong> means that the order of the objects matters.</p>
+
+<a data-id="" id="strings" style="top: -81.3333px;"></a><h3><a data-id="" href="#strings">Strings</a></h3>
+
+<dl>
+  <dt>: <strong>Ordered</strong>: Yes</dt>
+  <dd>
+    <p><strong>Mutable</strong>: No</p>
+  </dd>
+  <dd>
+    <p>We’ve already looked at strings a little bit, but instead of just
+ variables, we can think of a string as a sequence of characters. This 
+means we can access individual elements within the string! For example:</p>
+  </dd>
+</dl>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">name</span> <span class="o">=</span> <span class="s">"Harry"</span>
+<span class="k">print</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>prints out the first (or index-0) character in the string, which in this case happens to be <code class="language-plaintext highlighter-rouge">H</code>, and then prints out the second (or index-1) character, which is <code class="language-plaintext highlighter-rouge">a</code>.</p>
+
+<a data-id="" id="lists" style="top: -81.3333px;"></a><h3><a data-id="" href="#lists">Lists</a></h3>
+
+<dl>
+  <dt>: <strong>Ordered</strong>: Yes</dt>
+  <dd>
+    <p><strong>Mutable</strong>: Yes</p>
+  </dd>
+  <dd>
+    <p>A <a href="https://www.w3schools.com/python/python_lists.asp">Python list</a>
+ allows you to store any variable types. We create a list using square 
+brackets and commas, as shown below. Similarly to strings, we can print 
+an entire list, or some individual elements. We can also add elements to
+ a list using <code class="language-plaintext highlighter-rouge">append</code>, and sort a list using <code class="language-plaintext highlighter-rouge">sort</code></p>
+  </dd>
+</dl>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># This is a Python comment
+</span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Harry"</span><span class="p">,</span> <span class="s">"Ron"</span><span class="p">,</span> <span class="s">"Hermione"</span><span class="p">]</span>
+<span class="c1"># Print the entire list:
+</span><span class="k">print</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+<span class="c1"># Print the second element of the list:
+</span><span class="k">print</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="c1"># Add a new name to the list:
+</span><span class="n">names</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">"Draco"</span><span class="p">)</span>
+<span class="c1"># Sort the list:
+</span><span class="n">names</span><span class="p">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="c1"># Print the new list:
+</span><span class="k">print</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/list.png" alt="Names"></p>
+
+<a data-id="" id="tuples" style="top: -81.3333px;"></a><h3><a data-id="" href="#tuples">Tuples</a></h3>
+
+<dl>
+  <dt>: <strong>Ordered</strong>: Yes</dt>
+  <dd>
+    <p><strong>Mutable</strong>: No</p>
+  </dd>
+  <dd>
+    <p><a href="https://www.w3schools.com/python/python_tuples.asp">Tuples</a>
+ are generally used when you need to store just two or three values 
+together, such as the x and y values for a point. In Python code, we use
+ parentheses:</p>
+  </dd>
+</dl>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">point</span> <span class="o">=</span> <span class="p">(</span><span class="mf">12.5</span><span class="p">,</span> <span class="mf">10.6</span><span class="p">)</span>
+</code></pre></div></div>
+
+<a data-id="" id="sets" style="top: -81.3333px;"></a><h3><a data-id="" href="#sets">Sets</a></h3>
+
+<dl>
+  <dt>: <strong>Ordered</strong>: No</dt>
+  <dd>
+    <p><strong>Mutable</strong>: N/A</p>
+  </dd>
+  <dd>
+    <p><a href="https://www.w3schools.com/python/python_sets.asp">Sets</a> are different from lists and tuples in that they are <strong>unordered</strong>.
+ They are also different because while you can have two or more of the 
+same elements within a list/tuple, a set will only store each value 
+once. We can define an empty set using the <code class="language-plaintext highlighter-rouge">set</code> function. We can then use <code class="language-plaintext highlighter-rouge">add</code> and <code class="language-plaintext highlighter-rouge">remove</code> to add and remove elements from that set, and the <code class="language-plaintext highlighter-rouge">len</code> function to find the set’s size. Note that the <code class="language-plaintext highlighter-rouge">len</code> function works on all sequences in python. Also note that despite adding <code class="language-plaintext highlighter-rouge">4</code> and <code class="language-plaintext highlighter-rouge">3</code> to the set twice, each item can only appear once in a set.</p>
+  </dd>
+</dl>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create an empty set:
+</span><span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+<span class="c1"># Add some elements:
+</span><span class="n">s</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">s</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">s</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">s</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">s</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">s</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Remove 2 from the set
+</span><span class="n">s</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Print the set:
+</span><span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+<span class="c1"># Find the size of the set:
+</span><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"The set has </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="si">}</span><span class="s"> elements."</span><span class="p">)</span>
+
+<span class="s">""" This is a python multi-line comment:
+Output:
+{1, 3, 4}
+The set has 3 elements.
+"""</span>
+</code></pre></div></div>
+
+<a data-id="" id="dictionaries" style="top: -81.3333px;"></a><h3><a data-id="" href="#dictionaries">Dictionaries</a></h3>
+
+<dl>
+  <dt>: <strong>Ordered</strong>: No</dt>
+  <dd>
+    <p><strong>Mutable</strong>: Yes</p>
+  </dd>
+  <dd>
+    <p><a href="https://www.w3schools.com/python/python_dictionaries.asp">Python Dictionaries</a> or <code class="language-plaintext highlighter-rouge">dict</code>s, will be especially useful in this course. A dictionary is a set of <strong>key-value pairs</strong>,
+ where each key has a corresponding value, just like in a dictionary, 
+each word (the key) has a corresponding definition (the value). In 
+Python, we use curly brackets to contain a dictionary, and colons to 
+indicate keys and values. For example:</p>
+  </dd>
+</dl>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Define a dictionary
+</span><span class="n">houses</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Harry"</span><span class="p">:</span> <span class="s">"Gryffindor"</span><span class="p">,</span> <span class="s">"Draco"</span><span class="p">:</span> <span class="s">"Slytherin"</span><span class="p">}</span>
+<span class="c1"># Print out Harry's house
+</span><span class="k">print</span><span class="p">(</span><span class="n">houses</span><span class="p">[</span><span class="s">"Harry"</span><span class="p">])</span>
+<span class="c1"># Adding values to a dictionary:
+</span><span class="n">houses</span><span class="p">[</span><span class="s">"Hermione"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Gryffindor"</span>
+<span class="c1"># Print out Hermione's House:
+</span><span class="k">print</span><span class="p">(</span><span class="n">houses</span><span class="p">[</span><span class="s">"Hermione"</span><span class="p">])</span>
+
+<span class="s">""" Output:
+Gryffindor
+Gryffindor
+"""</span>
+</code></pre></div></div>
+
+<a data-id="" id="loops" style="top: -81.3333px;"></a><h3><a data-id="" href="#loops">Loops</a></h3>
+
+<p>Loops are an incredibly important part of any programming language, and in Python, they come in two main forms: <a href="https://www.w3schools.com/python/python_for_loops.asp">for loops</a> and <a href="https://www.w3schools.com/python/python_while_loops.asp">while loops</a>. For now, we’ll focus on For Loops.</p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>For
+ loops are used to iterate over a sequence of elements, performing some 
+block of code (indented below) for each element in a sequence. For 
+example, the following code will print out the numbers from 0 to 5:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="s">""" Output:
+0
+1
+2
+3
+4
+5
+"""</span>
+</code></pre></div></div>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>We can condense this code using the python <code class="language-plaintext highlighter-rouge">range</code>
+ function, which allows us to easily get a sequence of numbers. The 
+following code gives the exact same result as our code from above:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="s">""" Output:
+0
+1
+2
+3
+4
+5
+"""</span>
+</code></pre></div></div>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>This
+ type of loop can work for any sequence! For example, if we wish to 
+print each name in a list, we could write the code below:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create a list:
+</span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Harry"</span><span class="p">,</span> <span class="s">"Ron"</span><span class="p">,</span> <span class="s">"Hermione"</span><span class="p">]</span>
+
+<span class="c1"># Print each name:
+</span><span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+<span class="s">""" Output:
+Harry
+Ron
+Hermione
+"""</span>
+</code></pre></div></div>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>We can get even more specific if we want, and loop through each character in a single name!</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">name</span> <span class="o">=</span> <span class="s">"Harry"</span>
+<span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">char</span><span class="p">)</span>
+
+<span class="s">""" Output:
+H
+a
+r
+r
+y
+"""</span>
+</code></pre></div></div>
+
+<a data-id="" id="functions" style="top: -81.3333px;"></a><h2><a data-id="" href="#functions">Functions</a></h2>
+
+<p>We’ve already seen a few python functions such as <code class="language-plaintext highlighter-rouge">print</code> and <code class="language-plaintext highlighter-rouge">input</code>,
+ but now we’re going to dive into writing our own functions. To get 
+started, we’ll write a function that takes in a number and squares it:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+</code></pre></div></div>
+
+<p>Notice how we use the <code class="language-plaintext highlighter-rouge">def</code> keyword to indicate we’re defining a function, that we’re taking in a single input called <code class="language-plaintext highlighter-rouge">x</code> and that we use the <code class="language-plaintext highlighter-rouge">return</code> keyword to indicate what the function’s output should be.</p>
+
+<p>We can then “call” this function just as we’ve called other ones: using parentheses:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"The square of </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s"> is </span><span class="si">{</span><span class="n">square</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+<span class="s">""" Output:
+The square of 0 is 0
+The square of 1 is 1
+The square of 2 is 4
+The square of 3 is 9
+The square of 4 is 16
+The square of 5 is 25
+The square of 6 is 36
+The square of 7 is 49
+The square of 8 is 64
+The square of 9 is 81
+"""</span>
+</code></pre></div></div>
+
+<a data-id="" id="modules" style="top: -81.3333px;"></a><h2><a data-id="" href="#modules">Modules</a></h2>
+
+<p>As our projects get larger and larger, it will become useful to be 
+able to write functions in one file and run them in another. In the case
+ above, we could create create one file called <code class="language-plaintext highlighter-rouge">functions.py</code> with the code:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+</code></pre></div></div>
+
+<p>And another file called <code class="language-plaintext highlighter-rouge">square.py</code> with the code:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"The square of </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s"> is </span><span class="si">{</span><span class="n">square</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>However, when we try to run <code class="language-plaintext highlighter-rouge">square.py</code>, we run into the following error:</p>
+
+<p><img src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/NameError.png" alt="Name Error"></p>
+
+<p>We run into this problem because by default, Python files don’t know about each other, so we have to explicitly <code class="language-plaintext highlighter-rouge">import</code> the square function from the <code class="language-plaintext highlighter-rouge">functions</code> <strong>module</strong> we just wrote. Now, when <code class="language-plaintext highlighter-rouge">square.py</code> looks like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">functions</span> <span class="kn">import</span> <span class="n">square</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"The square of </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s"> is </span><span class="si">{</span><span class="n">square</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Alternatively, we can choose to import the entire <code class="language-plaintext highlighter-rouge">functions</code> module and then use dot notation to access the <code class="language-plaintext highlighter-rouge">square</code> function:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">functions</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"The square of </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s"> is </span><span class="si">{</span><span class="n">functions</span><span class="p">.</span><span class="n">square</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>There are many built-in Python modules we can import such as <code class="language-plaintext highlighter-rouge">math</code> or <code class="language-plaintext highlighter-rouge">csv</code>
+ that give us access to even more functions. Additionally, we can 
+download even more Modules to access even more functionality! We’ll 
+spend a lot of time using the <code class="language-plaintext highlighter-rouge">Django</code> Module, which we’ll discuss in the next lecture.</p>
+
+<a data-id="" id="object-oriented-programming" style="top: -81.3333px;"></a><h2><a data-id="" href="#object-oriented-programming">Object-Oriented Programming</a></h2>
+
+<p><a href="https://en.wikipedia.org/wiki/Object-oriented_programming">Object Oriented Programming</a>
+ is a programming paradigm, or a way of thinking about programming, that
+ is centered around objects that can store information and perform 
+actions.</p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><strong>Classes</strong>: We’ve already seen a few different types of variables in python, but what if we want to create our own type? A <a href="https://www.w3schools.com/python/python_classes.asp">Python Class</a>
+ is essentially a template for a new type of object that can store 
+information and perform actions. Here’s a class that defines a 
+two-dimensional point:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Point</span><span class="p">():</span>
+    <span class="c1"># A method defining how to create a point:
+</span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+</code></pre></div></div>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Note that in the above code, we use the keyword <code class="language-plaintext highlighter-rouge">self</code> to represent the object we are currently working with. <code class="language-plaintext highlighter-rouge">self</code> should be the first argument for any method within a Python class.</li>
+</ul>
+
+<p>Now, let’s see how we can actually use the class from above to create an object:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
+
+<span class="s">""" Output:
+2
+8
+"""</span>
+</code></pre></div></div>
+
+<p>Now, let’s look at a more interesting example where instead of 
+storing just the coordinates of a Point, we create a class that 
+represents an airline flight:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Flight</span><span class="p">():</span>
+    <span class="c1"># Method to create new flight with given capacity
+</span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">capacity</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">capacity</span> <span class="o">=</span> <span class="n">capacity</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">passengers</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Method to add a passenger to the flight:
+</span>    <span class="k">def</span> <span class="nf">add_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">passengers</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>However, this class is flawed because while we set a capacity, we 
+could still add too many passengers. Let’s augment it so that before 
+adding a passenger, we check to see if there is room on the flight:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Flight</span><span class="p">():</span>
+    <span class="c1"># Method to create new flight with given capacity
+</span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">capacity</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">capacity</span> <span class="o">=</span> <span class="n">capacity</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">passengers</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Method to add a passenger to the flight:
+</span>    <span class="k">def</span> <span class="nf">add_passenger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">.</span><span class="n">open_seats</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">passengers</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="c1"># Method to return number of open seats
+</span>    <span class="k">def</span> <span class="nf">open_seats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">capacity</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">passengers</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Note that above, we use the line <code class="language-plaintext highlighter-rouge">if not self.open_seats()</code> to determine whether or not there are open seats. This works because in Python, the number 0 can be interpretted as meaning <code class="language-plaintext highlighter-rouge">False</code>, and we can also use the keyword <code class="language-plaintext highlighter-rouge">not</code> to signify the opposite of the following statement so <code class="language-plaintext highlighter-rouge">not True</code> is <code class="language-plaintext highlighter-rouge">False</code> and <code class="language-plaintext highlighter-rouge">not False</code> is <code class="language-plaintext highlighter-rouge">True</code>. Therefore, if <code class="language-plaintext highlighter-rouge">open_seats</code> returns 0, the entire expression will evaluate to <code class="language-plaintext highlighter-rouge">True</code></p>
+
+<p>Now, let’s try out the class we’ve created by instantiating some objects:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create a new flight with o=up to 3 passengers
+</span><span class="n">flight</span> <span class="o">=</span> <span class="n">Flight</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Create a list of people
+</span><span class="n">people</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Harry"</span><span class="p">,</span> <span class="s">"Ron"</span><span class="p">,</span> <span class="s">"Hermione"</span><span class="p">,</span> <span class="s">"Ginny"</span><span class="p">]</span>
+
+<span class="c1"># Attempt to add each person in the list to a flight
+</span><span class="k">for</span> <span class="n">person</span> <span class="ow">in</span> <span class="n">people</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">flight</span><span class="p">.</span><span class="n">add_passenger</span><span class="p">(</span><span class="n">person</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Added </span><span class="si">{</span><span class="n">person</span><span class="si">}</span><span class="s"> to flight successfully"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"No available seats for </span><span class="si">{</span><span class="n">person</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+<span class="s">""" Output:
+Added Harry to flight successfully
+Added Ron to flight successfully
+Added Hermione to flight successfully
+No available seats for Ginny
+"""</span>
+</code></pre></div></div>
+
+<a data-id="" id="functional-programming" style="top: -81.3333px;"></a><h2><a data-id="" href="#functional-programming">Functional Programming</a></h2>
+
+<p>In addition to supporting Object-Oriented Programming, Python also supports the <a href="https://en.wikipedia.org/wiki/Functional_programming">Functional Programming Paradigm</a>, in which functions are treated as values just like any other variable.</p>
+
+<a data-id="" id="decorators" style="top: -81.3333px;"></a><h3><a data-id="" href="#decorators">Decorators</a></h3>
+
+<p>One thing made possible by functional programming is the idea of a 
+decorator, which is a higher-order function that can modify another 
+function. For example, let’s write a decorator that announces when a 
+function is about to begin, and when it ends. We can then apply this 
+decorator using an <code class="language-plaintext highlighter-rouge">@</code> symbol.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">announce</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"About to run the function"</span><span class="p">)</span>
+        <span class="n">f</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Done with the function"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="o">@</span><span class="n">announce</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Hello, world!"</span><span class="p">)</span>
+
+<span class="n">hello</span><span class="p">()</span>
+
+<span class="s">""" Output:
+About to run the function
+Hello, world!
+Done with the function
+"""</span>
+</code></pre></div></div>
+
+<a data-id="" id="lambda-functions" style="top: -81.3333px;"></a><h3><a data-id="" href="#lambda-functions">Lambda Functions</a></h3>
+
+<p>Lambda functions provide another way to create functions in python. For example, if we want to define the same <code class="language-plaintext highlighter-rouge">square</code> function we did earlier, we can write:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">square</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+</code></pre></div></div>
+
+<p>Where the input is to the left of the <code class="language-plaintext highlighter-rouge">:</code> and the output is on the right.</p>
+
+<p>This can be useful when we don’t want to write a whole separate 
+function for a single, small use. For example, if we want to sort some 
+objects where it’s not clear at first how to sort them. Imagine we have a
+ list of people, but with names and houses instead of just names that we
+ wish to sort:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">people</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s">"name"</span><span class="p">:</span> <span class="s">"Harry"</span><span class="p">,</span> <span class="s">"house"</span><span class="p">:</span> <span class="s">"Gryffindor"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"name"</span><span class="p">:</span> <span class="s">"Cho"</span><span class="p">,</span> <span class="s">"house"</span><span class="p">:</span> <span class="s">"Ravenclaw"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"name"</span><span class="p">:</span> <span class="s">"Draco"</span><span class="p">,</span> <span class="s">"house"</span><span class="p">:</span> <span class="s">"Slytherin"</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="n">people</span><span class="p">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">people</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This, however, leaves us with the error:</p>
+
+<p><img src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/TypeError.png" alt="Type Error"></p>
+
+<p>Which occurs because Python doesn’t know how to compare two Dictionaries to check if one is less than the other.</p>
+
+<p>We can solve this problem by including a <code class="language-plaintext highlighter-rouge">key</code> argument to the sort function, which specifies which part of the dictionary we wish to use to sort:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">people</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s">"name"</span><span class="p">:</span> <span class="s">"Harry"</span><span class="p">,</span> <span class="s">"house"</span><span class="p">:</span> <span class="s">"Gryffindor"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"name"</span><span class="p">:</span> <span class="s">"Cho"</span><span class="p">,</span> <span class="s">"house"</span><span class="p">:</span> <span class="s">"Ravenclaw"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"name"</span><span class="p">:</span> <span class="s">"Draco"</span><span class="p">,</span> <span class="s">"house"</span><span class="p">:</span> <span class="s">"Slytherin"</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">person</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">person</span><span class="p">[</span><span class="s">"name"</span><span class="p">]</span>
+
+<span class="n">people</span><span class="p">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">people</span><span class="p">)</span>
+
+<span class="s">""" Output:
+[{'name': 'Cho', 'house': 'Ravenclaw'}, {'name': 'Draco', 'house': 'Slytherin'}, {'name': 'Harry', 'house': 'Gryffindor'}]
+"""</span>
+</code></pre></div></div>
+
+<p>While this does work, we’ve had to write an entire function that 
+we’re only using once, we can make our code more readable by using a 
+lambda function:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">people</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s">"name"</span><span class="p">:</span> <span class="s">"Harry"</span><span class="p">,</span> <span class="s">"house"</span><span class="p">:</span> <span class="s">"Gryffindor"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"name"</span><span class="p">:</span> <span class="s">"Cho"</span><span class="p">,</span> <span class="s">"house"</span><span class="p">:</span> <span class="s">"Ravenclaw"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"name"</span><span class="p">:</span> <span class="s">"Draco"</span><span class="p">,</span> <span class="s">"house"</span><span class="p">:</span> <span class="s">"Slytherin"</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="n">people</span><span class="p">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">person</span><span class="p">:</span> <span class="n">person</span><span class="p">[</span><span class="s">"name"</span><span class="p">])</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">people</span><span class="p">)</span>
+
+<span class="s">""" Output:
+[{'name': 'Cho', 'house': 'Ravenclaw'}, {'name': 'Draco', 'house': 'Slytherin'}, {'name': 'Harry', 'house': 'Gryffindor'}]
+"""</span>
+</code></pre></div></div>
+
+<a data-id="" id="exceptions" style="top: -81.3333px;"></a><h2><a data-id="" href="#exceptions">Exceptions</a></h2>
+
+<p>During this lecture, we’ve run into a few different exceptions, so now we’ll look into some new ways of dealing with them.</p>
+
+<p>In the following chunk of code, we’ll take two integers from the user, and attempt to divide them:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">"x: "</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">"y: "</span><span class="p">))</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s"> / </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s"> = </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>In many cases, this program works well:</p>
+
+<p><img src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/dividegood.png" alt="Good example"></p>
+
+<p>However, we’ll run into problems when we attempt to divide by 0:</p>
+
+<p><img src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/dividebad.png" alt="Bad example"></p>
+
+<p>We can deal with this messy error using <a href="https://www.w3schools.com/python/python_try_except.asp">Exception Handling</a>. In the following block of code, we will <code class="language-plaintext highlighter-rouge">try</code> to divide the two numbers, <code class="language-plaintext highlighter-rouge">except</code> when we get a <code class="language-plaintext highlighter-rouge">ZeroDivisionError</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">"x: "</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">"y: "</span><span class="p">))</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span>
+<span class="k">except</span> <span class="nb">ZeroDivisionError</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Error: Cannot divide by 0."</span><span class="p">)</span>
+    <span class="c1"># Exit the program
+</span>    <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s"> / </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s"> = </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>In this case, when we try it again:</p>
+
+<p><img src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/divide0.png" alt="Divide by 0 exception"></p>
+
+<p>However, we still run into an error when the user enters non-numbers for x and y:</p>
+
+<p><img src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/valueError.png" alt="Value error"></p>
+
+<p>We can solve this problem in a similar manner!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">"x: "</span><span class="p">))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">"y: "</span><span class="p">))</span>
+<span class="k">except</span> <span class="nb">ValueError</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Error: Invalid input"</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span>
+<span class="k">except</span> <span class="nb">ZeroDivisionError</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Error: Cannot divide by 0."</span><span class="p">)</span>
+    <span class="c1"># Exit the program
+</span>    <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s"> / </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s"> = </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>That’s all for this lecture! Next time, we’ll use Python’s <code class="language-plaintext highlighter-rouge">Django</code> Module to build some applications!</p>
+
+
+
+                </main>
+
+            </div>
+
+        </div>
+
+        
+ 
+        <script src="Lecture%202%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/page.js"></script>
+
+    
+
+
+</body></html>

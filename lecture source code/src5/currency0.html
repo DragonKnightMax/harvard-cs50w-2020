@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <title>Currency</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch("https://api.exchangeratesapi.io/latest?base=USD&access_key=ACCESS_KEY")
+            .then(response => response.json())
+            .then(data => {
+                const rate = data.rates.EUR;
+                document.querySelector('body').innerHTML = rate;
+            })
+            .catch(error => {
+                console.log('Error:', error);
+            });
+        });
+    </script>
+    <body>
+    </body>
+</html>

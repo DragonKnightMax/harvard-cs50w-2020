@@ -1,0 +1,1833 @@
+<!DOCTYPE html>
+<html class="wf-ptsans-n4-active wf-ptsans-n7-active wf-active" lang="en-us"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width"><meta property="og:description" content="This course picks up where Harvard University's CS50 leaves off, diving more deeply into the design and implementation of web apps with Python, JavaScript, and SQL using frameworks like Django, React, and Bootstrap. Topics include database design, scalability, security, and user experience. Through hands-on projects, students learn to write and use APIs, create interactive UIs, and leverage cloud services like GitHub and Heroku. By semester’s end, students emerge with knowledge and experience in principles, languages, and tools that empower them to design and deploy applications on the Internet.">
+
+        <meta property="og:image" content="https://img.youtube.com/vi/24Kf3v7kZyE/maxresdefault.jpg"><meta property="og:title" content="Lecture 6 - CS50's Web Programming with Python and JavaScript">
+
+        <link href="https://cs50.harvard.edu/web/2020/favicon.ico?1645555620" rel="icon">
+
+        <!-- https://fonts.google.com/specimen/PT+Sans?query=PT+Sans&selection.family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700 -->
+        <script src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/webfont.js"></script>
+
+        <!-- http://getbootstrap.com/docs/4.6/getting-started/introduction/ -->
+        <script src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/jquery.js"></script>
+        <script src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap.js"></script>
+
+        <!-- https://bootstrap-table.com/docs/getting-started/introduction/ -->
+        <link href="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap-table.css" rel="stylesheet">
+        <script src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap-table.js"></script>
+        <script src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/bootstrap-table-mobile.js"></script>
+
+        <!-- https://fontawesome.com/how-to-use/on-the-web/referencing-icons/basic-use -->
+        <link href="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/all.css" rel="stylesheet">
+
+        <!-- https://moment.github.io/luxon/ -->
+        <script src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/luxon.js"></script>
+
+        <!-- http://docs.mathjax.org/ -->
+        <!-- https://www.jsdelivr.com/package/npm/mathjax?path=es5 -->
+        <script crossorigin="anonymous" integrity="sha256-+nfSJ1LiSvANSK3wvi6FjM+oFwoIQvURU1frozp5z6o=" src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/tex-chtml.js"></script><style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuSlider {  left: .1em;}
+.CtxtMenu_SliderValue {  position:absolute; right:.1em; padding-top:.25em; color:#333333;  font-size: .75em}
+.CtxtMenu_SliderBar {  outline: none; background: #d3d3d3}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_SelectionMenu {  position:relative; float:left;  border-bottom: none; -webkit-box-shadow:none; -webkit-border-radius:0px; }
+.CtxtMenu_SelectionItem {  padding-right: 1em;}
+.CtxtMenu_Selection {  right: 40%; width:50%; }
+.CtxtMenu_SelectionBox {  padding: 0em; max-height:20em; max-width: none;  background-color:#FFFFFF;}
+.CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style>
+
+        <!-- https://github.com/verlok/vanilla-lazyload -->
+        <script src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/intersection-observer.js"></script>
+        <script src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/lazyload.js"></script>
+
+        <!-- https://github.com/davidjbradshaw/iframe-resizer -->
+        <!-- https://www.jsdelivr.com/package/npm/iframe-resizer?path=js -->
+        <script crossorigin="anonymous" integrity="sha256-S8f0Q/V9VcfrqYgWo9EFS9zuDMdPTBMC+CBW0RjxQbs=" src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/iframeResizer.js"></script>
+
+        <!-- https://github.com/scratchblocks/scratchblocks/releases -->
+        <script src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/scratchblocks.js"></script><style><![CDATA[ .sb-label {
+      font-family: Lucida Grande, Verdana, Arial, DejaVu Sans, sans-serif;
+      font-weight: bold;
+      fill: #fff;
+      font-size: 10px;
+      word-spacing: +1px;
+    }
+
+    .sb-obsolete { fill: #d42828; }
+    .sb-motion { fill: #4a6cd4; }
+    .sb-looks { fill: #8a55d7; }
+    .sb-sound { fill: #bb42c3; }
+    .sb-pen { fill: #0e9a6c;  }
+    .sb-events { fill: #c88330; }
+    .sb-control { fill: #e1a91a; }
+    .sb-sensing { fill: #2ca5e2; }
+    .sb-operators { fill: #5cb712; }
+    .sb-variables { fill: #ee7d16; }
+    .sb-list { fill: #cc5b22 }
+    .sb-custom { fill: #632d99; }
+    .sb-custom-arg { fill: #5947b1; }
+    .sb-extension { fill: #4b4a60; }
+    .sb-grey { fill: #969696; }
+
+    .sb-bevel {
+      filter: url(#bevelFilter);
+    }
+
+    .sb-input {
+      filter: url(#inputBevelFilter);
+    }
+    .sb-input-number,
+    .sb-input-string,
+    .sb-input-number-dropdown {
+      fill: #fff;
+    }
+    .sb-literal-number,
+    .sb-literal-string,
+    .sb-literal-number-dropdown,
+    .sb-literal-dropdown {
+      font-weight: normal;
+      font-size: 9px;
+      word-spacing: 0;
+    }
+    .sb-literal-number,
+    .sb-literal-string,
+    .sb-literal-number-dropdown {
+      fill: #000;
+    }
+
+    .sb-darker {
+      filter: url(#inputDarkFilter);
+    }
+
+    .sb-outline {
+      stroke: #fff;
+      stroke-opacity: 0.2;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .sb-define-hat-cap {
+      stroke: #632d99;
+      stroke-width: 1;
+      fill: #8e2ec2;
+    }
+
+    .sb-comment {
+      fill: #ffffa5;
+      stroke: #d0d1d2;
+      stroke-width: 1;
+    }
+    .sb-comment-line {
+      fill: #ffff80;
+    }
+    .sb-comment-label {
+      font-family: Helevetica, Arial, DejaVu Sans, sans-serif;
+      font-weight: bold;
+      fill: #5c5d5f;
+      word-spacing: 0;
+      font-size: 12px;
+    }
+
+    .sb-diff {
+      fill: none;
+      stroke: #000;
+    }
+    .sb-diff-ins {
+      stroke-width: 2px;
+    }
+    .sb-diff-del {
+      stroke-width: 3px;
+    }
+  ]]></style><style><![CDATA[ .sb3-label {
+      font: 500 12pt Helevetica Neue, Helvetica, sans-serif;
+      fill: #fff;
+      word-spacing: +1pt;
+    }
+
+    .sb3-motion { fill: #4c97ff; stroke: #3373cc; }
+    .sb3-motion-alt { fill: #4280d7; }
+    .sb3-motion-dark { fill: #4c97ff; }
+    .sb3-looks { fill: #9966ff; stroke: #774dcb; }
+    .sb3-looks-alt { fill: #855cd6; }
+    .sb3-looks-dark { fill: #bd42bd; }
+    .sb3-sound { fill: #cf63cf; stroke: #bd42bd; }
+    .sb3-sound-alt { fill: #c94fc9; }
+    .sb3-sound-dark { fill: #bd42bd; }
+    .sb3-control { fill: #ffab19; stroke: #cf8b17; }
+    .sb3-control-alt { fill: #ec9c13; }
+    .sb3-control-dark { fill: #cf8b17; }
+    .sb3-events { fill: #ffbf00; stroke: #cc9900; }
+    .sb3-events-alt { fill: #e6ac00; }
+    .sb3-events-dark { fill: #cc9900; }
+    .sb3-sensing { fill: #5cb1d6; stroke: #2e8eb8; }
+    .sb3-sensing-alt { fill: #47a8d1; }
+    .sb3-sensing-dark { fill: #2e8eb8; }
+    .sb3-operators { fill: #59c059; stroke: #389438; }
+    .sb3-operators-alt { fill: #46b946; }
+    .sb3-operators-dark { fill: #389438; }
+    .sb3-variables { fill: #ff8c1a; stroke: #db6e00; }
+    .sb3-variables-alt { fill: #ff8000; }
+    .sb3-variables-dark { fill: #db6e00; }
+    .sb3-list { fill: #ff661a; stroke: #e64d00; }
+    .sb3-list-alt { fill: #ff5500; }
+    .sb3-list-dark { fill: #e64d00; }
+    .sb3-custom { fill: #ff6680; stroke: #ff3355; }
+    .sb3-custom-alt { fill: #ff4d6a; }
+    .sb3-custom-dark { fill: #ff3355; }
+    .sb3-custom-arg { fill: #ff6680; stroke: #ff3355; }
+
+    /* extension blocks, e.g. pen */
+    .sb3-extension { fill: #0fbd8c; stroke: #0b8e69; }
+    .sb3-extension-alt { fill: #0da57a; }
+    .sb3-extension-line { stroke: #0da57a; }
+    .sb3-extension-dark { fill: #0b8e69; }
+
+    /* obsolete colors: chosen by hand, indicates invalid blocks */
+    .sb3-obsolete { fill: #ed4242; stroke: #ca2b2b; }
+    .sb3-obsolete-alt { fill: #db3333; }
+    .sb3-obsolete-dark { fill: #ca2b2b; }
+
+    /* grey: special color from the Scratch 3.0 design mockups */
+    .sb3-grey { fill: #bfbfbf; stroke: #909090; }
+    .sb3-grey-alt { fill: #b2b2b2; }
+    .sb3-grey-dark { fill: #909090; }
+
+    .sb3-input-color {
+      stroke: #fff;
+    }
+
+    .sb3-input-number,
+    .sb3-input-string {
+      fill: #fff;
+    }
+    .sb3-literal-number,
+    .sb3-literal-string,
+    .sb3-literal-number-dropdown,
+    .sb3-literal-dropdown {
+      word-spacing: 0;
+    }
+    .sb3-literal-number,
+    .sb3-literal-string {
+      fill: #575e75;
+    }
+
+    .sb3-comment {
+      fill: #ffffa5;
+      stroke: #d0d1d2;
+      stroke-width: 1;
+    }
+    .sb3-comment-line {
+      fill: #ffff80;
+    }
+    .sb3-comment-label {
+      font: 400 12pt Helevetica Neue, Helvetica, sans-serif;
+      fill: #000;
+      word-spacing: 0;
+    }
+
+    .sb3-diff {
+      fill: none;
+      stroke: #000;
+    }
+    .sb3-diff-ins {
+      stroke-width: 2px;
+    }
+    .sb3-diff-del {
+      stroke-width: 3px;
+    }
+  ]]></style>
+
+        
+
+        <link href="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/page.css" rel="stylesheet">
+        <link rel="stylesheet" href="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/css.css" media="all"><script src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/jekyll-theme-cs50.js"></script>
+
+        <script>
+            window.CS50 = {
+                local: {"day":"numeric","hour":"numeric","minute":"numeric","month":"long","timeZoneName":"short","weekday":"long","year":"numeric"},
+                locale: "en",
+                tz: "America/New_York"
+            };
+        </script>
+
+        <title>Lecture 6 - CS50's Web Programming with Python and JavaScript</title>
+
+
+    <style id="MJX-CHTML-styles">
+mjx-container[jax="CHTML"] {
+  line-height: 0;
+}
+
+mjx-container [space="1"] {
+  margin-left: .111em;
+}
+
+mjx-container [space="2"] {
+  margin-left: .167em;
+}
+
+mjx-container [space="3"] {
+  margin-left: .222em;
+}
+
+mjx-container [space="4"] {
+  margin-left: .278em;
+}
+
+mjx-container [space="5"] {
+  margin-left: .333em;
+}
+
+mjx-container [rspace="1"] {
+  margin-right: .111em;
+}
+
+mjx-container [rspace="2"] {
+  margin-right: .167em;
+}
+
+mjx-container [rspace="3"] {
+  margin-right: .222em;
+}
+
+mjx-container [rspace="4"] {
+  margin-right: .278em;
+}
+
+mjx-container [rspace="5"] {
+  margin-right: .333em;
+}
+
+mjx-container [size="s"] {
+  font-size: 70.7%;
+}
+
+mjx-container [size="ss"] {
+  font-size: 50%;
+}
+
+mjx-container [size="Tn"] {
+  font-size: 60%;
+}
+
+mjx-container [size="sm"] {
+  font-size: 85%;
+}
+
+mjx-container [size="lg"] {
+  font-size: 120%;
+}
+
+mjx-container [size="Lg"] {
+  font-size: 144%;
+}
+
+mjx-container [size="LG"] {
+  font-size: 173%;
+}
+
+mjx-container [size="hg"] {
+  font-size: 207%;
+}
+
+mjx-container [size="HG"] {
+  font-size: 249%;
+}
+
+mjx-container [width="full"] {
+  width: 100%;
+}
+
+mjx-box {
+  display: inline-block;
+}
+
+mjx-block {
+  display: block;
+}
+
+mjx-itable {
+  display: inline-table;
+}
+
+mjx-row {
+  display: table-row;
+}
+
+mjx-row > * {
+  display: table-cell;
+}
+
+mjx-mtext {
+  display: inline-block;
+}
+
+mjx-mstyle {
+  display: inline-block;
+}
+
+mjx-merror {
+  display: inline-block;
+  color: red;
+  background-color: yellow;
+}
+
+mjx-mphantom {
+  visibility: hidden;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-c::before {
+  display: block;
+  width: 0;
+}
+
+.MJX-TEX {
+  font-family: MJXZERO, MJXTEX;
+}
+
+.TEX-B {
+  font-family: MJXZERO, MJXTEX-B;
+}
+
+.TEX-I {
+  font-family: MJXZERO, MJXTEX-I;
+}
+
+.TEX-MI {
+  font-family: MJXZERO, MJXTEX-MI;
+}
+
+.TEX-BI {
+  font-family: MJXZERO, MJXTEX-BI;
+}
+
+.TEX-S1 {
+  font-family: MJXZERO, MJXTEX-S1;
+}
+
+.TEX-S2 {
+  font-family: MJXZERO, MJXTEX-S2;
+}
+
+.TEX-S3 {
+  font-family: MJXZERO, MJXTEX-S3;
+}
+
+.TEX-S4 {
+  font-family: MJXZERO, MJXTEX-S4;
+}
+
+.TEX-A {
+  font-family: MJXZERO, MJXTEX-A;
+}
+
+.TEX-C {
+  font-family: MJXZERO, MJXTEX-C;
+}
+
+.TEX-CB {
+  font-family: MJXZERO, MJXTEX-CB;
+}
+
+.TEX-FR {
+  font-family: MJXZERO, MJXTEX-FR;
+}
+
+.TEX-FRB {
+  font-family: MJXZERO, MJXTEX-FRB;
+}
+
+.TEX-SS {
+  font-family: MJXZERO, MJXTEX-SS;
+}
+
+.TEX-SSB {
+  font-family: MJXZERO, MJXTEX-SSB;
+}
+
+.TEX-SSI {
+  font-family: MJXZERO, MJXTEX-SSI;
+}
+
+.TEX-SC {
+  font-family: MJXZERO, MJXTEX-SC;
+}
+
+.TEX-T {
+  font-family: MJXZERO, MJXTEX-T;
+}
+
+.TEX-V {
+  font-family: MJXZERO, MJXTEX-V;
+}
+
+.TEX-VB {
+  font-family: MJXZERO, MJXTEX-VB;
+}
+
+mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
+  font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+}
+
+@font-face /* 0 */ {
+  font-family: MJXZERO;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff");
+}
+
+@font-face /* 1 */ {
+  font-family: MJXTEX;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff");
+}
+
+@font-face /* 2 */ {
+  font-family: MJXTEX-B;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff");
+}
+
+@font-face /* 3 */ {
+  font-family: MJXTEX-I;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff");
+}
+
+@font-face /* 4 */ {
+  font-family: MJXTEX-MI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff");
+}
+
+@font-face /* 5 */ {
+  font-family: MJXTEX-BI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff");
+}
+
+@font-face /* 6 */ {
+  font-family: MJXTEX-S1;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff");
+}
+
+@font-face /* 7 */ {
+  font-family: MJXTEX-S2;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff");
+}
+
+@font-face /* 8 */ {
+  font-family: MJXTEX-S3;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff");
+}
+
+@font-face /* 9 */ {
+  font-family: MJXTEX-S4;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff");
+}
+
+@font-face /* 10 */ {
+  font-family: MJXTEX-A;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff");
+}
+
+@font-face /* 11 */ {
+  font-family: MJXTEX-C;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff");
+}
+
+@font-face /* 12 */ {
+  font-family: MJXTEX-CB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff");
+}
+
+@font-face /* 13 */ {
+  font-family: MJXTEX-FR;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff");
+}
+
+@font-face /* 14 */ {
+  font-family: MJXTEX-FRB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff");
+}
+
+@font-face /* 15 */ {
+  font-family: MJXTEX-SS;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff");
+}
+
+@font-face /* 16 */ {
+  font-family: MJXTEX-SSB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff");
+}
+
+@font-face /* 17 */ {
+  font-family: MJXTEX-SSI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff");
+}
+
+@font-face /* 18 */ {
+  font-family: MJXTEX-SC;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff");
+}
+
+@font-face /* 19 */ {
+  font-family: MJXTEX-T;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff");
+}
+
+@font-face /* 20 */ {
+  font-family: MJXTEX-V;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff");
+}
+
+@font-face /* 21 */ {
+  font-family: MJXTEX-VB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff");
+}
+</style></head>
+
+    <body class="">
+
+        <div class="alert fixed-top mb-0 rounded-0 shadow alert-success alert-dismissible" data-alert="success dismissible" data-hash="edc24fffed7a3a9ad8c189ef5e2aca41" id="alert" role="alert">
+            <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button><p>Interested in <a href="https://cs50.harvard.edu/web/2020/#how-to-take-this-course" class="alert-link">a verified certificate, a professional certificate, or transfer credit and accreditation</a>?
+And get vaccinated (as soon as it’s available to you). 💉 <a href="https://www.who.int/news-room/feature-stories/detail/getting-the-covid-19-vaccine" class="alert-link">Here’s why</a>. <a href="https://www.google.com/search?q=covid-19+vaccine+finder" class="alert-link">Here’s how</a>.</p></div>
+        
+
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <aside class="col-md" style="height: 513.667px; top: 81.3333px;">
+ 
+                    <header><h1 data-id="cs50s-web-programming-with-python-and-javascript"><a href="https://cs50.harvard.edu/web/2020/">CS50’s Web Programming with Python and JavaScript</a></h1>
+
+<p>OpenCourseWare</p>
+
+<p><a class="pr-1 small" href="https://cs50.harvard.edu/donate">Donate<i aria-hidden="true" class="fas fa-external-link-alt ps-2"></i></a></p>
+
+<p><a href="https://brianyu.me/">Brian Yu</a><br>
+<a href="mailto:brian@cs.harvard.edu">brian@cs.harvard.edu</a></p>
+
+<p><a href="https://cs.harvard.edu/malan/">David J. Malan</a>
+<br>
+<a href="mailto:malan@harvard.edu">malan@harvard.edu</a>
+<br>
+<a class="mr-1" href="https://www.facebook.com/dmalan"><i aria-hidden="true" class="fab fa-facebook-f" title="Facebook"></i><span class="sr-only">Facebook</span></a>
+<a class="mr-1" href="https://github.com/dmalan"><i aria-hidden="true" class="fab fa-github" title="GitHub"></i><span class="sr-only">GitHub</span></a>
+<a class="mr-1" href="https://www.instagram.com/davidjmalan/"><i aria-hidden="true" class="fab fa-instagram" title="Instagram"></i><span class="sr-only">Instagram</span></a>
+<a class="mr-1" href="https://www.linkedin.com/in/malan/"><i aria-hidden="true" class="fab fa-linkedin" title="LinkedIn"></i><span class="sr-only">LinkedIn</span></a>
+<a class="mr-1" href="https://orcid.org/0000-0001-5338-2522"><i aria-hidden="true" class="fab fa-orcid" title="ORCID"></i><span class="sr-only">ORCID</span></a>
+<a class="mr-1" href="https://www.quora.com/profile/David-J-Malan"><i aria-hidden="true" class="fab fa-quora" title="Quora"></i><span class="sr-only">Quora</span></a>
+<a class="mr-1" href="https://www.reddit.com/user/davidjmalan"><i aria-hidden="true" class="fab fa-reddit-alien" title="Reddit"></i><span class="sr-only">Reddit</span></a>
+<a class="mr-1" href="https://www.tiktok.com/@davidjmalan"><i aria-hidden="true" class="fab fa-tiktok" title="TikTok"></i><span class="sr-only">Twitter</span></a>
+<a class="mr-1" href="https://twitter.com/davidjmalan"><i aria-hidden="true" class="fab fa-twitter" title="Twitter"></i><span class="sr-only">Twitter</span></a></p></header>
+
+                    
+
+                    <button aria-controls="nav" aria-expanded="false" class="btn btn-sm collapsed d-md-none" data-bs-target="aside &gt; nav" data-bs-toggle="collapse">
+                        Menu
+                    </button>
+
+                    <nav class="collapse d-md-block" id="nav"><hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/x/movie/">🍿 CS50x Movie Night 2022</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/x/puzzles/"><i class="fas fa-puzzle-piece pe-2"></i>CS50x Puzzle Day 2022</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/x/prepare/"><i class="fas fa-book pe-2"></i>How to Prepare for Technical Interviews</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.ly/zoom"><i class="fas fa-video pe-2"></i>Zoom Meetings</a></li>
+</ul>
+
+<hr>
+
+<ol start="0">
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/0/">HTML, CSS</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/1/">Git</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/2/">Python</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/3/">Django</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/4/">SQL, Models, and Migrations</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/5/">JavaScript</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/6/">User Interfaces</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/7/">Testing, CI/CD</a></li>
+  <li><a href="https://cs50.harvard.edu/web/2020/weeks/8/">Scalability and Security</a></li>
+</ol>
+
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/honesty/">Academic Honesty</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/certificate/">CS50 Certificate</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/faqs/">FAQs</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.me/cs50w">Gradebook</a></li>
+</ul>
+
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/ed">Ed Discussion</a> for Q&amp;A</li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://us.edstem.org/quickstart/ed-discussion.pdf">Quick Start Guide</a></li>
+</ul>
+
+<hr>
+
+<ul class="small fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/web">edX</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://itunes.apple.com/us/course/id1505432709">iTunes U</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.youtube.com/playlist?list=PLhQjrBD2T380xvFSUmToMMzERZ3qB5Ueu">YouTube</a></li>
+</ul>
+
+<hr>
+
+<ul class="small fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.noticeable.news/">Changelog</a></li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.statuspage.io/">Status Page</a></li>
+</ul>
+
+<hr>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.harvard.edu/web/2020/communities/"><strong>Communities</strong></a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.clubhouse.com/club/cs50">Clubhouse</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://discord.gg/cs50">Discord</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/ed">Ed</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.facebook.com/groups/cs50/">Facebook Group</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.facebook.com/cs50/">Facebook Page</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://github.com/cs50">GitHub</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://gitter.im/cs50/x">Gitter</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://instagram.com/cs50">Instagram</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.linkedin.com/groups/7437240/">LinkedIn Group</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.linkedin.com/school/CS50/">LinkedIn Page</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.medium.com/">Medium</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.quora.com/topic/CS50">Quora</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.reddit.com/r/cs50/">Reddit</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.edx.org/slack">Slack</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.snapchat.com/add/cs50">Snapchat</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://soundcloud.com/cs50">SoundCloud</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://cs50.stackexchange.com/">Stack Exchange</a> <span class="badge bg-light ms-1 py-1 rounded-pill text-dark">Q&amp;A</span></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://www.tiktok.com/@cs50">TikTok</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="https://twitter.com/cs50">Twitter</a></li>
+  <li data-marker="*" class="small"><span class="fa-li"><i class="fas fa-square"></i></span><a href="http://www.youtube.com/subscription_center?add_user=cs50tv">YouTube</a></li>
+</ul>
+
+<hr>
+
+<p><a href="https://cs50.harvardshop.com/"><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/GGMdcKt.png" alt="Harvard Shop"></a></p>
+
+<hr>
+
+<p><a href="https://cs50.harvard.edu/web/2020/license/" class="small"><i class="fab fa-creative-commons me-1"></i>License</a></p></nav>
+
+                    <footer></footer>
+
+                </aside>
+
+                <main class="col-md" style="margin-bottom: 0px; margin-top: 81.3333px;">
+
+                    <a data-id="" id="lecture-6" style="top: -81.3333px;"></a><h1 class="no_toc"><a data-id="" href="#lecture-6">Lecture 6</a></h1>
+
+<ul id="markdown-toc">
+  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
+  <li><a href="#user-interfaces" id="markdown-toc-user-interfaces">User Interfaces</a></li>
+  <li><a href="#single-page-applications" id="markdown-toc-single-page-applications">Single Page Applications</a></li>
+  <li><a href="#scroll" id="markdown-toc-scroll">Scroll</a>    <ul>
+      <li><a href="#infinite-scroll" id="markdown-toc-infinite-scroll">Infinite Scroll</a></li>
+    </ul>
+  </li>
+  <li><a href="#animation" id="markdown-toc-animation">Animation</a></li>
+  <li><a href="#react" id="markdown-toc-react">React</a>    <ul>
+      <li><a href="#addition" id="markdown-toc-addition">Addition</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a data-id="" id="introduction" style="top: -81.3333px;"></a><h2><a data-id="" href="#introduction">Introduction</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>So
+ far, we’ve discussed how to build simple web pages using HTML and CSS, 
+and how to use Git and GitHub in order to keep track of changes to our 
+code and collaborate with others. We also familiarized ourselves with 
+the Python programming language, started using Django to create web 
+applications, and learned how to use Django models to store information 
+in our sites. We then introduced JavaScript and learned how to use it to
+ make web pages more interactive.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Today,
+ we’ll discuss common paradigms in User Interface design, using 
+JavaScript and CSS to make our sites even more user friendly.</li>
+</ul>
+
+<a data-id="" id="user-interfaces" style="top: -81.3333px;"></a><h2><a data-id="" href="#user-interfaces">User Interfaces</a></h2>
+
+<p>A User Interface is how visitors to a web page interact with that 
+page. Our goal as web developers is to make these interactions as 
+pleasant as possible for the user, and there are many methods we can use
+ to do this.</p>
+
+<a data-id="" id="single-page-applications" style="top: -81.3333px;"></a><h2><a data-id="" href="#single-page-applications">Single Page Applications</a></h2>
+
+<p>Previously, if we wanted a website with multiple pages, we would 
+accomplish that using different routes in our Django application. Now, 
+we have the ability to load just a single page and then use JavaScript 
+to manipulate the DOM. One major advantage of doing this is that we only
+ need to modify the part of the page that is actually changing. For 
+example, if we have a Nav Bar that doesn’t change based on your current 
+page, we wouldn’t want to have to re-render that Nav Bar every time we 
+switch to a new part of the page.</p>
+
+<p>Let’s look at an example of how we could simulate page switching in JavaScript:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Single Page<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;style&gt;</span>
+            <span class="nt">div</span> <span class="p">{</span>
+                <span class="nl">display</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="nt">&lt;/style&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"singlepage.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">data-page=</span><span class="s">"page1"</span><span class="nt">&gt;</span>Page 1<span class="nt">&lt;/button&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">data-page=</span><span class="s">"page2"</span><span class="nt">&gt;</span>Page 2<span class="nt">&lt;/button&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">data-page=</span><span class="s">"page3"</span><span class="nt">&gt;</span>Page 3<span class="nt">&lt;/button&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"page1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;h1&gt;</span>This is page 1<span class="nt">&lt;/h1&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"page2"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;h1&gt;</span>This is page 2<span class="nt">&lt;/h1&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"page3"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;h1&gt;</span>This is page 3<span class="nt">&lt;/h1&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>Notice in the HTML above that we have three buttons and three divs. 
+At the moment, the divs contain only a small bit of text, but we could 
+imagine each div containing the contents of one page on our site. Now, 
+we’ll add some JavaScript that allows us to use the buttons to toggle 
+between pages.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Shows one page and hides the other two</span>
+<span class="kd">function</span> <span class="nx">showPage</span><span class="p">(</span><span class="nx">page</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// Hide all of the divs:</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">'</span><span class="s1">div</span><span class="dl">'</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">div</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">div</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">none</span><span class="dl">'</span><span class="p">;</span>
+    <span class="p">});</span>
+
+    <span class="c1">// Show the div provided in the argument</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">`#</span><span class="p">${</span><span class="nx">page</span><span class="p">}</span><span class="s2">`</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">block</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Wait for page to loaded:</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">DOMContentLoaded</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// Select all buttons</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">'</span><span class="s1">button</span><span class="dl">'</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">button</span> <span class="o">=&gt;</span> <span class="p">{</span>
+
+        <span class="c1">// When a button is clicked, switch to that page</span>
+        <span class="nx">button</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">showPage</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">page</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">})</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/singlepage1.gif" alt="single page 1"></p>
+
+<p>In many cases, it will be inefficient to load the entire contents of 
+every page when we first visit a site, so we will need to use a server 
+to access new data. For example, when you visit a news site, it would 
+take far too long for the site to load if it had to load every single 
+article it has available when you first visit the page. We can avoid 
+this problem using a strategy similar to the one we used while loading 
+currency exchange rates in the previous lecture. This time, we’ll take a
+ look at using Django to send and receive information from our single 
+page application. To show how this works, let’s take a look at a simple 
+Django application. It has two URL patterns in <code class="language-plaintext highlighter-rouge">urls.py</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">""</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"index"</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">"sections/&lt;int:num&gt;"</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">section</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"section"</span><span class="p">)</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<p>And two corresponding routes in <code class="language-plaintext highlighter-rouge">views.py</code>. Notice that the <code class="language-plaintext highlighter-rouge">section</code> route takes in an integer, and then returns a string of text based on that integer as an HTTP Response.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">Http404</span><span class="p">,</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+
+<span class="c1"># Create your views here.
+</span><span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">"singlepage/index.html"</span><span class="p">)</span>
+
+<span class="c1"># The texts are much longer in reality, but have
+# been shortened here to save space
+</span><span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Text 1"</span><span class="p">,</span> <span class="s">"Text 2"</span><span class="p">,</span> <span class="s">"Text 3"</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">section</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+    <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">texts</span><span class="p">[</span><span class="n">num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">Http404</span><span class="p">(</span><span class="s">"No such section"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now, within our <code class="language-plaintext highlighter-rouge">index.html</code>
+ file, we’ll take advantage of AJAX, which we learned about last 
+lecture, to make a request to the server to gain the text of a 
+particular section and display it on the screen:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Single Page<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;style&gt;</span>
+        <span class="nt">&lt;/style&gt;</span>
+        <span class="nt">&lt;script&gt;</span>
+
+            <span class="c1">// Shows given section</span>
+            <span class="kd">function</span> <span class="nx">showSection</span><span class="p">(</span><span class="nx">section</span><span class="p">)</span> <span class="p">{</span>
+                
+                <span class="c1">// Find section text from server</span>
+                <span class="nx">fetch</span><span class="p">(</span><span class="s2">`/sections/</span><span class="p">${</span><span class="nx">section</span><span class="p">}</span><span class="s2">`</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+                <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">text</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                    <span class="c1">// Log text and display on page</span>
+                    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">text</span><span class="p">);</span>
+                    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">#content</span><span class="dl">'</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">text</span><span class="p">;</span>
+                <span class="p">});</span>
+            <span class="p">}</span>
+
+            <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">DOMContentLoaded</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="c1">// Add button functionality</span>
+                <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">'</span><span class="s1">button</span><span class="dl">'</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">button</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                    <span class="nx">button</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                        <span class="nx">showSection</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">section</span><span class="p">);</span>
+                    <span class="p">};</span>
+                <span class="p">});</span>
+            <span class="p">});</span>
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;h1&gt;</span>Hello!<span class="nt">&lt;/h1&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">data-section=</span><span class="s">"1"</span><span class="nt">&gt;</span>Section 1<span class="nt">&lt;/button&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">data-section=</span><span class="s">"2"</span><span class="nt">&gt;</span>Section 2<span class="nt">&lt;/button&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">data-section=</span><span class="s">"3"</span><span class="nt">&gt;</span>Section 3<span class="nt">&lt;/button&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"content"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/singlepage2.gif" alt="Single page 2"></p>
+
+<p>Now, we’ve created a site where we can load new data from a server without reloading our entire HTML page!</p>
+
+<p>One disadvantage of our site though is that the URL is now less 
+informative. You’ll notice in the video above that the URL remains the 
+same even when we switch from section to section. We can solve this 
+problem using the <a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">JavaScript History API</a>.
+ This API allows us to push information to our browser history and 
+update the URL manually. Let’s take a look at how we can use this API. 
+Imagine we have a Django project identical to the previous one, but this
+ time we wish to alter our script to be employ the history API:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// When back arrow is clicked, show previous section</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">onpopstate</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">section</span><span class="p">);</span>
+    <span class="nx">showSection</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">section</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">showSection</span><span class="p">(</span><span class="nx">section</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fetch</span><span class="p">(</span><span class="s2">`/sections/</span><span class="p">${</span><span class="nx">section</span><span class="p">}</span><span class="s2">`</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">text</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">text</span><span class="p">);</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">#content</span><span class="dl">'</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">text</span><span class="p">;</span>
+    <span class="p">});</span>
+
+<span class="p">}</span>
+
+<span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">DOMContentLoaded</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">'</span><span class="s1">button</span><span class="dl">'</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">button</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">button</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="kd">const</span> <span class="nx">section</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">section</span><span class="p">;</span>
+
+            <span class="c1">// Add the current state to the history</span>
+            <span class="nx">history</span><span class="p">.</span><span class="nx">pushState</span><span class="p">({</span><span class="na">section</span><span class="p">:</span> <span class="nx">section</span><span class="p">},</span> <span class="dl">""</span><span class="p">,</span> <span class="s2">`section</span><span class="p">${</span><span class="nx">section</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+            <span class="nx">showSection</span><span class="p">(</span><span class="nx">section</span><span class="p">);</span>
+        <span class="p">};</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>In the <code class="language-plaintext highlighter-rouge">showSection</code> function above, we employ the <code class="language-plaintext highlighter-rouge">history.pushState</code> function. This function adds a new element to our browsing history based on three arguments:</p>
+<ol>
+  <li>Any data associated with the state.</li>
+  <li>A title parameter ignored by most web browsers</li>
+  <li>What should be displayed in the URL</li>
+</ol>
+
+<p>The other change we make in the above JavaScript is in setting the <code class="language-plaintext highlighter-rouge">onpopstate</code>
+ parameter, which specifies what we should do when the user clicks the 
+back arrow. In this case, we want to show the previous section when the 
+button is pressed. Now, the site looks a little more user-friendly:</p>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/singlepage3.gif" alt="single page with URL change"></p>
+
+<a data-id="" id="scroll" style="top: -81.3333px;"></a><h2><a data-id="" href="#scroll">Scroll</a></h2>
+
+<p>In order to update and access the browser history, we used an important JavaScript object known as the <a href="https://www.w3schools.com/js/js_window.asp">window</a>. There are some other properties of the window that we can use to make our sites look nicer:</p>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">window.innerWidth</code>: Width of window in pixels</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">window.innerHeight</code>: Height of window in pixels</li>
+</ul>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/innerMeasures.png" alt="inner measures"></p>
+
+<p>While the window represents what is currently visible to the user, the <a href="https://www.w3schools.com/js/js_htmldom_document.asp">document</a>
+ refers to the entire web page, which is often much larger than the 
+window, forcing the user to scroll up and down to see the page’s 
+contents. To work with our scrolling, we have access to other variables:</p>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">window.scrollY</code>: How many pixels we have scrolled from the top of the page</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">document.body.offsetHeight</code>: The height in pixels of the entire document.</li>
+</ul>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/scroll.png" alt="Scrolling measures"></p>
+
+<p>We can use these measures to determine whether or not the user has scrolled to the end of a page using the comparison <code class="language-plaintext highlighter-rouge">window.scrollY + window.innerHeight &gt;= document.body.offsetHeight</code>. The following page, for example, will change the backgroud color to green when we reach the bottom of a page:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Scroll<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;script&gt;</span>
+
+            <span class="c1">// Event listener for scrolling</span>
+            <span class="nb">window</span><span class="p">.</span><span class="nx">onscroll</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+
+                <span class="c1">// Check if we're at the bottom</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">innerHeight</span> <span class="o">+</span> <span class="nb">window</span><span class="p">.</span><span class="nx">scrollY</span> <span class="o">&gt;=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">offsetHeight</span><span class="p">)</span> <span class="p">{</span>
+
+                    <span class="c1">// Change color to green</span>
+                    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">body</span><span class="dl">'</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">background</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">green</span><span class="dl">'</span><span class="p">;</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+
+                    <span class="c1">// Change color to white</span>
+                    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">body</span><span class="dl">'</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">background</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">white</span><span class="dl">'</span><span class="p">;</span>
+                <span class="p">}</span>
+
+            <span class="p">};</span>
+
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;p&gt;</span>1<span class="nt">&lt;/p&gt;</span>
+        <span class="nt">&lt;p&gt;</span>2<span class="nt">&lt;/p&gt;</span>
+        <span class="c">&lt;!-- More paragraphs left out to save space --&gt;</span>
+        <span class="nt">&lt;p&gt;</span>99<span class="nt">&lt;/p&gt;</span>
+        <span class="nt">&lt;p&gt;</span>100<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/scrollgreen.gif" alt="scroll green white"></p>
+
+<a data-id="" id="infinite-scroll" style="top: -81.3333px;"></a><h3><a data-id="" href="#infinite-scroll">Infinite Scroll</a></h3>
+
+<p>Changing the background color at the end of the page probably isn’t 
+all that useful, but we may want to detect that we’re at the end of the 
+page if we want to implement <strong>infinite scroll</strong>. For 
+example, if you’re on a social media site, you don’t want to have to 
+load all posts at once, you might want to load the first ten, and then 
+when the user reaches the bottom, load the next ten. Let’s take a look 
+at a Django application that could do this. This app has two paths in <code class="language-plaintext highlighter-rouge">urls.py</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">""</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"index"</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">"posts"</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">posts</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"posts"</span><span class="p">)</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<p>And two corresponding views in <code class="language-plaintext highlighter-rouge">views.py</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">JsonResponse</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+
+<span class="c1"># Create your views here.
+</span><span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">"posts/index.html"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">posts</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+
+    <span class="c1"># Get start and end points
+</span>    <span class="n">start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">GET</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"start"</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">GET</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"end"</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="mi">9</span><span class="p">))</span>
+
+    <span class="c1"># Generate list of posts
+</span>    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">data</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s">"Post #</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+    <span class="c1"># Artificially delay speed of response
+</span>    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Return list of posts
+</span>    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span>
+        <span class="s">"posts"</span><span class="p">:</span> <span class="n">data</span>
+    <span class="p">})</span>
+</code></pre></div></div>
+
+<p>Notice that the <code class="language-plaintext highlighter-rouge">posts</code> view requires two arguments: a <code class="language-plaintext highlighter-rouge">start</code> point and an <code class="language-plaintext highlighter-rouge">end</code> point. In this view, we’ve created our own <strong>API</strong>, which we can test out by visiting the url <code class="language-plaintext highlighter-rouge">localhost:8000/posts?start=10&amp;end=15</code>, which returns the following JSON:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"posts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"Post #10"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Post #11"</span><span class="p">,</span><span class="w"> 
+        </span><span class="s2">"Post #12"</span><span class="p">,</span><span class="w"> 
+        </span><span class="s2">"Post #13"</span><span class="p">,</span><span class="w"> 
+        </span><span class="s2">"Post #14"</span><span class="p">,</span><span class="w"> 
+        </span><span class="s2">"Post #15"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Now, in the <code class="language-plaintext highlighter-rouge">index.html</code> template that the site loads, we start out with only an empty <code class="language-plaintext highlighter-rouge">div</code>
+ in the body and some styling. Notice that we load our static files at 
+the beginning, and then we reference a JavaScript file within our <code class="language-plaintext highlighter-rouge">static</code> folder.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+{% load static %}
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>My Webpage<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;style&gt;</span>
+            <span class="nc">.post</span> <span class="p">{</span>
+                <span class="nl">background-color</span><span class="p">:</span> <span class="m">#77dd11</span><span class="p">;</span>
+                <span class="nl">padding</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+                <span class="nl">margin</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="nt">body</span> <span class="p">{</span>
+                <span class="nl">padding-bottom</span><span class="p">:</span> <span class="m">50px</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="nt">&lt;/style&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">scr=</span><span class="s">"{% static 'posts/script.js' %}"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"posts"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+
+</code></pre></div></div>
+
+<p>Now with JavaScript, we’ll wait until a user scrolls to the end of the page and then load more posts using our API:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Start with first post</span>
+<span class="kd">let</span> <span class="nx">counter</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="c1">// Load posts 20 at a time</span>
+<span class="kd">const</span> <span class="nx">quantity</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+
+<span class="c1">// When DOM loads, render the first 20 posts</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">DOMContentLoaded</span><span class="dl">'</span><span class="p">,</span> <span class="nx">load</span><span class="p">);</span>
+
+<span class="c1">// If scrolled to bottom, load the next 20 posts</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">onscroll</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">innerHeight</span> <span class="o">+</span> <span class="nb">window</span><span class="p">.</span><span class="nx">scrollY</span> <span class="o">&gt;=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">offsetHeight</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">load</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Load next set of posts</span>
+<span class="kd">function</span> <span class="nx">load</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// Set start and end post numbers, and update counter</span>
+    <span class="kd">const</span> <span class="nx">start</span> <span class="o">=</span> <span class="nx">counter</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">start</span> <span class="o">+</span> <span class="nx">quantity</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="nx">counter</span> <span class="o">=</span> <span class="nx">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// Get new posts and add posts</span>
+    <span class="nx">fetch</span><span class="p">(</span><span class="s2">`/posts?start=</span><span class="p">${</span><span class="nx">start</span><span class="p">}</span><span class="s2">&amp;end=</span><span class="p">${</span><span class="nx">end</span><span class="p">}</span><span class="s2">`</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">data</span><span class="p">.</span><span class="nx">posts</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">add_post</span><span class="p">);</span>
+    <span class="p">})</span>
+<span class="p">};</span>
+
+<span class="c1">// Add a new post with given contents to DOM</span>
+<span class="kd">function</span> <span class="nx">add_post</span><span class="p">(</span><span class="nx">contents</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// Create new post</span>
+    <span class="kd">const</span> <span class="nx">post</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">div</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">post</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">post</span><span class="dl">'</span><span class="p">;</span>
+    <span class="nx">post</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">contents</span><span class="p">;</span>
+
+    <span class="c1">// Add post to DOM</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">#posts</span><span class="dl">'</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">post</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Now, we’ve created a site with infinite scroll!</p>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/infscroll.gif" alt="infinite scroll"></p>
+
+<a data-id="" id="animation" style="top: -81.3333px;"></a><h2><a data-id="" href="#animation">Animation</a></h2>
+
+<p>Another way we can make our sites a bit more interesting is by adding
+ some animation to them. It turns out that in addition to providing 
+styling, CSS makes it easy for us to animate HTML elements.</p>
+
+<p>To create an animation in CSS, we use the format below, where the animation specifics can include starting and ending styles (<code class="language-plaintext highlighter-rouge">to</code> and <code class="language-plaintext highlighter-rouge">from</code>) or styles at different stages in the duration (anywhere from <code class="language-plaintext highlighter-rouge">0%</code> to <code class="language-plaintext highlighter-rouge">100%</code>). For example:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@keyframes</span> <span class="n">animation_name</span> <span class="p">{</span>
+    <span class="nt">from</span> <span class="p">{</span>
+        <span class="c">/* Some styling for the start */</span>
+    <span class="p">}</span>
+
+    <span class="nt">to</span> <span class="p">{</span>
+        <span class="c">/* Some styling for the end */</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>or:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@keyframes</span> <span class="n">animation_name</span> <span class="p">{</span>
+    <span class="err">0</span><span class="o">%</span> <span class="p">{</span>
+        <span class="c">/* Some styling for the start */</span>
+    <span class="p">}</span>
+
+    <span class="err">75</span><span class="o">%</span> <span class="p">{</span>
+        <span class="c">/* Some styling after 3/4 of animation */</span>
+    <span class="p">}</span>
+
+    <span class="err">100</span><span class="o">%</span> <span class="p">{</span>
+        <span class="c">/* Some styling for the end */</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Then, to apply an animation to an element, we include the <code class="language-plaintext highlighter-rouge">animation-name</code>, the <code class="language-plaintext highlighter-rouge">animation-duration</code> (in seconds), and the <code class="language-plaintext highlighter-rouge">animation-fill-mode</code> (typically <code class="language-plaintext highlighter-rouge">forwards</code>). For example, here’s a page where a title grows when we first enter the page:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Animate<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;style&gt;</span>
+            <span class="k">@keyframes</span> <span class="n">grow</span> <span class="p">{</span>
+                <span class="nt">from</span> <span class="p">{</span>
+                    <span class="nl">font-size</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="nt">to</span> <span class="p">{</span>
+                    <span class="nl">font-size</span><span class="p">:</span> <span class="m">100px</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="nt">h1</span> <span class="p">{</span>
+                <span class="nl">animation-name</span><span class="p">:</span> <span class="n">grow</span><span class="p">;</span>
+                <span class="nl">animation-duration</span><span class="p">:</span> <span class="m">2s</span><span class="p">;</span>
+                <span class="nl">animation-fill-mode</span><span class="p">:</span> <span class="n">forwards</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="nt">&lt;/style&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;h1&gt;</span>Welcome!<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/animate0.gif" alt="Growing title"></p>
+
+<p>We can do more than just manipulate size: the below example shows how
+ we can change the position of a heading just by changing a few lines:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Animate<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;style&gt;</span>
+            <span class="k">@keyframes</span> <span class="n">move</span> <span class="p">{</span>
+                <span class="nt">from</span> <span class="p">{</span>
+                    <span class="nl">left</span><span class="p">:</span> <span class="m">0%</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="nt">to</span> <span class="p">{</span>
+                    <span class="nl">left</span><span class="p">:</span> <span class="m">50%</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="nt">h1</span> <span class="p">{</span>
+                <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+                <span class="nl">animation-name</span><span class="p">:</span> <span class="n">move</span><span class="p">;</span>
+                <span class="nl">animation-duration</span><span class="p">:</span> <span class="m">2s</span><span class="p">;</span>
+                <span class="nl">animation-fill-mode</span><span class="p">:</span> <span class="n">forwards</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="nt">&lt;/style&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;h1&gt;</span>Welcome!<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/animate1.gif" alt="Moving header"></p>
+
+<p>Now, let’s look at setting some intermediate CSS properties as well. 
+We can specify the style at any percentage of the way through an 
+animation. In the below example we’ll move the title from left to right,
+ and then back to left by altering only the animation from above</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@keyframes</span> <span class="n">move</span> <span class="p">{</span>
+    <span class="err">0</span><span class="o">%</span> <span class="p">{</span>
+        <span class="nl">left</span><span class="p">:</span> <span class="m">0%</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="err">50</span><span class="o">%</span> <span class="p">{</span>
+        <span class="nl">left</span><span class="p">:</span> <span class="m">50%</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="err">100</span><span class="o">%</span> <span class="p">{</span>
+        <span class="nl">left</span><span class="p">:</span> <span class="m">0%</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/animate2.gif" alt="back and forth"></p>
+
+<p>If we want to repeat an animation multiple times, we can change the <code class="language-plaintext highlighter-rouge">animation-iteration-count</code> to a number higher than one (or even <code class="language-plaintext highlighter-rouge">infinite</code> for endless animation). There are many <a href="https://www.w3schools.com/cssref/css3_pr_animation.asp">animation properties</a> that we can set in order to change different aspects of our animation.</p>
+
+<p>In addition to CSS, we can use JavaScript to further control our 
+animations. Let’s use our moving header example (with infinite 
+repetition) to show how we can create a button that starts and stops the
+ animation. Assuming we already have an animation, button, and heading, 
+we can add the following script to start and pause the animation:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">DOMContentLoaded</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// Find heading</span>
+    <span class="kd">const</span> <span class="nx">h1</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">h1</span><span class="dl">'</span><span class="p">);</span>
+
+    <span class="c1">// Pause Animation by default</span>
+    <span class="nx">h1</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">animationPlayState</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">paused</span><span class="dl">'</span><span class="p">;</span>
+
+    <span class="c1">// Wait for button to be clicked</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">button</span><span class="dl">'</span><span class="p">).</span><span class="nx">onclick</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+
+        <span class="c1">// If animation is currently paused, begin playing it</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">h1</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">animationPlayState</span> <span class="o">==</span> <span class="dl">'</span><span class="s1">paused</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">h1</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">animationPlayState</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">running</span><span class="dl">'</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Otherwise, pause the animation</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">h1</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">animationPlayState</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">paused</span><span class="dl">'</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/animate4.gif" alt="play/pause animation"></p>
+
+<p>Now, let’s look at how we can apply our new knowledge of animations 
+to the posts page we made earlier. Specifically, let’s say we want the 
+ability to hide posts once we’re done reading them. Let’s imagine a 
+Django project identical to the one we just created, but with some 
+slightly different HTML and JavaScript. The first change we’ll make is 
+to the <code class="language-plaintext highlighter-rouge">add_post</code> function, this time also adding a button to the right side of the post:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Add a new post with given contents to DOM</span>
+<span class="kd">function</span> <span class="nx">add_post</span><span class="p">(</span><span class="nx">contents</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// Create new post</span>
+    <span class="kd">const</span> <span class="nx">post</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">div</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">post</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">post</span><span class="dl">'</span><span class="p">;</span>
+    <span class="nx">post</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">contents</span><span class="p">}</span><span class="s2"> &lt;button class="hide"&gt;Hide&lt;/button&gt;`</span><span class="p">;</span>
+
+    <span class="c1">// Add post to DOM</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">#posts</span><span class="dl">'</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">post</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Now, we’ll work on hiding a post when the <code class="language-plaintext highlighter-rouge">hide</code>
+ button is clicked. To do this, we’ll add an event listener that is 
+triggered whenever a user clicks anywhere on the page. We then write a 
+function that takes in the <code class="language-plaintext highlighter-rouge">event</code> as an argument, which is useful because we can use the <code class="language-plaintext highlighter-rouge">event.target</code> attribute to access what was clicked on. We can also use the <code class="language-plaintext highlighter-rouge">parentElement</code> class to find the parent of a given element in the DOM.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// If hide button is clicked, delete the post</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
+
+    <span class="c1">// Find what was clicked on</span>
+    <span class="kd">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">;</span>
+
+    <span class="c1">// Check if the user clicked on a hide button</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">className</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">hide</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">element</span><span class="p">.</span><span class="nx">parentElement</span><span class="p">.</span><span class="nx">remove</span><span class="p">()</span>
+    <span class="p">}</span>
+    
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/hide0.gif" alt="naive hide"></p>
+
+<p>We can now see that we’ve implemented the hide button, but it doesn’t
+ look as nice as it possible could. Maybe we want to have the post fade 
+away and shrink before we remove it. In order to do this, we’ll first 
+create a CSS animation. The animation below will spend 75% of its time 
+changing the <code class="language-plaintext highlighter-rouge">opacity</code> from 1 to 0, which esentially makes the post fade out slowly. It then spends the rest of the time moving all of its <code class="language-plaintext highlighter-rouge">height</code>-related attributes to 0, effectively shrinking the post to nothing.</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@keyframes</span> <span class="nb">hide</span> <span class="p">{</span>
+    <span class="err">0</span><span class="o">%</span> <span class="p">{</span>
+        <span class="nl">opacity</span><span class="p">:</span> <span class="m">1</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+        <span class="nl">line-height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+        <span class="nl">padding</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+        <span class="nl">margin-bottom</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="err">75</span><span class="o">%</span> <span class="p">{</span>
+        <span class="nl">opacity</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+        <span class="nl">line-height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+        <span class="nl">padding</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+        <span class="nl">margin-bottom</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="err">100</span><span class="o">%</span> <span class="p">{</span>
+        <span class="nl">opacity</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">0px</span><span class="p">;</span>
+        <span class="nl">line-height</span><span class="p">:</span> <span class="m">0px</span><span class="p">;</span>
+        <span class="nl">padding</span><span class="p">:</span> <span class="m">0px</span><span class="p">;</span>
+        <span class="nl">margin-bottom</span><span class="p">:</span> <span class="m">0px</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Next, we would add this animation to our post’s CSS. Notice that we initially set the <code class="language-plaintext highlighter-rouge">animation-play-state</code> to <code class="language-plaintext highlighter-rouge">paused</code>, meaning the post will not be hidden by default.</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.post</span> <span class="p">{</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="m">#77dd11</span><span class="p">;</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+    <span class="nl">margin-bottom</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+    <span class="nl">animation-name</span><span class="p">:</span> <span class="nb">hide</span><span class="p">;</span>
+    <span class="nl">animation-duration</span><span class="p">:</span> <span class="m">2s</span><span class="p">;</span>
+    <span class="nl">animation-fill-mode</span><span class="p">:</span> <span class="n">forwards</span><span class="p">;</span>
+    <span class="nl">animation-play-state</span><span class="p">:</span> <span class="n">paused</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Finally, we want to be able to start the animation once the <code class="language-plaintext highlighter-rouge">hide</code> button has been clicked, and then remove the post. We can do this by editing our JavaScript from above:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// If hide button is clicked, delete the post</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
+
+    <span class="c1">// Find what was clicked on</span>
+    <span class="kd">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">;</span>
+
+    <span class="c1">// Check if the user clicked on a hide button</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">className</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">hide</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">element</span><span class="p">.</span><span class="nx">parentElement</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">animationPlayState</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">running</span><span class="dl">'</span><span class="p">;</span>
+        <span class="nx">element</span><span class="p">.</span><span class="nx">parentElement</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">animationend</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="nx">element</span><span class="p">.</span><span class="nx">parentElement</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+    
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/hide1.gif" alt="Pretty hide"></p>
+
+<p>As you can see above, the hide functionality now looks a lot nicer!</p>
+
+<a data-id="" id="react" style="top: -81.3333px;"></a><h2><a data-id="" href="#react">React</a></h2>
+
+<p>At this point, you can imagine how much JavaScript code would have to
+ go into a more complicated website. We can mitigate how much code we 
+actually need to write by employing a JavaScript framework, just as we 
+employed Bootstrap as a CSS framework to cut down on the amount of CSS 
+we actually had to write. One of the most popular JavaScript frameworks 
+is a library called <a href="https://reactjs.org/">React</a>.</p>
+
+<p>So far in this course, we’ve been using <strong>imperative programming</strong>
+ methods, where we give the computer a set of statements to execute. For
+ example, to update the counter in an HTML page we might have have code 
+that looks like this:</p>
+
+<p>View:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;h1&gt;</span>0<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div></div>
+
+<p>Logic:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">num</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">h1</span><span class="dl">"</span><span class="p">).</span><span class="nx">innerHTML</span><span class="p">);</span>
+<span class="nx">num</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">h1</span><span class="dl">"</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">num</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>React allows us to use <strong>declarative programming</strong>, which will allow us to simply write code explaining <em>what</em> we wish to display and not worry about <em>how</em> we’re displaying it. In React, a counter might look a bit more like this:</p>
+
+<p>View:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;h1&gt;</span>{num}<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div></div>
+
+<p>Logic:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">num</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>The React framework is built around the idea of components, each of 
+which can have an underlying state. A component would be something you 
+can see on a web page like a post or a navigation bar, and a state is a 
+set of variables associated with that component. The beauty of React is 
+that when the state changes, React will automatically change the DOM 
+accordingly.</p>
+
+<p>There are a number of ways to use React, (including the popular <a href="https://reactjs.org/docs/create-a-new-react-app.html">create-react-app</a>
+ command published by Facebook) but today we’ll focus on getting started
+ directly in an HTML file. To do this, we’ll have to import three 
+JavaScript Packages:</p>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">React</code>: Defines components and their behavior</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">ReactDOM</code>: Takes React components and inserts them into the DOM</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">Babel</code>: Translates from <a href="https://reactjs.org/docs/introducing-jsx.html">JSX</a>,
+ the language in which we’ll write in React, to plain JavaScript that 
+our browsers can interpret. JSX is very similar to JavaScript, but with 
+some additional features, including the ability to represent HTML inside
+ of our code.</li>
+</ul>
+
+<p>Let’s dive in and create our first React application!</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://unpkg.com/react@17/umd/react.production.min.js"</span> <span class="na">crossorigin</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"</span> <span class="na">crossorigin</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://unpkg.com/babel-standalone@6/babel.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Hello<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;&lt;/div&gt;</span>
+
+        <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/babel"</span><span class="nt">&gt;</span>
+            <span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="p">(</span>
+                    <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+                        <span class="nx">Hello</span><span class="o">!</span>
+                    <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>                <span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">App</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">#app</span><span class="dl">"</span><span class="p">));</span>
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>Since this is our first React app, let’s take a detailed look at what each part of this code is doing:</p>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>In the three lines above the title, we import the latest versions of React, ReactDOM, and Babel.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>In the body, we include a single <code class="language-plaintext highlighter-rouge">div</code> with an <code class="language-plaintext highlighter-rouge">id</code> of <code class="language-plaintext highlighter-rouge">app</code>. We almost always want to leave this empty, and fill it in our react code below.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>We include a script tag where we specify that <code class="language-plaintext highlighter-rouge">type="text/babel"</code>. This signals to the browser that the following script needs to be translated using Babel.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Next, we create a component called <code class="language-plaintext highlighter-rouge">App</code>. Components in React can be represented by JavaScript functions.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>Our component returns what we would like to render to the DOM. In this case, we simply return <code class="language-plaintext highlighter-rouge">&lt;div&gt;Hello!&lt;/div&gt;</code>.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span>The last line of our script employs the <code class="language-plaintext highlighter-rouge">ReactDOM.render</code> function, which takes two arguments:
+    <ol>
+      <li>A component to render</li>
+      <li>An element in the DOM inside of which the component should be rendered</li>
+    </ol>
+  </li>
+</ul>
+
+<p>Now that we understant what the code is doing, we can take a look at the resulting webpage:</p>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/react0.png" alt="welcome hello react"></p>
+
+<p>One useful feature of React is the ability to render components 
+within other components. To demonstrate this, let’s create another 
+component called <code class="language-plaintext highlighter-rouge">Hello</code>:</p>
+
+<pre><code class="language-JSX">function Hello(props) {
+    return (
+        &lt;h1&gt;Hello&lt;/h1&gt;
+    );
+}
+</code></pre>
+
+<p>And now, let’s render three <code class="language-plaintext highlighter-rouge">Hello</code> components inside of our <code class="language-plaintext highlighter-rouge">App</code> component:</p>
+
+<pre><code class="language-JSX">function App() {
+    return (
+        &lt;div&gt;
+            &lt;Hello /&gt;
+            &lt;Hello /&gt;
+            &lt;Hello /&gt;
+        &lt;/div&gt;
+    );
+}
+</code></pre>
+
+<p>This gives us a page that looks like:</p>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/react1.png" alt="Three hellos"></p>
+
+<p>So far, the components haven’t been all that interesting, as they are
+ all exactly the same. We can make these components more flexible by 
+adding additional properties (<strong>props</strong> in React terms) to 
+them. For example, let’s say we wish to say hello to three different 
+people. We can provide those people’s names in a method that looks 
+similar to HTML attributes:</p>
+
+<pre><code class="language-JSX">function App() {
+    return (
+        &lt;div&gt;
+            &lt;Hello name="Harry" /&gt;
+            &lt;Hello name="Ron" /&gt;
+            &lt;Hello name="Hermione" /&gt;
+        &lt;/div&gt;
+    );
+}
+</code></pre>
+
+<p>We can then access those props using <code class="language-plaintext highlighter-rouge">props.PROP_NAME</code>. We can then insert this into our JSX using curly braces:</p>
+
+<pre><code class="language-JSX">function Hello(props) {
+    return (
+        &lt;h1&gt;Hello, {props.name}!&lt;/h1&gt;
+    );
+}
+</code></pre>
+
+<p>Now, our page displays the three names!</p>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/react2.png" alt="Three names"></p>
+
+<p>Now, let’s see how we can use React to re-implement the counter page 
+we built when first working with JavaScript. Our overall structure will 
+remain the same, but inside of our <code class="language-plaintext highlighter-rouge">App</code> component, we’ll use React’s <code class="language-plaintext highlighter-rouge">useState</code> hook to add state to our component. The argument to <code class="language-plaintext highlighter-rouge">useState</code> is the initial value of the state, which we’ll set to <code class="language-plaintext highlighter-rouge">0</code>. The function returns both a variable representing the state and a function that allows us to update the state.</p>
+
+<pre><code class="language-JSX">const [count, setCount] = React.useState(0);
+</code></pre>
+
+<p>Now, we can work on what the function will render, where we’ll 
+specify a header and a button. We’ll also add an event listener for when
+ the button is clicked, which React handles using the <code class="language-plaintext highlighter-rouge">onClick</code> attribute:</p>
+
+<pre><code class="language-JSX">return (
+    &lt;div&gt;
+        &lt;h1&gt;{count}&lt;/h1&gt;
+        &lt;button onClick={updateCount}&gt;Count&lt;/button&gt;
+    &lt;/div&gt;
+);
+</code></pre>
+
+<p>Finally, let’s define the <code class="language-plaintext highlighter-rouge">updateCount</code> function. To do this, we’ll use the <code class="language-plaintext highlighter-rouge">setCount</code> function, which can take as argument a new value for the state.</p>
+
+<pre><code class="language-JSX">function updateCount() {
+    setCount(count + 1);
+}
+</code></pre>
+
+<p>Now we have a functioning counter site!</p>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/react3.gif" alt="counter"></p>
+
+<a data-id="" id="addition" style="top: -81.3333px;"></a><h3><a data-id="" href="#addition">Addition</a></h3>
+
+<p>Now that we have a feel for the React framework, let’s work on using 
+what we’ve learned to build a game-like site where users will solve 
+addition problems. We’ll begin by creating a new file with the same 
+setup as our other React pages. To start building this application, 
+let’s think about what we might want to keep track of in the state. We 
+should include anything that we think might change while a user is on 
+our page. Our state might include:</p>
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">num1</code>: The first number to be added</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">num2</code>: The second number to be added</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">response</code>: What the user has typed in</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-square"></i></span><code class="language-plaintext highlighter-rouge">score</code>: How many questions the user has answered correctly.</li>
+</ul>
+
+<p>Now, our state can be a JavaScript object that includes all of this information:</p>
+
+<pre><code class="language-JSX">const [state, setState] = React.useState({
+    num1: 1,
+    num2: 1,
+    response: "",
+    score: 0
+});
+</code></pre>
+
+<p>Now, using the values in the state, we can render a basic user interface.</p>
+
+<pre><code class="language-JSX">return (
+    &lt;div&gt;
+        &lt;div&gt;{state.num1} + {state.num2}&lt;/div&gt;
+        &lt;input value={state.response} /&gt;
+        &lt;div&gt;Score: {state.score}&lt;/div&gt;
+    &lt;/div&gt;
+);
+</code></pre>
+
+<p>Now, the basic layout of the site looks like this:</p>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/add0.png" alt="Addition layout"></p>
+
+<p>At this point, the user cannot type anything in the input box because its value is fixed as <code class="language-plaintext highlighter-rouge">state.response</code> which is currently the empty string. To fix this, let’s add an <code class="language-plaintext highlighter-rouge">onChange</code> attribute to the input element, and set it equal to a function called <code class="language-plaintext highlighter-rouge">updateResponse</code></p>
+
+<pre><code class="language-JSX">onChange={updateResponse}
+</code></pre>
+
+<p>Now, we’ll have to define the <code class="language-plaintext highlighter-rouge">updateResposne</code> function, which takes in the event that triggered the function, and sets the <code class="language-plaintext highlighter-rouge">response</code> to the current value of the input. This function allows the user to type, and stores whatever has been typed in the <code class="language-plaintext highlighter-rouge">state</code>.</p>
+
+<pre><code class="language-JSX">function updateResponse(event) {
+    setState({
+        ...state,
+        response: event.target.value
+    });
+}
+</code></pre>
+
+<p>Now, let’s add the ability for a user to submit a problem. We’ll 
+first add another event listener and link it to a function we’ll write 
+next:</p>
+
+<pre><code class="language-JSX">onKeyPress={inputKeyPress}
+</code></pre>
+
+<p>Now, we’ll define the <code class="language-plaintext highlighter-rouge">inputKeyPress</code> function. In this function, we’ll first check whether the <code class="language-plaintext highlighter-rouge">Enter</code>
+ key was pressed, and then check to see if the answer is correct. When 
+the user is correct, we want to increase the score by 1, choose random 
+numbers for the next problem, and clear the response. If the answer is 
+incorrect, we want to decrease the score by 1 and clear the response.</p>
+
+<pre><code class="language-JSX">function inputKeyPress(event) {
+    if (event.key === "Enter") {
+        const answer = parseInt(state.response);
+        if (answer === state.num1 + state.num2) {
+            // User got question right
+            setState({
+                ...state,
+                score: state.score + 1,
+                response: "",
+                num1: Math.ceil(Math.random() * 10),
+                num2: Math.ceil(Math.random() * 10)
+            });
+        } else {
+            // User got question wrong
+            setState({
+                ...state,
+                score: state.score - 1,
+                response: ""
+            })
+        }
+    }
+}
+</code></pre>
+
+<p>To put some finishing touches on the application, let’s add some 
+style to the page. We’ll center everything in the app, and then make the
+ problem larger by adding an <code class="language-plaintext highlighter-rouge">id</code> of <code class="language-plaintext highlighter-rouge">problem</code> to the div containing the problem, and then adding the following CSS to a style tag:</p>
+
+<pre><code class="language-CSS">#app {
+    text-align: center;
+    font-family: sans-serif;
+}
+
+#problem {
+    font-size: 72px;
+}
+</code></pre>
+
+<p>Finally, let’s add the ability to win the game after gaining 10 points. To do this, we’ll add a condition to the <code class="language-plaintext highlighter-rouge">render</code> funciton, returning something completely different once we have 10 points:</p>
+
+<pre><code class="language-JSX">if (state.score === 10) {
+    return (
+        &lt;div id="winner"&gt;You won!&lt;/div&gt;
+    );
+}
+</code></pre>
+
+<p>To make the win more exciting, we’ll add some style to the alternative div as well:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#winner</span> <span class="p">{</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">72px</span><span class="p">;</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="no">green</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now, let’s take a look at our application!</p>
+
+<p><img src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/add1.gif" alt="finished"></p>
+
+<p>That’s all for lecture today! Next time, we’ll talk about some best practices for building larger web applications.</p>
+
+
+                </main>
+
+            </div>
+
+        </div>
+
+        
+ 
+        <script src="Lecture%206%20-%20CS50's%20Web%20Programming%20with%20Python%20and%20JavaScript_files/page.js"></script>
+
+    
+
+
+</body></html>
