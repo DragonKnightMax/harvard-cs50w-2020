@@ -1,4 +1,4 @@
-# CS50W-Project0-Wiki
+# CS50W-Project1-Wiki
 
 Design a Wikipedia-like online encyclopedia.
 
