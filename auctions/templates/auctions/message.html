@@ -1,0 +1,8 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+        {% if winner_message %}
+            <div>{{ winner_message }}</div>
+            <a href="{% url 'index' %}">Back To Homepage</a>
+        {% endif %}
+{% endblock %}

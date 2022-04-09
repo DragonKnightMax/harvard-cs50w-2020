@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+    
+    {% if filter_by_category %}
+        <H4>Category: {{ filter_by_category }}</H4>
+    {% endif %}
+
+    {% for listing in listings %}
+        <ul>
+            {% if listing.image_url %}
+                <img src="{{ listing.image_url }}" alt="{{ listing.title}} image">
+            {% else %}
+                <h4>No Image Provided</h4>
+            {% endif %}
+            
+            <li>{{ listing.title }}</li>
+            <li>Price: ${{ listing.price }}</li>
+            <li>{{ listing.description }}</li>
+            <li>Created {{ listing.date_time }}</li>
+        </ul>
+        
+        <a href="{% url 'details' listing.id %}">Details</a>
+    {% empty %}
+        <h4>No Active Listings</h4>
+    {% endfor %}
+
+{% endblock %}

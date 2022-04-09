@@ -1,0 +1,1 @@
+web: gunicorn commerce.wsgi --preload --log-file -

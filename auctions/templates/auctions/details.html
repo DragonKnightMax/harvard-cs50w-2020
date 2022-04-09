@@ -1,0 +1,85 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {% if listing %}
+        {% if message %}
+            <div>{{ message }}</div>
+        {% endif %}
+
+        {% if listing.status == "Closed" and winner %}
+            <h5>Congratulations! You had won the auction!</h5>
+        {% endif %}
+
+        <h3>Listing: {{ listing.title }}</h3>
+        
+        {% if user.is_authenticated %}
+            <!-- Add to Watchlist and Remove from Watchlist options -->
+            {% if not already_in_watchlist %}
+                <form action="{% url 'add_watchlist' listing.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Add to Watchlist">
+                </form>
+            {% else %}
+                <form action="{% url 'remove_watchlist' listing.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Remove from Watchlist">
+                </form>
+            {% endif %}
+            
+            <!-- Close Auction button displayed for owner of active listing -->
+            {% if owner and listing.status != "Closed" %}
+                <form action="{% url 'close_auction' listing.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Close Auction">
+                </form>
+            {% endif %}
+        {% endif %}
+        
+        <!-- Listing image (optional) -->
+        {% if listing.image_url %}
+            <img src="{{ listing.image_url }}" alt="{{ listing.title }} image">
+        {% else %}
+            <h4>No Image Provided</h4>  
+        {% endif %}
+
+        <div>{{ listing.description }}</div>
+
+        <div>${{ listing.price }}</div>
+
+        {% if user.is_authenticated and listing.status != "Closed" %}
+            <!-- For user to Place Bid -->
+            <form action="{% url 'bid_item' listing.id %}" method="post">
+                {% csrf_token %}
+                {{ BidForm }}
+                <input type="submit" value="Place Bid">
+            </form>
+        {% endif %}
+
+        <h3>Details:</h3>
+        <ul>
+            <li>Listed by: {{ listing.owner }}</li>
+            <li>Category: {{ listing.category }}</li>
+        </ul>
+    {% endif %}
+    
+    <!-- Comments Section -->
+    <h3>Comments:</h3>
+    {% for comment in comments %}
+        <ul>
+            <li>{{ comment.user }}</li>
+            <li>{{ comment.comment }}</li>
+            <li>Posted {{ comment.date_time }}</li>
+        </ul>
+    {% empty %}
+        <h3>0 Comments</h3>
+    {% endfor %}
+    
+    <!-- For user to add comment -->
+    {% if user.is_authenticated %}
+        <form action="{% url 'add_comment' listing.id %}" method="post">
+            {% csrf_token %}
+            {{ CommentForm }}
+            <input type="submit" value="Add Comment">
+        </form>
+    {% endif %}
+{% endblock %}
