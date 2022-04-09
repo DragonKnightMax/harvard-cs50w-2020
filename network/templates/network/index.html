@@ -1,0 +1,28 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <h1>All Posts</h1>
+
+    <!-- section to display user profile info -->
+    <div id="profile-page">
+    </div>
+
+    <!-- section for user to post new posts -->
+    <div id="new-post">
+    </div>
+
+    <!-- section for user to edit post -->
+    <div id="edit-post">   
+    </div>
+
+    <!-- section to display all posts from all users -->
+    <div id="all-posts">
+    </div>
+    
+{% endblock %}
+
+{% block script %}
+    <!-- javascript to handle posts -->
+    <script src="{% static 'network/posts.js' %}"></script>
+{% endblock %}
